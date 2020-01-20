@@ -17,7 +17,8 @@ import LegalNotices from 'src/components/LegalNotices';
 import PageError from 'src/components/PageError';
 import FormRegisterUser from 'src/components/FormRegisterUser';
 import FormRegisterArtisan from 'src/components/FormRegisterArtisan';
-import ForgettenPassword from 'src/components/ForgottenPassword';
+import ForgottenPassword from 'src/components/ForgottenPassword';
+import ProfilSettingsArtisan from 'src/components/ProfilSettingsArtisan';
 
 /**
  * Code
@@ -46,11 +47,14 @@ const App = () => {
 					<Route exact path="/page-artisan/:id">
 						<PageArtisan />
 					</Route>
+					<Route exact path="/profil-settings-artisan">
+						<ProfilSettingsArtisan />
+					</Route>
 					<Route exact path="/mentions-legal">
 						<LegalNotices />
 					</Route>
 					<Route exact path="/mot-de-passe-oublié">
-						<ForgettenPassword />
+						<ForgottenPassword />
 					</Route>
 					<Route>
 						<PageError />
