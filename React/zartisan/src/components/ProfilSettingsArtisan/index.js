@@ -70,22 +70,24 @@ const ProfilSettingsArtisan = () => {
 						>
 							{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
 						</Upload>
+						<Button type="primary" className="buttons" htmlType="submit">
+							Confirmer
+						</Button>
 					</Form.Item>
 					<Form.Item>
+						<Input placeholder="Basic usage" value="jean" disabled={true} />
+						<Input value="SIRET" disabled />
 						<Input disabled value="Entreprise" />
-						<Input disabled value="Siret" />
+					</Form.Item>
+					<Form.Item>
 						<Input disabled value="Adresse" />
 						<Input disabled value="Code postal" />
 						<Input disabled value="Ville" />
 						<Input disabled value="Téléphone" />
 						<Input disabled value="Mail" />
-						<Button className="buttons">Modifier le mot de passe</Button>
-						<TextArea rows={4} />
 					</Form.Item>
 					<Form.Item>
-						<Button type="primary" className="buttons" htmlType="submit">
-							Confirmer
-						</Button>
+						<TextArea rows={4} />
 					</Form.Item>
 					<Form.Item>
 						<input type="file" name="image_uploads" accept=".jpg, .jpeg, .png" multiple />
