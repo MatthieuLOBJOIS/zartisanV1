@@ -52,7 +52,7 @@ const FormLogin = ({ handleSubmitLogin, handleCancel }) => {
 		return (
 			<Button
 				type="default"
-				id="buttons"
+				className="buttons"
 				htmlType="submit"
 				className="login-form-button"
 				style={{ color: 'white', background: '#bb9574' }}

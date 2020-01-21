@@ -57,7 +57,7 @@ const ForgettenPassword = () => {
 						<Input.Password onChange={passwordCheckChangeValue} />
 					</Form.Item>
 					<Form.Item>
-						<Button type="primary" id="buttons" htmlType="submit" onClick={timeoutHist}>
+						<Button type="primary" className="buttons" htmlType="submit" onClick={timeoutHist}>
 							Confirmer
 						</Button>
 					</Form.Item>

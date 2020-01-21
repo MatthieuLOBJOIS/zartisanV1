@@ -148,7 +148,7 @@ const Home = () => {
 		};
 
 		return (
-			<Button className="home-button-search" id="buttons" onClick={handleSearch}>
+			<Button className="home-button-search" className="buttons" onClick={handleSearch}>
 				Recherche
 			</Button>
 		);

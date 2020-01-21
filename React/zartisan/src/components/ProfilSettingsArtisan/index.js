@@ -79,25 +79,25 @@ const ProfilSettingsArtisan = () => {
 						<Input disabled value="Ville" />
 						<Input disabled value="Téléphone" />
 						<Input disabled value="Mail" />
-						<Button id="buttons">Modifier le mot de passe</Button>
+						<Button className="buttons">Modifier le mot de passe</Button>
 						<TextArea rows={4} />
 					</Form.Item>
 					<Form.Item>
-						<Button type="primary" id="buttons" htmlType="submit">
+						<Button type="primary" className="buttons" htmlType="submit">
 							Confirmer
 						</Button>
 					</Form.Item>
 					<Form.Item>
 						<input type="file" name="image_uploads" accept=".jpg, .jpeg, .png" multiple />
-						<Button type="primary" id="buttons" htmlType="submit">
+						<Button type="primary" className="buttons" htmlType="submit">
 							Ajouter
 						</Button>
-						<Button type="primary" id="buttons" htmlType="submit">
+						<Button type="primary" className="buttons" htmlType="submit">
 							Supprimer
 						</Button>
 					</Form.Item>
 					<Form.Item>
-						<Button type="primary" id="buttons" htmlType="submit">
+						<Button type="primary" className="buttons" htmlType="submit">
 							Sauvegarder
 						</Button>
 					</Form.Item>
