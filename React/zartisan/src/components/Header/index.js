@@ -203,6 +203,7 @@ const Header = () => {
 	//let artisanUser = -1;
 	if (token != null) {
 		admin = parseJwt(token).roles[0];
+		//console.log(admin);
 		//artisanUser = parseJwt(token).roles.indexOf('ROLE_ARTISAN');
 		//tokenEmail = parseJwt(token).username;
 		//console.log(tokenEmail);

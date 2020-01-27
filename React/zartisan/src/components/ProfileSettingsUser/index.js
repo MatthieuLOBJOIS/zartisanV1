@@ -1,27 +1,22 @@
-/**
- * Imports of dependencies
- */
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Row, Button, TextArea, Upload, Icon, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
+import { Form, Input, Row, Button, TextArea, Upload, Icon, message } from 'antd';
 import 'antd/dist/antd.css';
 
-const ProfilSettingsArtisan = () => {
-	//
+const ProfileSettingsUser = () => {
 	const { TextArea } = Input;
-	// hooks state
+
+	const artisanSelector = useSelector((state) => state.artisan);
+
 	const [ loading, setLoading ] = useState(false);
 
-	// select artisan in the state
-	const artisanSelector = useSelector((state) => state.artisan);
-	console.log(artisanSelector);
-	function getBase64(img, callback) {
+	const getBase64 = (img, callback) => {
 		const reader = new FileReader();
 		reader.addEventListener('load', () => callback(reader.result));
 		reader.readAsDataURL(img);
-	}
+	};
 
-	function beforeUpload(file) {
+	const beforeUpload = (file) => {
 		const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
 		if (!isJpgOrPng) {
 			message.error('You can only upload JPG/PNG file!');
@@ -31,7 +26,7 @@ const ProfilSettingsArtisan = () => {
 			message.error('Image must smaller than 2MB!');
 		}
 		return isJpgOrPng && isLt2M;
-	}
+	};
 
 	const handleChange = (info) => {
 		if (info.file.status === 'uploading') {
@@ -40,10 +35,14 @@ const ProfilSettingsArtisan = () => {
 		}
 		if (info.file.status === 'done') {
 			// Get this url from response in real world.
-			getBase64(info.file.originFileObj, (imageUrl) => setLoading({ imageUrl, loading: false }));
+			getBase64(info.file.originFileObj, (imageUrl) =>
+				setLoading({
+					imageUrl,
+					loading: false
+				})
+			);
 		}
 	};
-
 	const uploadButton = (
 		<div>
 			<Icon type={loading ? 'loading' : 'plus'} />
@@ -52,7 +51,7 @@ const ProfilSettingsArtisan = () => {
 	);
 
 	const { imageUrl } = loading;
-	console.log(imageUrl);
+	console.log('imageUrl ' + imageUrl);
 
 	return (
 		<div>
@@ -75,16 +74,14 @@ const ProfilSettingsArtisan = () => {
 						</Button>
 					</Form.Item>
 					<Form.Item>
-						<Input placeholder="Basic usage" value="jean" disabled={true} />
-						<Input value="SIRET" disabled />
-						<Input disabled value="Entreprise" />
+						<Input placeholder="Nom et prénom" />
 					</Form.Item>
 					<Form.Item>
-						<Input disabled value="Adresse" />
-						<Input disabled value="Code postal" />
-						<Input disabled value="Ville" />
-						<Input disabled value="Téléphone" />
-						<Input disabled value="Mail" />
+						<Input placeholder="Adresse" />
+						<Input placeholder="Code postal" />
+						<Input placeholder="Ville" />
+						<Input placeholder="Téléphone" />
+						<Input placeholder="Mail" />
 					</Form.Item>
 					<Form.Item>
 						<TextArea rows={4} />
@@ -114,4 +111,4 @@ const ProfilSettingsArtisan = () => {
 	);
 };
 
-export default ProfilSettingsArtisan;
+export default ProfileSettingsUser;

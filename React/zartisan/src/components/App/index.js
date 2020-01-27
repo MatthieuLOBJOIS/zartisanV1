@@ -19,6 +19,7 @@ import FormRegisterUser from 'src/components/FormRegisterUser';
 import FormRegisterArtisan from 'src/components/FormRegisterArtisan';
 import ForgottenPassword from 'src/components/ForgottenPassword';
 import ProfilSettingsArtisan from 'src/components/ProfilSettingsArtisan';
+import ProfileSettingsUser from 'src/components/ProfileSettingsUser';
 
 /**
  * Code
@@ -47,7 +48,10 @@ const App = () => {
 					<Route exact path="/page-artisan/:id">
 						<PageArtisan />
 					</Route>
-					<Route exact path="/profil-settings-artisan">
+					<Route exact path="/profil/particulier">
+						<ProfileSettingsUser />
+					</Route>
+					<Route exact path="/profil/artisan">
 						<ProfilSettingsArtisan />
 					</Route>
 					<Route exact path="/mentions-legal">
