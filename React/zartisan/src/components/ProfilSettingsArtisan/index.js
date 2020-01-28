@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import 'antd/dist/antd.css';
 
 const ProfilSettingsArtisan = () => {
-	//
 	const { TextArea } = Input;
 	// hooks state
 	const [ loading, setLoading ] = useState(false);

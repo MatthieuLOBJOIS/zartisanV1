@@ -10,8 +10,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { sendLogin, deconnect } from 'src/store/register/actions';
 import cookies from 'js-cookie';
 
-import { artisanData } from 'src/store/artisan/actions';
-
 /**
  * Local imports
  */
@@ -23,6 +21,7 @@ import FormRegisterArtisan from 'src/components/FormRegisterArtisan';
 import { sendRegisterArtisan } from 'src/store/register/actions';
 import FormRegisterUser from 'src/components/FormRegisterUser';
 import { sendRegisterUser } from 'src/store/register/actions';
+import { artisanData } from 'src/store/artisan/actions';
 /**
  * NAME SERVER
  */
@@ -201,15 +200,16 @@ const Header = () => {
 	let admin = -1;
 	let user = -1;
 	let artisanUser = -1;
+	let tokenEmail = '';
 	if (token != null) {
 		admin = parseJwt(token).roles.indexOf('ROLE_ADMIN');
 		//console.log(admin);
 		user = parseJwt(token).roles.indexOf('ROLE_USER');
 		artisanUser = parseJwt(token).roles.indexOf('ROLE_ARTISAN');
-		console.log(parseJwt(token));
+		//console.log(parseJwt(token));
 		//artisanUser = parseJwt(token).roles.indexOf('ROLE_ARTISAN');
-		//tokenEmail = parseJwt(token).username;
-		//console.log(tokenEmail);
+		tokenEmail = parseJwt(token).username;
+		console.log(tokenEmail);
 		//console.log(parseJwt(token).roles[0]);
 	}
 
@@ -276,6 +276,11 @@ const Header = () => {
 		};
 	};
 
+	const handleClickProfile = () => {
+		dispatch(artisanData(1, tokenEmail));
+		onClose();
+	};
+
 	return (
 		<div id="zheader">
 			<Row className="header" type="flex" justify="space-around">
@@ -306,9 +311,13 @@ const Header = () => {
 									</Modal>
 
 									{connect === true && admin === -1 ? connect === true && artisanUser !== -1 ? (
-										<Link to="/profil/artisan">Profil</Link>
+										<Link to="/profil/artisan" onClick={handleClickProfile}>
+											Profil
+										</Link>
 									) : (
-										<Link to="/profil/particulier">Profil</Link>
+										<Link to="/profil/particulier" onClick={handleClickProfile}>
+											Profil
+										</Link>
 									) : (
 										''
 									)}
