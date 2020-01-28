@@ -13,8 +13,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 
 /**
-* @Route("api/v1/user", name="api_user_")
-*/
+ * @Route("api/v1/user", name="api_user_")
+ */
 class ApiUserController extends AbstractController
 {
     private $securityManager;
@@ -31,7 +31,7 @@ class ApiUserController extends AbstractController
     {
         // list all users  ROLE_USER and enabled
         $users = $userRepository->findAllUser();
-        
+
         $arrayUsers = [];
 
         foreach ($users as $individual) {
@@ -63,7 +63,7 @@ class ApiUserController extends AbstractController
             if ($user != null) {
                 return $this->json($user, 200, [], ['groups' => 'user_user_single']);
             } else {
-                return $this->json(['error' => 'user not found'],404);
+                return $this->json(['error' => 'user not found'], 404);
             }
         } else {
             return $this->json(['error' => 'unexpected information for edit request'], 304);
@@ -87,15 +87,15 @@ class ApiUserController extends AbstractController
             $region = $apiRegionController->getRegionFromCode($request->get('postalCode'));
             // search in the BDD id and email and role and status and confirmail
             $userRole = $user->getRoles();
-            $userStatus= $user->getIsStatus();   
+            $userStatus = $user->getIsStatus();
 
             // if role  == user and user is enable
             if ($userRole[0] == "ROLE_USER" && $userStatus == 'true') {
                 $user->setEmail($request->get('email'));
                 $user->setFirstname($request->get('firstname'));
                 $user->setLastname($request->get('lastname'));
-                $user->setBirthday($request->get('birthday'));              
-                $user->setAdressSupp($request->get('adressSupp'));  
+                $user->setBirthday($request->get('birthday'));
+                $user->setAdressSupp($request->get('adressSupp'));
                 $user->setSpecialDistribution($request->get('specialDistribution'));
                 $user->setExtNumberWay($request->get('extNumberWay'));
                 $user->setNumberWay($request->get('numberWay'));
@@ -107,8 +107,11 @@ class ApiUserController extends AbstractController
                 $user->setPhone($request->get('phone'));
                 $user->setPicture($request->get('picture'));
                 $user->setNickname($request->get('nickname'));
+                $user->setSiret($request->get('siret'));
                 $user->setUpdatedAt(new \DateTime());
-                
+
+
+
                 $em->flush();
                 return $this->json($user, 200, [], ['groups' => 'user_user_single']);
             } else {
@@ -118,7 +121,7 @@ class ApiUserController extends AbstractController
             return $this->json(['error' => 'unexpected information for edit request'], 304);
         }
     }
-    
+
     /**
      * @Route("/delete", name="delete")
      * Disable user, keep the datas
@@ -131,11 +134,10 @@ class ApiUserController extends AbstractController
             $user = $userRepository->isFoundMail($request->get('email'));
 
             // si user existe on modifie la base de données
-            if ($user != null) 
-            {
+            if ($user != null) {
                 $user->setIsStatus(false);
                 $em->flush();
-                return $this->json(['success' => 'utilisatuer disable'],200);
+                return $this->json(['success' => 'utilisatuer disable'], 200);
             } else {
                 return $this->json(['error' => 'unexpected information for edit request'], 404);
             }
@@ -143,5 +145,4 @@ class ApiUserController extends AbstractController
             return $this->json(['error' => 'unexpected information for edit request'], 304);
         }
     }
-
 }
