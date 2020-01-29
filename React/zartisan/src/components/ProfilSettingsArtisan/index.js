@@ -13,7 +13,16 @@ const ProfilSettingsArtisan = () => {
 
 	// select artisan in the state
 	const artisanSelector = useSelector((state) => state.artisan);
-	console.log(artisanSelector);
+	//console.log(artisanSelector);
+
+	let artisanObject = {};
+	for (let artisan in artisanSelector) {
+		//console.log(artisanSelector[artisan]);
+		artisanObject = artisanSelector[0];
+	}
+	console.log('object', artisanObject);
+
+	// Avatar upload
 	function getBase64(img, callback) {
 		const reader = new FileReader();
 		reader.addEventListener('load', () => callback(reader.result));
@@ -53,6 +62,8 @@ const ProfilSettingsArtisan = () => {
 	const { imageUrl } = loading;
 	console.log(imageUrl);
 
+	// Wall picture upload
+
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
@@ -69,23 +80,44 @@ const ProfilSettingsArtisan = () => {
 						>
 							{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
 						</Upload>
+
 						<Button type="primary" className="buttons" htmlType="submit">
 							Confirmer
 						</Button>
 					</Form.Item>
-					<Form.Item>
-						<Input placeholder="Basic usage" value="jean" disabled={true} />
-						<Input value="SIRET" disabled />
-						<Input disabled value="Entreprise" />
+					<Form.Item label="Prénom/Nom" hasFeedback>
+						<Input value={`${artisanObject.firstname} ${artisanObject.lastname}`} disabled={true} />
 					</Form.Item>
-					<Form.Item>
-						<Input disabled value="Adresse" />
-						<Input disabled value="Code postal" />
-						<Input disabled value="Ville" />
-						<Input disabled value="Téléphone" />
-						<Input disabled value="Mail" />
+
+					<Form.Item label="Siret" hasFeedback>
+						<Input value={artisanObject.siret} disabled />
 					</Form.Item>
-					<Form.Item>
+
+					<Form.Item label="Entreprise" hasFeedback>
+						<Input disabled value={artisanObject.company} />
+					</Form.Item>
+
+					<Form.Item label="Adresse" hasFeedback>
+						<Input disabled value={`${artisanObject.numberWay} ${artisanObject.way}`} />
+					</Form.Item>
+
+					<Form.Item label="Code Postal" hasFeedback>
+						<Input disabled value={artisanObject.postalCode} />
+					</Form.Item>
+
+					<Form.Item label="Ville" hasFeedback>
+						<Input disabled value={artisanObject.city} />
+					</Form.Item>
+
+					<Form.Item label="Téléphone" hasFeedback>
+						<Input disabled value={artisanObject.phone} />
+					</Form.Item>
+
+					<Form.Item label="Mail" hasFeedback>
+						<Input disabled value={artisanObject.email} />
+					</Form.Item>
+
+					<Form.Item label="Description" hasFeedback>
 						<TextArea rows={4} />
 					</Form.Item>
 					<Form.Item>
