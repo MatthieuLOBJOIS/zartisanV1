@@ -2,7 +2,7 @@
  * Imports of dependencies
  */
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Row, Button, TextArea, Upload, Icon, message } from 'antd';
+import { Form, Input, Row, Button, TextArea, Upload, Icon, message, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import 'antd/dist/antd.css';
 
@@ -62,7 +62,42 @@ const ProfilSettingsArtisan = () => {
 	const { imageUrl } = loading;
 	console.log(imageUrl);
 
-	// Wall picture upload
+	//////////////////////////////////////// Wall picture upload//////////////////////////////////////////////////////////////////////
+
+	function getSecondeBase64(file) {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result);
+			reader.onerror = (error) => reject(error);
+		});
+	}
+
+	const [ previewVisible, setPreviewVisible ] = useState(false);
+	const [ previewImage, setPreviewImage ] = useState('');
+	const [ fileList, setFileList ] = useState([]);
+
+	const handleCancel = () => setPreviewVisible(false);
+
+	const handlePreview = async (file) => {
+		if (!file.url && !file.preview) {
+			file.preview = await getSecondeBase64(file.originFileObj);
+		}
+		setPreviewVisible(true);
+		setPreviewImage(file.url || file.preview);
+	};
+
+	const handleChangeFile = (fileList) => {
+		console.log(fileList.fileList);
+		return setFileList(fileList.fileList);
+	};
+
+	const uploadButtonFile = (
+		<div>
+			<Icon type="plus" />
+			<div className="ant-upload-text">Upload</div>
+		</div>
+	);
 
 	return (
 		<div>
@@ -120,7 +155,8 @@ const ProfilSettingsArtisan = () => {
 					<Form.Item label="Description" hasFeedback>
 						<TextArea rows={4} />
 					</Form.Item>
-					<Form.Item>
+
+					{/* <Form.Item>
 						<input type="file" name="image_uploads" accept=".jpg, .jpeg, .png" multiple />
 						<Button type="primary" className="buttons" htmlType="submit">
 							Ajouter
@@ -128,7 +164,22 @@ const ProfilSettingsArtisan = () => {
 						<Button type="primary" className="buttons" htmlType="submit">
 							Supprimer
 						</Button>
+					</Form.Item> */}
+					<Form.Item>
+						<Upload
+							action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+							listType="picture-card"
+							//fileList={fileList}
+							onPreview={handlePreview}
+							onChange={handleChangeFile}
+						>
+							{fileList.length >= 4 ? null : uploadButtonFile}
+						</Upload>
+						<Modal visible={previewVisible} footer={null} onCancel={handleCancel}>
+							<img alt="example" style={{ width: '100%' }} src={previewImage} />
+						</Modal>
 					</Form.Item>
+
 					<Form.Item>
 						<Button type="primary" className="buttons" htmlType="submit">
 							Sauvegarder
