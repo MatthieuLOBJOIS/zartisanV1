@@ -99,6 +99,25 @@ const ProfilSettingsArtisan = () => {
 		</div>
 	);
 
+	const editUserArtisan = {
+		id: artisanObject.id,
+		email: artisanObject.email,
+		firstname: artisanObject.firstname,
+		lastname: artisanObject.lastname,
+		birdthday: artisanObject.birdthday,
+		adressSupp: artisanObject.adressSupp,
+		specialDistribution: artisanObject.specialDistribution,
+		extnumberWay: artisanObject.extnumberWay,
+		typeWay: artisanObject.typeWay,
+		way: artisanObject.way,
+		postalCode: artisanObject.postalCode,
+		city: artisanObject.city,
+		phone: artisanObject.phone,
+		picture: artisanObject.picture,
+		nickname: 'pseudo'
+	};
+
+	console.log('edit object', editUserArtisan);
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
@@ -113,7 +132,17 @@ const ProfilSettingsArtisan = () => {
 							beforeUpload={beforeUpload}
 							onChange={handleChange}
 						>
-							{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+							{imageUrl ? (
+								<img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
+							) : artisanObject.picture != undefined ? (
+								<img
+									src={`../src/styles/pictures/company/${artisanObject.picture}`}
+									alt="avatar"
+									style={{ width: '100%' }}
+								/>
+							) : (
+								uploadButton
+							)}
 						</Upload>
 
 						<Button type="primary" className="buttons" htmlType="submit">
