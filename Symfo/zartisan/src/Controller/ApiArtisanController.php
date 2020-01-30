@@ -12,8 +12,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
-* @Route("/v1/artisan", name="api_artisan_")
-*/
+ * @Route("/v1/artisan", name="api_artisan_")
+ */
 class ApiArtisanController extends AbstractController
 {
     /**
@@ -24,8 +24,8 @@ class ApiArtisanController extends AbstractController
         $users = $userRepository->findAll();
 
         $arrayUsers = [];
-        
-        foreach($users as $user){
+
+        foreach ($users as $user) {
             $arrayUsers[] = [
                 'id' => $user->getId(),
                 'email' => $user->getEmail(),
@@ -34,10 +34,10 @@ class ApiArtisanController extends AbstractController
                 ], UrlGeneratorInterface::ABSOLUTE_URL)
             ];
         }
-        return $this->json($arrayUsers , 200, []);
+        return $this->json($arrayUsers, 200, []);
     }
 
-    
+
     /**
      * @Route("/recherche", name="recherche")
      */
@@ -45,17 +45,17 @@ class ApiArtisanController extends AbstractController
     {
         $arrayUsers = [];
         if ($request->get('idJob')) {
-            
+
             $job = $request->get('idJob');
             $region = $request->get('nameRegion');
 
-            $arrayUsers = $userRepository->searchOrderRate($job,$region);
+            $arrayUsers = $userRepository->searchOrderRate($job, $region);
 
-            return $this->json($arrayUsers, 200, [],['groups' => 'user_artisan_search']);
+            return $this->json($arrayUsers, 200, [], ['groups' => 'user_artisan_search']);
         }
         return $this->json(['error' => 'unexpected information for edit request'], 304, []);
     }
-    
+
     /**
      * @Route("/edit", name="edit")
      */
@@ -66,7 +66,7 @@ class ApiArtisanController extends AbstractController
             $userId = $request->get('id');
             $user = $userRepository->find($userId);
 
-            if($request->get('companyDescription')){
+            if ($request->get('companyDescription')) {
                 $user->setCompanyDescription($request->get('companyDescription'));
             }
 
@@ -88,24 +88,25 @@ class ApiArtisanController extends AbstractController
     /**
      * @Route("/single", name="single")
      */
-    public function single(Request $request, AdviceRepository $adviceRepository, RateRepository $rateRepository,
-     UserRepository $userRepository)
-    {
+    public function single(
+        Request $request,
+        AdviceRepository $adviceRepository,
+        RateRepository $rateRepository,
+        UserRepository $userRepository
+    ) {
         if ($request->get('email')) {
-            
+
             if ($request->get('email')) {
                 $user = $userRepository->isFoundMail($request->get('email'));
-                $advices = $adviceRepository-> isFoundAdvice($user->getId());
+                $advices = $adviceRepository->isFoundAdvice($user->getId());
                 if ($user == NULL) {
 
                     return $this->json(['error' => 'no user register'], 304, []);
-
                 }
-                return $this->json([$user, $advices] , 200, [], ['groups' => 'user_artisan_advice']);
+                return $this->json([$user, $advices], 200, [], ['groups' => 'user_artisan_advice']);
             }
             return $this->json(['error' => 'no email found'], 304, []);
         }
         return $this->json(['error' => 'no request'], 304, []);
     }
-
 }

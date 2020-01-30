@@ -222,7 +222,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="bigint", nullable=true)
-     * @Groups("user_artisan_single")
+     * @Groups({"user_artisan_single","user_artisan_advice"})
      */
     private $siret;
 
@@ -634,7 +634,7 @@ class User implements UserInterface
 
     public function getCreatedAt()
     {
-        if($this->createdAt != NULL){
+        if ($this->createdAt != NULL) {
             return $this->createdAt->format('d/m/Y H:i:s');
         }
         return $this->createdAt;
@@ -649,7 +649,7 @@ class User implements UserInterface
 
     public function getUpdatedAt()
     {
-        if($this->updatedAt != NULL){
+        if ($this->updatedAt != NULL) {
             return $this->updatedAt->format('d/m/Y H:i:s');
         }
         return $this->updatedAt;

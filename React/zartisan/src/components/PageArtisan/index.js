@@ -177,7 +177,7 @@ const PageArtisan = () => {
 	const ButtonContact = () => {
 		return (
 			<Popover placement="bottom" content={contentContact} trigger="click">
-				<Button id="buttons" className="buttonInscription">
+				<Button className="buttons" className="buttonInscription">
 					Contacter
 				</Button>
 			</Popover>
@@ -234,7 +234,7 @@ const PageArtisan = () => {
 					<TextArea rows={4} onChange={changeArea} />
 				</Form.Item>
 				<Form.Item>
-					<Button htmlType="submit" id="buttons">
+					<Button htmlType="submit" className="buttons">
 						Envoyer
 					</Button>
 				</Form.Item>
@@ -258,7 +258,7 @@ const PageArtisan = () => {
 
 		if (user !== -1 || artisanUser !== -1) {
 			return (
-				<Button onClick={handleAdvice} id="buttons">
+				<Button onClick={handleAdvice} className="buttons">
 					Donnez votre avis
 				</Button>
 			);
@@ -266,7 +266,7 @@ const PageArtisan = () => {
 			return (
 				<Popover placement="bottom" content={contentAdvice} trigger="click">
 					<div>
-						<Button id="buttons">Donnez votre avis</Button>
+						<Button className="buttons">Donnez votre avis</Button>
 					</div>
 				</Popover>
 			);

@@ -50,7 +50,7 @@ const FormRegisterArtisan = ({ handleFormArtisan }) => {
 						<Input.Password onChange={passwordCheckChangeValue} />
 					</Form.Item>
 					<Form.Item>
-						<Button type="primary" id="buttons" htmlType="submit">
+						<Button type="primary" className="buttons" htmlType="submit">
 							Confirmer
 						</Button>
 					</Form.Item>

@@ -20,7 +20,7 @@ const ListArtisan = () => {
 	 */
 	const artisandata = useSelector((state) => state.search);
 
-	//console.log('listartisan', artisandata);
+	console.log('listartisan', artisandata);
 	let arrayArtisan = [];
 	for (let data in artisandata) {
 		arrayArtisan = artisandata[data];
@@ -159,6 +159,7 @@ const ListArtisan = () => {
 	const LinkArtisan = withRouter(({ history, item }) => {
 		const handleSearch = () => {
 			dispatch(artisanData(item.id, item.email));
+			console.log('itemtest', item.id, item.email, item);
 			{
 				'item compagny', item.company;
 			}
