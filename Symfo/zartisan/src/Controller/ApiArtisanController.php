@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/v1/artisan", name="api_artisan_")
+ * @Route("v1/artisan", name="api_artisan_")
  */
 class ApiArtisanController extends AbstractController
 {
@@ -61,10 +61,10 @@ class ApiArtisanController extends AbstractController
      */
     public function edit(UserRepository $userRepository, Request $request, EntityManagerInterface $em)
     {
-        if ($request->get('id')) {
+        if ($request->get('email')) {
 
-            $userId = $request->get('id');
-            $user = $userRepository->find($userId);
+            $userEmail = $request->get('email');
+            $user = $userRepository->find($userEmail);
 
             if ($request->get('companyDescription')) {
                 $user->setCompanyDescription($request->get('companyDescription'));
@@ -74,6 +74,10 @@ class ApiArtisanController extends AbstractController
             // $user->setPictureFolder($user->getCompany());
             if ($request->get('picture')) {
                 $user->setPicture($request->get('picture'));
+            }
+
+            if ($request->get('phone')) {
+                $user->setPhone($request->get('phone'));
             }
 
             $user->setUpdatedAt(new \DateTime());

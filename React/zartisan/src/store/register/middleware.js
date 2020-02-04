@@ -70,7 +70,7 @@ export default store => next => action => {
         .then(response => {
           // console.log(response);
           if (response.status === 200) {
-            loginCheck();
+            //console.log('inscription')
           }
         })
         .catch(function(error) {
@@ -101,7 +101,7 @@ export default store => next => action => {
         .then(response => {
           // console.log(response);
           if (response.status === 200) {
-            loginCheck();
+            //console.log('inscription')
           }
         })
         .catch(function(error) {
