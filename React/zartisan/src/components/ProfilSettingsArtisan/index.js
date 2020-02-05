@@ -5,8 +5,10 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Row, Button, TextArea, Upload, Icon, message, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import 'antd/dist/antd.css';
+import { artisanEdit } from 'src/store/artisan/actions';
 
 const ProfilSettingsArtisan = () => {
+	const dispatch = useDispatch();
 	const { TextArea } = Input;
 	// hooks state
 	const [ loading, setLoading ] = useState(false);
@@ -48,7 +50,10 @@ const ProfilSettingsArtisan = () => {
 		}
 		if (info.file.status === 'done') {
 			// Get this url from response in real world.
-			getBase64(info.file.originFileObj, (imageUrl) => setLoading({ imageUrl, loading: false }));
+			getBase64(info.file.originFileObj, (imageUrl) => {
+				setPictureAvatar(imageUrl);
+				return setLoading({ imageUrl, loading: false });
+			});
 		}
 	};
 
@@ -60,7 +65,7 @@ const ProfilSettingsArtisan = () => {
 	);
 
 	const { imageUrl } = loading;
-	console.log(imageUrl);
+	//console.log(imageUrl);
 
 	//////////////////////////////////////// Wall picture upload//////////////////////////////////////////////////////////////////////
 
@@ -88,7 +93,7 @@ const ProfilSettingsArtisan = () => {
 	};
 
 	const handleChangeFile = (fileList) => {
-		console.log(fileList.fileList);
+		//console.log(fileList.fileList);
 		return setFileList(fileList.fileList);
 	};
 
@@ -99,25 +104,43 @@ const ProfilSettingsArtisan = () => {
 		</div>
 	);
 
-	const editUserArtisan = {
-		id: artisanObject.id,
-		email: artisanObject.email,
-		firstname: artisanObject.firstname,
-		lastname: artisanObject.lastname,
-		birdthday: artisanObject.birdthday,
-		adressSupp: artisanObject.adressSupp,
-		specialDistribution: artisanObject.specialDistribution,
-		extnumberWay: artisanObject.extnumberWay,
-		typeWay: artisanObject.typeWay,
-		way: artisanObject.way,
-		postalCode: artisanObject.postalCode,
-		city: artisanObject.city,
-		phone: artisanObject.phone,
-		picture: artisanObject.picture,
-		nickname: 'pseudo'
+	// update profil
+
+	// local state
+
+	const [ description, setDescription ] = useState(artisanObject.companyDescription);
+	const [ pictureAvatar, setPictureAvatar ] = useState(artisanObject.picture);
+	const [ pictureGalery, setPictureGalery ] = useState(artisanObject.pictureFolder);
+
+	//console.log('img', pictureAvatar, artisanObject.picture);
+
+	useEffect(() => {
+		if (description === undefined) {
+			setDescription(artisanObject.companyDescription);
+		}
+
+		if (pictureAvatar === undefined) {
+			setPictureAvatar(artisanObject.picture);
+		}
+
+		if (pictureGalery === undefined) {
+			setPictureGalery(artisanObject.pictureFolder);
+		}
+		// if (pictureGalery !== undefined) {
+		// 	setFileList(artisanObject.pictureFolder);
+		// }
+	});
+
+	const handleSaveClick = () => {
+		dispatch(artisanEdit(artisanObject.email, description, pictureAvatar, pictureGalery));
 	};
 
-	console.log('edit object', editUserArtisan);
+	const handleContentDescription = (event) => {
+		const content = event.target.value;
+		//console.log(content);
+		setDescription(content);
+	};
+
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
@@ -174,7 +197,7 @@ const ProfilSettingsArtisan = () => {
 					</Form.Item>
 
 					<Form.Item label="Téléphone" hasFeedback>
-						<Input disabled value={artisanObject.phone} />
+						<Input value={artisanObject.phone} />
 					</Form.Item>
 
 					<Form.Item label="Mail" hasFeedback>
@@ -182,7 +205,7 @@ const ProfilSettingsArtisan = () => {
 					</Form.Item>
 
 					<Form.Item label="Description" hasFeedback>
-						<TextArea rows={4} />
+						<TextArea onChange={handleContentDescription} rows={4} />
 					</Form.Item>
 
 					{/* <Form.Item>
@@ -210,7 +233,7 @@ const ProfilSettingsArtisan = () => {
 					</Form.Item>
 
 					<Form.Item>
-						<Button type="primary" className="buttons" htmlType="submit">
+						<Button onClick={handleSaveClick} type="primary" className="buttons" htmlType="submit">
 							Sauvegarder
 						</Button>
 					</Form.Item>

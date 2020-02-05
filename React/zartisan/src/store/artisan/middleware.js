@@ -1,5 +1,7 @@
 import { ARTISAN_DATA } from 'src/store/artisan/actions';
+import { ARTISAN_EDIT } from 'src/store/artisan/actions';
 import { artisanInfo } from 'src/store/artisan/actions';
+
 /**
  * NAME SERVER
  */
@@ -37,6 +39,12 @@ export default (store) => (next) => (action) => {
 					// always executed
 				});
 		}
+
+		case ARTISAN_EDIT: {
+			console.log('middleware artisan edit');
+			console.log('value', action.email, action.description, action.pictureAvatar, action.pictureGalery);
+		}
 	}
+
 	next(action);
 };

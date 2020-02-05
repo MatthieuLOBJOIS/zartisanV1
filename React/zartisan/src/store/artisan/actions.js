@@ -12,3 +12,14 @@ export const artisanInfo = (data) => ({
 	type: ARTISAN_INFO,
 	data
 });
+
+export const ARTISAN_EDIT = 'artisan/actions/ARTISAN_EDIT';
+
+export const artisanEdit = (email, description, pictureAvatar, pictureGalery, phone) => ({
+	type: ARTISAN_EDIT,
+	email,
+	description,
+	pictureAvatar,
+	pictureGalery,
+	phone
+});
