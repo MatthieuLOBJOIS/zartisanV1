@@ -80,6 +80,10 @@ class ApiArtisanController extends AbstractController
                 $user->setPhone($request->get('phone'));
             }
 
+            if ($request->get('birthday')) {
+                $user->setBirthday($request->get('birthday'));
+            }
+
             $user->setUpdatedAt(new \DateTime());
 
             $em->persist($user);
