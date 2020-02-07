@@ -6,6 +6,7 @@ import { Form, Input, Row, Button, TextArea, Upload, Icon, message, Modal } from
 import { useSelector, useDispatch } from 'react-redux';
 import 'antd/dist/antd.css';
 import { artisanEdit } from 'src/store/artisan/actions';
+import { NAME_SERVER } from 'src/store/register/actions';
 
 const ProfilSettingsArtisan = () => {
 	const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const ProfilSettingsArtisan = () => {
 		//console.log(artisanSelector[artisan]);
 		artisanObject = artisanSelector[0];
 	}
-	console.log('object', artisanObject);
+	//console.log('object', artisanObject);
 
 	// Avatar upload
 	function getBase64(img, callback) {
