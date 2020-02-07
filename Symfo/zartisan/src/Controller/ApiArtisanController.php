@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/v1/artisan", name="api_artisan_")
+ * @Route("v1/artisan", name="api_artisan_")
  */
 class ApiArtisanController extends AbstractController
 {
@@ -61,10 +61,20 @@ class ApiArtisanController extends AbstractController
      */
     public function edit(UserRepository $userRepository, Request $request, EntityManagerInterface $em)
     {
-        if ($request->get('id')) {
+        if ($request->get('email')) {
+            $userEmail = $request->get('email');
+            $user = $userRepository->isFoundMail($userEmail);
 
-            $userId = $request->get('id');
-            $user = $userRepository->find($userId);
+            $picture64 = ($request->get('picture'));
+            $path = "assets/images/" . $userEmail . '/logo/'; // definit chemin du dossier
+            $image_parts = explode(";base64,", $picture64);  // scinde le fichier 0 => "data:image/png", 1 => "imagebase64"
+            $image_type_aux = explode("image/", $image_parts[0]);  // correspopnd 0 => 'data, 1 => 'png' 
+            $image_type = $image_type_aux[1];  // renvoie extension 'png'
+            $image_en_base64 = base64_decode($image_parts[1]);  // correspond au code image decodée de base64
+            $file = $path . uniqid() . '.' . $image_type;  // création numéro image unique
+            file_put_contents($file, $image_en_base64); // ecrit dans le fichier 
+
+            $user->setPicture($file);
 
             if ($request->get('companyDescription')) {
                 $user->setCompanyDescription($request->get('companyDescription'));
@@ -72,9 +82,9 @@ class ApiArtisanController extends AbstractController
 
             // TODO : Add this in register after set company
             // $user->setPictureFolder($user->getCompany());
-            if ($request->get('picture')) {
-                $user->setPicture($request->get('picture'));
-            }
+            // if ($request->get('picture')) {
+            //     $user->setPicture($file);
+            // }
 
             $user->setUpdatedAt(new \DateTime());
 

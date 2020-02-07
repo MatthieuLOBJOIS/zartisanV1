@@ -161,10 +161,10 @@ class User implements UserInterface
     private $picture;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups("user_artisan_single")
+     * @ORM\Column(type="json")
+     * @Groups({"user_artisan_single","user_artisan_advice"})
      */
-    private $pictureFolder;
+    private $pictureFolder = [];
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -584,12 +584,19 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPictureFolder(): ?string
+
+
+
+
+
+
+
+    public function getPictureFolder(): ?array
     {
         return $this->pictureFolder;
     }
 
-    public function setPictureFolder(?string $pictureFolder): self
+    public function setPictureFolder(?array $pictureFolder): self
     {
         $this->pictureFolder = $pictureFolder;
 

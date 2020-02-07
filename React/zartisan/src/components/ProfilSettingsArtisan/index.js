@@ -5,8 +5,11 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Row, Button, TextArea, Upload, Icon, message, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import 'antd/dist/antd.css';
+import { artisanEdit } from 'src/store/artisan/actions';
+import { NAME_SERVER } from 'src/store/register/actions';
 
 const ProfilSettingsArtisan = () => {
+	const dispatch = useDispatch();
 	const { TextArea } = Input;
 	// hooks state
 	const [ loading, setLoading ] = useState(false);
@@ -20,7 +23,7 @@ const ProfilSettingsArtisan = () => {
 		//console.log(artisanSelector[artisan]);
 		artisanObject = artisanSelector[0];
 	}
-	console.log('object', artisanObject);
+	//console.log('object', artisanObject);
 
 	// Avatar upload
 	function getBase64(img, callback) {
@@ -48,7 +51,10 @@ const ProfilSettingsArtisan = () => {
 		}
 		if (info.file.status === 'done') {
 			// Get this url from response in real world.
-			getBase64(info.file.originFileObj, (imageUrl) => setLoading({ imageUrl, loading: false }));
+			getBase64(info.file.originFileObj, (imageUrl) => {
+				setPictureAvatar(imageUrl);
+				return setLoading({ imageUrl, loading: false });
+			});
 		}
 	};
 
@@ -60,7 +66,7 @@ const ProfilSettingsArtisan = () => {
 	);
 
 	const { imageUrl } = loading;
-	console.log(imageUrl);
+	//console.log(imageUrl);
 
 	//////////////////////////////////////// Wall picture upload//////////////////////////////////////////////////////////////////////
 
@@ -75,7 +81,7 @@ const ProfilSettingsArtisan = () => {
 
 	const [ previewVisible, setPreviewVisible ] = useState(false);
 	const [ previewImage, setPreviewImage ] = useState('');
-	const [ fileList, setFileList ] = useState([]);
+	const [ fileList, setFileList ] = useState([ pictureGalery ]);
 
 	const handleCancel = () => setPreviewVisible(false);
 
@@ -88,7 +94,7 @@ const ProfilSettingsArtisan = () => {
 	};
 
 	const handleChangeFile = (fileList) => {
-		console.log(fileList.fileList);
+		//console.log(fileList.fileList);
 		return setFileList(fileList.fileList);
 	};
 
@@ -99,25 +105,51 @@ const ProfilSettingsArtisan = () => {
 		</div>
 	);
 
-	const editUserArtisan = {
-		id: artisanObject.id,
-		email: artisanObject.email,
-		firstname: artisanObject.firstname,
-		lastname: artisanObject.lastname,
-		birdthday: artisanObject.birdthday,
-		adressSupp: artisanObject.adressSupp,
-		specialDistribution: artisanObject.specialDistribution,
-		extnumberWay: artisanObject.extnumberWay,
-		typeWay: artisanObject.typeWay,
-		way: artisanObject.way,
-		postalCode: artisanObject.postalCode,
-		city: artisanObject.city,
-		phone: artisanObject.phone,
-		picture: artisanObject.picture,
-		nickname: 'pseudo'
+	// update profil
+
+	// local state
+
+	const [ description, setDescription ] = useState(artisanObject.companyDescription);
+	const [ pictureAvatar, setPictureAvatar ] = useState(artisanObject.picture);
+	const [ pictureGalery, setPictureGalery ] = useState(artisanObject.pictureFolder);
+	const [ phoneArtisan, setPhoneArtisan ] = useState(artisanObject.phone);
+
+	//console.log('img', pictureAvatar, artisanObject.picture);
+
+	useEffect(() => {
+		if (description === undefined) {
+			setDescription(artisanObject.companyDescription);
+		}
+
+		if (pictureAvatar === undefined) {
+			setPictureAvatar(artisanObject.picture);
+		}
+
+		if (pictureGalery === undefined) {
+			setPictureGalery(artisanObject.pictureFolder);
+		}
+
+		if (phoneArtisan === undefined) {
+			setPhoneArtisan(artisanObject.phone);
+		}
+	});
+
+	const handleSaveClick = () => {
+		dispatch(artisanEdit(artisanObject.email, description, pictureAvatar, pictureGalery, phoneArtisan));
 	};
 
-	console.log('edit object', editUserArtisan);
+	const handleContentDescription = (event) => {
+		const content = event.target.value;
+		//console.log(content);
+		setDescription(content);
+	};
+
+	const handlePhone = (event) => {
+		const contentPhone = event.target.value;
+		console.log(contentPhone);
+		setPhoneArtisan(contentPhone);
+	};
+
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
@@ -136,7 +168,7 @@ const ProfilSettingsArtisan = () => {
 								<img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
 							) : artisanObject.picture != undefined ? (
 								<img
-									src={`../src/styles/pictures/company/${artisanObject.picture}`}
+									src={`${NAME_SERVER}/${artisanObject.picture}`}
 									alt="avatar"
 									style={{ width: '100%' }}
 								/>
@@ -149,6 +181,7 @@ const ProfilSettingsArtisan = () => {
 							Confirmer
 						</Button>
 					</Form.Item>
+
 					<Form.Item label="Prénom/Nom" hasFeedback>
 						<Input value={`${artisanObject.firstname} ${artisanObject.lastname}`} disabled={true} />
 					</Form.Item>
@@ -174,7 +207,7 @@ const ProfilSettingsArtisan = () => {
 					</Form.Item>
 
 					<Form.Item label="Téléphone" hasFeedback>
-						<Input disabled value={artisanObject.phone} />
+						<Input onChange={handlePhone} value={phoneArtisan} />
 					</Form.Item>
 
 					<Form.Item label="Mail" hasFeedback>
@@ -182,18 +215,9 @@ const ProfilSettingsArtisan = () => {
 					</Form.Item>
 
 					<Form.Item label="Description" hasFeedback>
-						<TextArea rows={4} />
+						<TextArea onChange={handleContentDescription} rows={4} />
 					</Form.Item>
 
-					{/* <Form.Item>
-						<input type="file" name="image_uploads" accept=".jpg, .jpeg, .png" multiple />
-						<Button type="primary" className="buttons" htmlType="submit">
-							Ajouter
-						</Button>
-						<Button type="primary" className="buttons" htmlType="submit">
-							Supprimer
-						</Button>
-					</Form.Item> */}
 					<Form.Item>
 						<Upload
 							action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -210,7 +234,7 @@ const ProfilSettingsArtisan = () => {
 					</Form.Item>
 
 					<Form.Item>
-						<Button type="primary" className="buttons" htmlType="submit">
+						<Button onClick={handleSaveClick} type="primary" className="buttons" htmlType="submit">
 							Sauvegarder
 						</Button>
 					</Form.Item>

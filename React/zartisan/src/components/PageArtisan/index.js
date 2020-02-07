@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
+import { NAME_SERVER } from 'src/store/register/actions';
 
 import {
 	Row,
@@ -34,7 +35,6 @@ import Carousel1 from 'src/styles/pictures/caroussel/artisan10.jpg';
 import Carousel2 from 'src/styles/pictures/caroussel/artisan11.jpg';
 import Carousel3 from 'src/styles/pictures/caroussel/artisan12.jpg';
 import Picture0 from 'src/styles/pictures/company/artisan.png';
-import Company1 from 'src/styles/pictures/company/company3.png';
 
 const { TextArea } = Input;
 const PageArtisan = () => {
@@ -300,7 +300,10 @@ const PageArtisan = () => {
 						<Row>
 							<Col span={12}>
 								<div>
-									<img className="description-picture" src={Company1} />
+									<img
+										className="description-picture"
+										src={`${NAME_SERVER}/${artisanObject.picture}`}
+									/>
 									<Rating />
 									{user !== -1 || artisanUser !== -1 ? (
 										<div>
