@@ -80,6 +80,7 @@ class ApiArtisanController extends AbstractController
             }
 
             $user->setCompanyDescription($request->get('companyDescription'));
+            $user->setPhone($request->get('phone'));
 
 
             // TODO : Add this in register after set company

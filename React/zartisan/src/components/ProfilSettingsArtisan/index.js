@@ -190,10 +190,6 @@ const ProfilSettingsArtisan = () => {
                 uploadButton
               )}
             </Upload>
-
-            <Button type="primary" className="buttons" htmlType="submit">
-              Confirmer
-            </Button>
           </Form.Item>
 
           <Form.Item label="Prénom/Nom" hasFeedback>
