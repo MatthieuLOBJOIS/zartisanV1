@@ -76,12 +76,12 @@ class ApiArtisanController extends AbstractController
                 $user->setPicture($request->get('picture'));
             }
 
-            if ($request->get('phone')) {
-                $user->setPhone($request->get('phone'));
+            if ($request->get('pictureFolder')) {
+                $user->setPicture($request->get('pictureFolder'));
             }
 
-            if ($request->get('birthday')) {
-                $user->setBirthday($request->get('birthday'));
+            if ($request->get('phone')) {
+                $user->setPhone($request->get('phone'));
             }
 
             $user->setUpdatedAt(new \DateTime());

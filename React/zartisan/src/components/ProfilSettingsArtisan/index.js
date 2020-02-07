@@ -81,7 +81,7 @@ const ProfilSettingsArtisan = () => {
 
 	const [ previewVisible, setPreviewVisible ] = useState(false);
 	const [ previewImage, setPreviewImage ] = useState('');
-	const [ fileList, setFileList ] = useState([]);
+	const [ fileList, setFileList ] = useState([ pictureGalery ]);
 
 	const handleCancel = () => setPreviewVisible(false);
 
@@ -112,6 +112,7 @@ const ProfilSettingsArtisan = () => {
 	const [ description, setDescription ] = useState(artisanObject.companyDescription);
 	const [ pictureAvatar, setPictureAvatar ] = useState(artisanObject.picture);
 	const [ pictureGalery, setPictureGalery ] = useState(artisanObject.pictureFolder);
+	const [ phoneArtisan, setPhoneArtisan ] = useState(artisanObject.phone);
 
 	//console.log('img', pictureAvatar, artisanObject.picture);
 
@@ -127,19 +128,26 @@ const ProfilSettingsArtisan = () => {
 		if (pictureGalery === undefined) {
 			setPictureGalery(artisanObject.pictureFolder);
 		}
-		// if (pictureGalery !== undefined) {
-		// 	setFileList(artisanObject.pictureFolder);
-		// }
+
+		if (phoneArtisan === undefined) {
+			setPhoneArtisan(artisanObject.phone);
+		}
 	});
 
 	const handleSaveClick = () => {
-		dispatch(artisanEdit(artisanObject.email, description, pictureAvatar, pictureGalery));
+		dispatch(artisanEdit(artisanObject.email, description, pictureAvatar, pictureGalery, phoneArtisan));
 	};
 
 	const handleContentDescription = (event) => {
 		const content = event.target.value;
 		//console.log(content);
 		setDescription(content);
+	};
+
+	const handlePhone = (event) => {
+		const contentPhone = event.target.value;
+		console.log(contentPhone);
+		setPhoneArtisan(contentPhone);
 	};
 
 	return (
@@ -160,7 +168,7 @@ const ProfilSettingsArtisan = () => {
 								<img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
 							) : artisanObject.picture != undefined ? (
 								<img
-									src={`../src/styles/pictures/company/${artisanObject.picture}`}
+									src={`${NAME_SERVER}/${artisanObject.picture}`}
 									alt="avatar"
 									style={{ width: '100%' }}
 								/>
@@ -173,6 +181,7 @@ const ProfilSettingsArtisan = () => {
 							Confirmer
 						</Button>
 					</Form.Item>
+
 					<Form.Item label="Prénom/Nom" hasFeedback>
 						<Input value={`${artisanObject.firstname} ${artisanObject.lastname}`} disabled={true} />
 					</Form.Item>
@@ -198,7 +207,7 @@ const ProfilSettingsArtisan = () => {
 					</Form.Item>
 
 					<Form.Item label="Téléphone" hasFeedback>
-						<Input value={artisanObject.phone} />
+						<Input onChange={handlePhone} value={phoneArtisan} />
 					</Form.Item>
 
 					<Form.Item label="Mail" hasFeedback>
@@ -209,15 +218,6 @@ const ProfilSettingsArtisan = () => {
 						<TextArea onChange={handleContentDescription} rows={4} />
 					</Form.Item>
 
-					{/* <Form.Item>
-						<input type="file" name="image_uploads" accept=".jpg, .jpeg, .png" multiple />
-						<Button type="primary" className="buttons" htmlType="submit">
-							Ajouter
-						</Button>
-						<Button type="primary" className="buttons" htmlType="submit">
-							Supprimer
-						</Button>
-					</Form.Item> */}
 					<Form.Item>
 						<Upload
 							action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
