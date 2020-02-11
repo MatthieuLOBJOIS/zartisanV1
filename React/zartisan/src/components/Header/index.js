@@ -235,10 +235,9 @@ const Header = () => {
 			//console.log(email, password, passwordCheck);
 			event.preventDefault();
 			if (password === passwordCheck && password !== '') {
-				//console.log('mots est correct');
-				if (parseJwt(token) != null) {
-					dispatch(sendRegisterArtisan(email, password, siret));
-				}
+				console.log('mots est correct');
+				dispatch(sendRegisterArtisan(email, password, siret));
+				hideModalRegisterArtisan();
 			}
 		};
 	};
