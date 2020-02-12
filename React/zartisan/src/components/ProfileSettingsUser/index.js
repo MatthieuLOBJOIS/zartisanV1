@@ -6,7 +6,8 @@ import 'antd/dist/antd.css';
 const ProfileSettingsUser = () => {
 	const { TextArea } = Input;
 
-	const artisanSelector = useSelector((state) => state.artisan);
+	const userSelect = useSelector((state) => state.artisan);
+	console.log(userSelect);
 
 	const [ loading, setLoading ] = useState(false);
 
@@ -51,7 +52,11 @@ const ProfileSettingsUser = () => {
 	);
 
 	const { imageUrl } = loading;
-	console.log('imageUrl ' + imageUrl);
+	//console.log('imageUrl ' + imageUrl);
+
+	const [ profileUser, setProfileUser ] = useState({
+		pictureAvatar: ''
+	});
 
 	return (
 		<div>
@@ -69,22 +74,26 @@ const ProfileSettingsUser = () => {
 						>
 							{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
 						</Upload>
-						<Button type="primary" className="buttons" htmlType="submit">
-							Confirmer
-						</Button>
 					</Form.Item>
-					<Form.Item>
-						<Input placeholder="Nom et prénom" />
+
+					<Form.Item label="Pseudo" hasFeedback>
+						<Input placeholder="Pseudo" />
 					</Form.Item>
-					<Form.Item>
-						<Input placeholder="Adresse" />
-						<Input placeholder="Code postal" />
-						<Input placeholder="Ville" />
+
+					<Form.Item label="Nom" hasFeedback>
+						<Input placeholder="Nom" />
+					</Form.Item>
+
+					<Form.Item label="Prénom" hasFeedback>
+						<Input placeholder="Prénom" />
+					</Form.Item>
+
+					<Form.Item label="Téléphone" hasFeedback>
 						<Input placeholder="Téléphone" />
-						<Input placeholder="Mail" />
 					</Form.Item>
-					<Form.Item>
-						<TextArea rows={4} />
+
+					<Form.Item label="Mail" hasFeedback>
+						<Input placeholder="Mail" />
 					</Form.Item>
 
 					<Form.Item>
