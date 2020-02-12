@@ -41,15 +41,16 @@ export default (store) => (next) => (action) => {
 		}
 
 		case ARTISAN_EDIT: {
-			console.log('middleware artisan edit');
-			console.log(
-				'value',
-				action.email,
-				action.description,
-				action.pictureAvatar,
-				action.pictureGalery,
-				action.phone
-			);
+			console.log(action);
+			// console.log(
+			// 	'value',
+			// 	action.email,
+			// 	action.description,
+			// 	action.pictureAvatar,
+			// 	action.pictureGalery,
+			// 	action.phone
+			// );
+
 			return axios({
 				method: 'post',
 				url: `${NAME_SERVER}/v1/artisan/edit`,

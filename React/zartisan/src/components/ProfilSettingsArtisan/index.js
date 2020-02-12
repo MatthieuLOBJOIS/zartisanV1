@@ -114,10 +114,10 @@ const ProfilSettingsArtisan = () => {
 	const [ pictureAvatar, setPictureAvatar ] = useState(artisanObject.picture);
 	const [ pictureGalery, setPictureGalery ] = useState(artisanObject.pictureFolder);
 	const [ phoneArtisan, setPhoneArtisan ] = useState(artisanObject.phone);
-	let urlGaleryPicture = [];
 
 	useEffect(
 		() => {
+			let urlGaleryPicture = [];
 			//console.log('img', pictureGalery, 'filelist', fileList);
 
 			if (fileList.length >= 0) {

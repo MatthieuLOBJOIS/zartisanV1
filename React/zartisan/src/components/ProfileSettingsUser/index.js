@@ -86,15 +86,7 @@ const ProfileSettingsUser = () => {
 					<Form.Item>
 						<TextArea rows={4} />
 					</Form.Item>
-					<Form.Item>
-						<input type="file" name="image_uploads" accept=".jpg, .jpeg, .png" multiple />
-						<Button type="primary" className="buttons" htmlType="submit">
-							Ajouter
-						</Button>
-						<Button type="primary" className="buttons" htmlType="submit">
-							Supprimer
-						</Button>
-					</Form.Item>
+
 					<Form.Item>
 						<Button type="primary" className="buttons" htmlType="submit">
 							Sauvegarder
