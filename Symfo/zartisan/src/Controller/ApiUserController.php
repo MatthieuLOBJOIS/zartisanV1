@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 
 /**
- * @Route("api/v1/user", name="api_user_")
+ * @Route("v1/user", name="api_user_")
  */
 class ApiUserController extends AbstractController
 {
@@ -43,21 +43,25 @@ class ApiUserController extends AbstractController
 
             // verify if  email is in the BDD
             $userEmail = $request->get('email');
+            //dd($userEmail);
 
             // if email don't find
             if (!$userRepository->isFoundMail($request->get('email'))) {
                 return $this->json(['error' => 'Email not exist'], 404);
             }
-            $user = $userRepository->isFoundMail($request->get($userEmail));
+            $user = $userRepository->isFoundMail($userEmail);
 
-            // verify if folder exist
-            $folder = $foldersUser->isFolder($userEmail);
+            // verify if folder existgit statu
+            $foldersUser->isFolder($userEmail);  // verification if folder exist
 
             // if picture is uploaded
             $picture64 = ($request->get('picture'));
             $image = substr("$picture64", 0, 6);
             if ($image != "assets") {
                 $file = $fileLogoCreate->createPicture($picture64, $userEmail);   // inject avatar in file logo
+                if ($file == 409) {
+                    return $this->json(['error' => 'Vous devez uploader un fichier de type png, jpg, jpeg'], 409);
+                }
                 $user->setPicture($file);
             }
 
@@ -73,16 +77,6 @@ class ApiUserController extends AbstractController
                 $user->setEmail($request->get('email'));
                 $user->setFirstname($request->get('firstname'));
                 $user->setLastname($request->get('lastname'));
-                $user->setBirthday($request->get('birthday'));
-                $user->setAdressSupp($request->get('adressSupp'));
-                $user->setSpecialDistribution($request->get('specialDistribution'));
-                $user->setExtNumberWay($request->get('extNumberWay'));
-                $user->setNumberWay($request->get('numberWay'));
-                $user->setTypeWay($request->get('typeWay'));
-                $user->setWay($request->get('way'));
-                $user->setPostalCode($request->get('postalCode'));
-                $user->setRegion($region);
-                $user->setCity($request->get('city'));
                 $user->setPhone($request->get('phone'));
                 $user->setNickname($request->get('nickname'));
                 $user->setUpdatedAt(new \DateTime());
