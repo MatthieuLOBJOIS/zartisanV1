@@ -9,6 +9,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { sendLogin, deconnect } from 'src/store/register/actions';
 import cookies from 'js-cookie';
+import { userSingle } from 'src/store/user/actions';
 
 /**
  * Local imports
@@ -275,8 +276,13 @@ const Header = () => {
 		};
 	};
 
-	const handleClickProfile = () => {
+	const handleClickProfileArtisan = () => {
 		dispatch(artisanData(1, tokenEmail));
+		onClose();
+	};
+
+	const handleClickProfileUser = () => {
+		dispatch(userSingle(tokenEmail));
 		onClose();
 	};
 
@@ -310,11 +316,11 @@ const Header = () => {
 									</Modal>
 
 									{connect === true && admin === -1 ? connect === true && artisanUser !== -1 ? (
-										<Link to="/profil/artisan" onClick={handleClickProfile}>
+										<Link to="/profil/artisan" onClick={handleClickProfileArtisan}>
 											Profil
 										</Link>
 									) : (
-										<Link to="/profil/particulier" onClick={handleClickProfile}>
+										<Link to="/profil/particulier" onClick={handleClickProfileUser}>
 											Profil
 										</Link>
 									) : (

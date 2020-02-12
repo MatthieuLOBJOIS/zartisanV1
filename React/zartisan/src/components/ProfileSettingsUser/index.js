@@ -4,15 +4,17 @@ import { Form, Input, Row, Button, Upload, Icon, message } from 'antd';
 import 'antd/dist/antd.css';
 
 const ProfileSettingsUser = () => {
-	const userSelect = useSelector((state) => state.artisan);
+	const userSelect = useSelector((state) => state.user);
 
-	let userObject = {};
-	for (let user in userSelect) {
-		//console.log(artisanSelector[artisan]);
-		userObject = userSelect[0];
-	}
+	console.log('ussser', userSelect);
 
-	console.log(userObject);
+	// let userObject = {};
+	// for (let user in userSelect) {
+	// 	//console.log(artisanSelector[artisan]);
+	// 	userObject = userSelect[0];
+	// }
+
+	//console.log(userObject);
 
 	const [ loading, setLoading ] = useState(false);
 

@@ -7,6 +7,7 @@ import search from 'src/store/search';
 import artisan from 'src/store/artisan';
 import rate from 'src/store/rate';
 import advice from 'src/store/advice';
+import user from 'src/store/user';
 
 export default combineReducers({
 	jobs,
@@ -15,5 +16,6 @@ export default combineReducers({
 	search,
 	artisan,
 	rate,
-	advice
+	advice,
+	user
 });
