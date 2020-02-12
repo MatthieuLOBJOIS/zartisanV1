@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Input, Row, Button, TextArea, Upload, Icon, message } from 'antd';
+import { Form, Input, Row, Button, Upload, Icon, message } from 'antd';
 import 'antd/dist/antd.css';
 
 const ProfileSettingsUser = () => {
-	const { TextArea } = Input;
-
 	const userSelect = useSelector((state) => state.artisan);
-	console.log(userSelect);
+
+	let userObject = {};
+	for (let user in userSelect) {
+		//console.log(artisanSelector[artisan]);
+		userObject = userSelect[0];
+	}
+
+	console.log(userObject);
 
 	const [ loading, setLoading ] = useState(false);
 
