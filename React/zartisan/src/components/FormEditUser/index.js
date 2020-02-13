@@ -45,10 +45,16 @@ const FormEditUser = ({ profileUser, setProfileUser }) => {
 		};
 	};
 
+	const handleSaveEdit = (object) => {
+		return () => {
+			console.log(object);
+		};
+	};
+
 	return (
 		<Form className="artisan-form">
 			<Form.Item>
-				<UploadAvatar pictureUser={profileUser.pictureAvatar} />
+				<UploadAvatar profileUser={profileUser} setProfileUser={setProfileUser} />
 			</Form.Item>
 
 			<Form.Item label="Pseudo" hasFeedback>
@@ -72,7 +78,7 @@ const FormEditUser = ({ profileUser, setProfileUser }) => {
 			</Form.Item>
 
 			<Form.Item>
-				<Button type="primary" className="buttons" htmlType="submit">
+				<Button type="primary" className="buttons" htmlType="submit" onClick={handleSaveEdit(profileUser)}>
 					Sauvegarder
 				</Button>
 			</Form.Item>
