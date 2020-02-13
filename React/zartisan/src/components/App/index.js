@@ -19,7 +19,7 @@ import FormRegisterUser from 'src/components/FormRegisterUser';
 import FormRegisterArtisan from 'src/components/FormRegisterArtisan';
 import ForgottenPassword from 'src/components/ForgottenPassword';
 import ProfilSettingsArtisan from 'src/components/ProfilSettingsArtisan';
-import ProfileSettingsUser from 'src/components/ProfileSettingsUser';
+import ProfileSettingsUser from 'src/pages/ProfileSettingsUser';
 
 /**
  * Code

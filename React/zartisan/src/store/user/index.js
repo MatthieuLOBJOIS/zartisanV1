@@ -1,6 +1,6 @@
 import { RESPONSE_USER } from 'src/store/user/actions';
 
-const initialState = [];
+const initialState = {};
 
 export default (state = initialState, action) => {
 	//console.log('reducer >>', action);
