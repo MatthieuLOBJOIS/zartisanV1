@@ -50,7 +50,6 @@ const UploadAvatar = ({ pictureUser }) => {
 
 	return (
 		<div>
-			{' '}
 			<Upload
 				name="avatar"
 				listType="picture-card"

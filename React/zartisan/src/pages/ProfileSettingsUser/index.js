@@ -38,7 +38,11 @@ const ProfileSettingsUser = () => {
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{userSelect == '' ? <Loader /> : <FormEditUser profileUser={profileUser} />}
+				{userSelect == '' ? (
+					<Loader />
+				) : (
+					<FormEditUser profileUser={profileUser} setProfileUser={setProfileUser} />
+				)}
 			</Row>
 		</div>
 	);
