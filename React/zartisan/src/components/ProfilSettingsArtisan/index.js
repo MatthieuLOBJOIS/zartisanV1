@@ -23,7 +23,7 @@ const ProfilSettingsArtisan = () => {
 		//console.log(artisanSelector[artisan]);
 		artisanObject = artisanSelector[0];
 	}
-	console.log('object', artisanObject);
+	//console.log('object', artisanObject);
 
 	// Avatar upload
 	function getBase64(img, callback) {
@@ -81,7 +81,7 @@ const ProfilSettingsArtisan = () => {
 
 	const [ previewVisible, setPreviewVisible ] = useState(false);
 	const [ previewImage, setPreviewImage ] = useState('');
-	const [ fileList, setFileList ] = useState([ pictureGalery ]);
+	const [ fileList, setFileList ] = useState([]);
 
 	const handleCancel = () => setPreviewVisible(false);
 
@@ -94,8 +94,9 @@ const ProfilSettingsArtisan = () => {
 	};
 
 	const handleChangeFile = (fileList) => {
-		//console.log(fileList.fileList);
-		return setFileList(fileList.fileList);
+		if (fileList.file.thumbUrl != '') {
+			return setFileList(fileList.fileList);
+		}
 	};
 
 	const uploadButtonFile = (
@@ -114,7 +115,25 @@ const ProfilSettingsArtisan = () => {
 	const [ pictureGalery, setPictureGalery ] = useState(artisanObject.pictureFolder);
 	const [ phoneArtisan, setPhoneArtisan ] = useState(artisanObject.phone);
 
-	console.log('img', pictureGalery, fileList);
+	useEffect(
+		() => {
+			let urlGaleryPicture = [];
+			//console.log('img', pictureGalery, 'filelist', fileList);
+
+			if (fileList.length >= 0) {
+				for (let objectFile in fileList) {
+					urlGaleryPicture.push(fileList[objectFile].thumbUrl);
+
+					//console.log(fileList[objectFile].thumbUrl);
+				}
+				//console.log(urlGaleryPicture);
+				setPictureGalery(urlGaleryPicture);
+			}
+		},
+		[ fileList ]
+	);
+
+	console.log(pictureGalery);
 
 	useEffect(
 		() => {
@@ -122,12 +141,7 @@ const ProfilSettingsArtisan = () => {
 
 			setPictureAvatar(artisanObject.picture);
 
-			setPictureGalery(artisanObject.pictureFolder);
-
 			setPhoneArtisan(artisanObject.phone);
-			if (artisanObject.pictureFolder !== undefined) {
-				setFileList(artisanObject.pictureFolder);
-			}
 		},
 		[ artisanObject ]
 	);

@@ -8,6 +8,7 @@ import middlewareSearch from 'src/store/search/middleware';
 import middlewareArtisan from 'src/store/artisan/middleware';
 import middlewareRate from 'src/store/rate/middleware';
 import middlewareAdvice from 'src/store/advice/middleware';
+import middlewareUser from 'src/store/user/middleware';
 
 const withReduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middlewares = applyMiddleware(
@@ -17,7 +18,8 @@ const middlewares = applyMiddleware(
 	middlewareSearch,
 	middlewareArtisan,
 	middlewareRate,
-	middlewareAdvice
+	middlewareAdvice,
+	middlewareUser
 );
 // Création du store de l'application, avec son state privé.
 const reactModelStore = createStore(reducer, withReduxDevTools(middlewares));

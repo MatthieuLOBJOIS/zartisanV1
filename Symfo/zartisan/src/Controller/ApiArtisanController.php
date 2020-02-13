@@ -62,13 +62,16 @@ class ApiArtisanController extends AbstractController
                 $user->setPicture($file);
             }
 
-            // // if pictureFolder is uploaded
+            // // if pictureFolder is uploaded 
             // $pictureFolder64 = ($request->get('pictureFolder'));
-            // //dd($pictureFolder64);
-            // $image = substr("$pictureFolder64[1]", 0, 6);
-            // if ($image != "assets") {
+            // $counter = count($pictureFolder64);
+
+            // if ($counter != 0) {
             //     $file = $fileTablePictures->createTablePictures($pictureFolder64, $userEmail);   // inject pictures in file compagny
-            //     $user->setPictureFolder($file);
+            //     if ($file == 409) {
+            //         return $this->json(['error' => 'Vous devez uploader un fichier de type png, jpg, jpeg'], 409);
+            //     }
+            //     //$user->setPictureFolder([$file]);
             // }
 
 
