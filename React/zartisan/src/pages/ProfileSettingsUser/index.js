@@ -8,7 +8,7 @@ import Loader from 'src/components/Loader';
 const ProfileSettingsUser = () => {
 	const userSelect = useSelector((state) => state.user);
 
-	console.log('ussser', userSelect);
+	//console.log('ussser', userSelect);
 
 	const [ profileUser, setProfileUser ] = useState({
 		pictureAvatar: '',
@@ -27,7 +27,7 @@ const ProfileSettingsUser = () => {
 				firstname: userSelect.firstname,
 				lastname: userSelect.lastname,
 				phone: userSelect.phone,
-				mail: userSelect.mail
+				mail: userSelect.email
 			});
 		},
 		[ userSelect ]
@@ -38,7 +38,7 @@ const ProfileSettingsUser = () => {
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{userSelect == '' ? <Loader /> : <FormEditUser />}
+				{userSelect == '' ? <Loader /> : <FormEditUser profileUser={profileUser} />}
 			</Row>
 		</div>
 	);

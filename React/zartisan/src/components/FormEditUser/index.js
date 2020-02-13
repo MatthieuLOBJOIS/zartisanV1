@@ -3,31 +3,32 @@ import { Form, Input, Button } from 'antd';
 import UploadAvatar from 'src/components/UploadAvatar';
 import 'antd/dist/antd.css';
 
-const FormEditUser = () => {
+const FormEditUser = ({ profileUser }) => {
+	console.log('form', profileUser);
 	return (
 		<Form className="artisan-form">
 			<Form.Item>
-				<UploadAvatar />
+				<UploadAvatar pictureUser={profileUser.pictureAvatar} />
 			</Form.Item>
 
 			<Form.Item label="Pseudo" hasFeedback>
-				<Input placeholder="Pseudo" />
+				<Input placeholder="Pseudo" value={profileUser.nickname} />
 			</Form.Item>
 
 			<Form.Item label="Nom" hasFeedback>
-				<Input placeholder="Nom" />
+				<Input placeholder="Nom" value={profileUser.lastname} />
 			</Form.Item>
 
 			<Form.Item label="Prénom" hasFeedback>
-				<Input placeholder="Prénom" />
+				<Input placeholder="Prénom" value={profileUser.firstname} />
 			</Form.Item>
 
 			<Form.Item label="Téléphone" hasFeedback>
-				<Input placeholder="Téléphone" />
+				<Input placeholder="Téléphone" value={profileUser.phone} />
 			</Form.Item>
 
 			<Form.Item label="Mail" hasFeedback>
-				<Input placeholder="Mail" />
+				<Input placeholder="Mail" value={profileUser.mail} />
 			</Form.Item>
 
 			<Form.Item>
