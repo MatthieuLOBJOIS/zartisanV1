@@ -11,3 +11,10 @@ export const responseUser = (data) => ({
 	type: RESPONSE_USER,
 	data
 });
+
+export const EDIT_USER = 'search/actions/EDIT_USER';
+
+export const editUser = (data) => ({
+	type: EDIT_USER,
+	data
+});

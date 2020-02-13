@@ -1,10 +1,14 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Form, Input, Button } from 'antd';
-import UploadAvatar from 'src/components/UploadAvatar';
 import 'antd/dist/antd.css';
+
+import UploadAvatar from 'src/components/UploadAvatar';
+import { editUser } from 'src/store/user/actions';
 
 const FormEditUser = ({ profileUser, setProfileUser }) => {
 	//console.log('form', profileUser);
+	const dispatch = useDispatch();
 
 	const handleChangeValue = (keys) => {
 		return (event) => {
@@ -45,10 +49,8 @@ const FormEditUser = ({ profileUser, setProfileUser }) => {
 		};
 	};
 
-	const handleSaveEdit = (object) => {
-		return () => {
-			console.log(object);
-		};
+	const handleSaveEdit = () => {
+		dispatch(editUser(profileUser));
 	};
 
 	return (
@@ -78,7 +80,7 @@ const FormEditUser = ({ profileUser, setProfileUser }) => {
 			</Form.Item>
 
 			<Form.Item>
-				<Button type="primary" className="buttons" htmlType="submit" onClick={handleSaveEdit(profileUser)}>
+				<Button type="primary" className="buttons" htmlType="submit" onClick={handleSaveEdit}>
 					Sauvegarder
 				</Button>
 			</Form.Item>

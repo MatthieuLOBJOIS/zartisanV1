@@ -8,7 +8,7 @@ import Loader from 'src/components/Loader';
 const ProfileSettingsUser = () => {
 	const userSelect = useSelector((state) => state.user);
 
-	//console.log('ussser', userSelect);
+	console.log('ussser', userSelect);
 
 	const [ profileUser, setProfileUser ] = useState({
 		pictureAvatar: '',
