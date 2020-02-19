@@ -34,7 +34,6 @@ import { artisanData } from 'src/store/artisan/actions';
 import Carousel1 from 'src/styles/pictures/caroussel/artisan10.jpg';
 import Carousel2 from 'src/styles/pictures/caroussel/artisan11.jpg';
 import Carousel3 from 'src/styles/pictures/caroussel/artisan12.jpg';
-import Picture0 from 'src/styles/pictures/company/artisan.png';
 
 const { TextArea } = Input;
 const PageArtisan = () => {
