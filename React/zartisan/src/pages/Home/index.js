@@ -10,10 +10,10 @@ import classNames from 'classnames';
  * Local imports
  */
 import './style.sass';
-import france from './picture/france.svg';
 import { getRegions } from 'src/store/regions/actions';
 import { getJobs } from 'src/store/jobs/actions';
 import { postHomeSearch } from 'src/store/search/actions';
+import FranceMap from '../../components/FranceMap';
 
 /**
  * Code
@@ -176,9 +176,7 @@ const Home = () => {
 			</Row>
 
 			<Row type="flex" justify="space-around" align="middle" className="home-france">
-				<object data={france} id="yoursvg" width="100%" height="100%" type="image/svg+xml">
-					<img src={france} alt="Une carte de france en svg cliquable" />
-				</object>
+				<FranceMap />
 				<ButtonSearchArtisanList />
 			</Row>
 		</div>
