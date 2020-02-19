@@ -252,6 +252,12 @@ class User implements UserInterface
      */
     private $passToken;
 
+    // /**
+    //  * @ORM\Column(type="array", nullable=true)
+    //  * @Groups({"user_artisan_single","user_artisan_advice"})
+    //  */
+    // private $folderPicture = [];
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -585,18 +591,12 @@ class User implements UserInterface
     }
 
 
-
-
-
-
-
-
     public function getPictureFolder(): ?array
     {
         return $this->pictureFolder;
     }
 
-    public function setPictureFolder(?array $pictureFolder): self
+    public function setPictureFolder(array $pictureFolder): self
     {
         $this->pictureFolder = $pictureFolder;
 
