@@ -8,79 +8,11 @@ import 'antd/dist/antd.css';
 import { artisanEdit } from 'src/store/artisan/actions';
 import { NAME_SERVER } from 'src/store/register/actions';
 import UploadAvatar from 'src/components/UploadAvatar';
+import UploadPictureGalery from '../UploadPictureGalery';
 
 const FormEditArtisan = ({ profileArtisan, setProfileArtisan }) => {
-	//==================================================================================================
 	const dispatch = useDispatch();
 	const { TextArea } = Input;
-
-	//////////////////////////////////////// Wall picture upload//////////////////////////////////////////////////////////////////////
-
-	function getSecondeBase64(file) {
-		return new Promise((resolve, reject) => {
-			const reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = () => resolve(reader.result);
-			reader.onerror = (error) => reject(error);
-		});
-	}
-
-	//------------------------------------------------------------------------------------------------------------------------------
-	// State local picture folder
-	const [ previewVisible, setPreviewVisible ] = useState(false);
-	const [ previewImage, setPreviewImage ] = useState('');
-	const [ fileList, setFileList ] = useState([]);
-
-	useEffect(
-		() => {
-			let urlGaleryPicture = [];
-
-			if (fileList.length >= 0) {
-				for (let objectFile in fileList) {
-					urlGaleryPicture.push(fileList[objectFile].thumbUrl);
-				}
-				setProfileArtisan({
-					...profileArtisan,
-					...{ pictureGalery: urlGaleryPicture }
-				});
-			}
-		},
-		[ fileList ]
-	);
-	//------------------------------------------------------------------------------------------------------------------------------
-
-	const handleCancel = () => setPreviewVisible(false);
-
-	const handlePreview = async (file) => {
-		if (!file.url && !file.preview) {
-			file.preview = await getSecondeBase64(file.originFileObj);
-		}
-		setPreviewVisible(true);
-		setPreviewImage(file.url || file.preview);
-	};
-
-	const handleChangeFile = (fileList) => {
-		if (fileList.file.thumbUrl != '') {
-			return setFileList(fileList.fileList);
-		}
-	};
-
-	const uploadButtonFile = (
-		<div>
-			<Icon type="plus" />
-			<div className="ant-upload-text">Upload</div>
-		</div>
-	);
-
-	// update profil
-
-	// local state
-
-	//------------------------------------------------------------------------------------------------------------------------------
-
-	//------------------------------------------------------------------------------------------------------------------------------
-
-	//------------------------------------------------------------------------------------------------------------------------------
 
 	const handleSaveClick = () => {
 		dispatch(
@@ -94,20 +26,25 @@ const FormEditArtisan = ({ profileArtisan, setProfileArtisan }) => {
 		);
 	};
 
-	const handleContentDescription = (event) => {
-		const content = event.target.value;
-		setProfileArtisan({
-			...profileArtisan,
-			...{ description: content }
-		});
-	};
-
-	const handlePhone = (event) => {
-		const contentPhone = event.target.value;
-		setProfileArtisan({
-			...profileArtisan,
-			...{ phone: contentPhone }
-		});
+	const handleChangeValue = (keys) => {
+		return (event) => {
+			switch (keys) {
+				case 'phone':
+					setProfileArtisan({
+						...profileArtisan,
+						...{ phone: event.target.value }
+					});
+					break;
+				case 'description':
+					setProfileArtisan({
+						...profileArtisan,
+						...{ description: event.target.value }
+					});
+					break;
+				default:
+					console.log('Aucun changement');
+			}
+		};
 	};
 
 	return (
@@ -141,7 +78,7 @@ const FormEditArtisan = ({ profileArtisan, setProfileArtisan }) => {
 			</Form.Item>
 
 			<Form.Item label="Téléphone" hasFeedback>
-				<Input onChange={handlePhone} value={profileArtisan.phone} />
+				<Input onChange={handleChangeValue('phone')} value={profileArtisan.phone} />
 			</Form.Item>
 
 			<Form.Item label="Mail" hasFeedback>
@@ -149,22 +86,11 @@ const FormEditArtisan = ({ profileArtisan, setProfileArtisan }) => {
 			</Form.Item>
 
 			<Form.Item label="Description" hasFeedback>
-				<TextArea value={profileArtisan.description} onChange={handleContentDescription} rows={4} />
+				<TextArea value={profileArtisan.description} onChange={handleChangeValue('description')} rows={4} />
 			</Form.Item>
 
 			<Form.Item>
-				<Upload
-					action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-					listType="picture-card"
-					//fileList={fileList}
-					onPreview={handlePreview}
-					onChange={handleChangeFile}
-				>
-					{fileList.length >= 4 ? null : uploadButtonFile}
-				</Upload>
-				<Modal visible={previewVisible} footer={null} onCancel={handleCancel}>
-					<img alt="example" style={{ width: '100%' }} src={previewImage} />
-				</Modal>
+				<UploadPictureGalery profileArtisan={profileArtisan} setProfileArtisan={setProfileArtisan} />
 			</Form.Item>
 
 			<Form.Item>
