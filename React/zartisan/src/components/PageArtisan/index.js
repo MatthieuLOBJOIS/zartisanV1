@@ -398,9 +398,10 @@ const PageArtisan = () => {
 						dataSource={adviceObject}
 						renderItem={(item) => (
 							<li>
+								{console.log(item, 'itemlog')}
 								<Comment
 									author={item.userAuthor.firstname}
-									avatar={Picture0}
+									avatar={`${NAME_SERVER}/${item.userAuthor.picture}`}
 									content={item.body}
 									datetime={
 										<div>
