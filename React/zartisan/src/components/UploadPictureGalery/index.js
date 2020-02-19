@@ -2,12 +2,9 @@
  * Imports of dependencies
  */
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Row, Button, TextArea, Upload, Icon, message, Modal } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
+import { Upload, Icon, Modal } from 'antd';
+
 import 'antd/dist/antd.css';
-import { artisanEdit } from 'src/store/artisan/actions';
-import { NAME_SERVER } from 'src/store/register/actions';
-import UploadAvatar from 'src/components/UploadAvatar';
 
 const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
 	function getSecondeBase64(file) {
