@@ -1,32 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
 import { NAME_SERVER } from 'src/store/register/actions';
 
-import { Row, Col, Button, Rate, List, Comment, Popover, Icon, Form, Input, Modal } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
+import { Row, Col, Button, Popover } from 'antd';
+import { useSelector } from 'react-redux';
 
 import './style.sass';
 import cookies from 'js-cookie';
-import { sendRate } from 'src/store/rate/actions';
-import { alertAdvice } from 'src/store/advice/actions';
-import { sendAdvice } from 'src/store/advice/actions';
-
-import { artisanData } from 'src/store/artisan/actions';
 import CarouselArtisan from 'src/components/CarouselArtisan';
 import RateArtisan from 'src/components/RateArtisan';
+import AdviceArtisan from 'src/components/AdviceArtisan';
 
-const { TextArea } = Input;
 const PageArtisan = () => {
 	const artisanSelector = useSelector((state) => state.artisan);
-
-	const advice = useSelector((state) => state.advice);
-
-	//console.log("object advice", advice);
 
 	let artisanObject = {};
 	let adviceObject = [];
 	for (let artisan in artisanSelector) {
-		//console.log(artisanSelector[artisan]);
 		artisanObject = artisanSelector[0];
 		adviceObject = artisanSelector[1];
 	}
@@ -45,8 +35,6 @@ const PageArtisan = () => {
 		}
 	};
 
-	//console.log(parseJwt(token));
-
 	let user = -1;
 	let artisanUser = -1;
 	let mail = '';
@@ -56,38 +44,14 @@ const PageArtisan = () => {
 		mail = parseJwt(token).username;
 	}
 
-	//console.log(user);
-	//console.log(artisanUser);
-	//console.log(email);
-	const dataArtisan = [];
-	dataArtisan.push(artisanObject);
-
 	let phone = '';
 	artisanObject.phone != undefined ? (phone = artisanObject.phone.slice(1)) : phone;
-	//console.log(phone);
 
-	//console.log(artisanObject.advice);
-	let arrayAdvice = [];
-	if (artisanObject.advice !== undefined) {
-		arrayAdvice = artisanObject.advice;
-	}
-
-	//console.log(arrayAdvice);
-
-	//console.log('picture: ', artisanObject.picture, 'note : ', artisanObject.averageRate);
-
-	const dispatch = useDispatch();
 	const idArtisan = artisanObject.id;
-
 	const emailArtisan = artisanObject.email;
 
-	/**
-   * redirect to register user onClick Contacter
-   */
+	// contact
 
-	/**
-   * button for navigate towards form register user (use withRouter for manage history url)
-   */
 	const contentContact = (
 		<div>
 			<p>Pour accéder aux informations de contact veuillez-vous enregistrer et valider votre adresse email</p>
@@ -102,107 +66,6 @@ const PageArtisan = () => {
 				</Button>
 			</Popover>
 		);
-	};
-
-	/**
-   * button advice
-   */
-
-	const [ visibleSendAdvice, setVisibleSendAdvice ] = useState(false);
-	const [ changeAdvice, setChangeAdvice ] = useState(null);
-
-	const visiblePopAdvice = () => {
-		setVisibleSendAdvice(true);
-	};
-
-	const hidePopAdvice = () => {
-		setVisibleSendAdvice(false);
-	};
-
-	/**
-   * submit form
-   */
-
-	const changeValueArea = (valueArea) => {
-		setChangeAdvice(valueArea);
-	};
-
-	const changeArea = (value) => {
-		let valueArea = value.target.value;
-		//console.log(valueArea);
-		changeValueArea(valueArea);
-	};
-
-	const handleAreaComment = (event) => {
-		event.preventDefault();
-
-		//console.log('mail', mail, 'artisanid', idArtisan, 'body', changeAdvice);
-		hidePopAdvice();
-		dispatch(sendAdvice(mail, idArtisan, changeAdvice));
-
-		setTimeout(() => {
-			dispatch(artisanData(idArtisan, emailArtisan));
-		}, 2000);
-	};
-
-	//console.log("changeAdvice : ", changeAdvice);
-
-	const areaComment = (
-		<div>
-			<Form onSubmit={handleAreaComment}>
-				<Form.Item>
-					<TextArea rows={4} onChange={changeArea} />
-				</Form.Item>
-				<Form.Item>
-					<Button htmlType="submit" className="buttons">
-						Envoyer
-					</Button>
-				</Form.Item>
-			</Form>
-		</div>
-	);
-
-	const contentAdvice = (
-		<div>
-			<p>Pour accéder aux commentaires veuillez-vous enregistrer et valider votre adresse email</p>
-		</div>
-	);
-
-	const ButtonAdvice = () => {
-		const handleAdvice = () => {
-			if (user !== -1 || artisanUser !== -1) {
-				//console.log("commentaire");
-				visiblePopAdvice();
-			}
-		};
-
-		if (user !== -1 || artisanUser !== -1) {
-			return (
-				<Button onClick={handleAdvice} className="buttons">
-					Donnez votre avis
-				</Button>
-			);
-		} else {
-			return (
-				<Popover placement="bottom" content={contentAdvice} trigger="click">
-					<div>
-						<Button className="buttons">Donnez votre avis</Button>
-					</div>
-				</Popover>
-			);
-		}
-	};
-
-	/**
-   * report a advice
-   */
-
-	const handleAlert = (event) => {
-		dispatch(alertAdvice(event.target.value));
-
-		setTimeout(() => {
-			dispatch(artisanData(idArtisan, emailArtisan));
-		}, 2000);
 	};
 
 	return (
@@ -270,54 +133,16 @@ const PageArtisan = () => {
 				<CarouselArtisan />
 			</div>
 
-			<div className="page-artisan-commentary" />
-
-			<Row>
-				<Col span={24} id="back-patch">
-					<ButtonAdvice />
-					<Modal footer={null} visible={visibleSendAdvice} onCancel={hidePopAdvice}>
-						{areaComment}
-					</Modal>
-				</Col>
-			</Row>
-
-			{user !== -1 || artisanUser !== -1 ? (
-				<div id="background-com">
-					<div id="com">
-						{adviceObject.length} <Icon type="message" />
-					</div>
-					<List
-						className="comment-list"
-						id="comment"
-						itemLayout="horizontal"
-						dataSource={adviceObject}
-						renderItem={(item) => (
-							<li>
-								{console.log(item, 'itemlog')}
-								<Comment
-									author={item.userAuthor.firstname}
-									avatar={`${NAME_SERVER}/${item.userAuthor.picture}`}
-									content={item.body}
-									datetime={
-										<div>
-											{item.createdAt}{' '}
-											<Button id="design" value={item.id} onClick={handleAlert}>
-												{item.isReported ? (
-													<Icon style={{ color: 'red' }} type="alert" />
-												) : (
-													<Icon type="alert" />
-												)}
-											</Button>
-										</div>
-									}
-								/>
-							</li>
-						)}
-					/>
-				</div>
-			) : (
-				''
-			)}
+			<div className="page-artisan-commentary">
+				<AdviceArtisan
+					user={user}
+					artisanUser={artisanUser}
+					adviceObject={adviceObject}
+					mail={mail}
+					idArtisan={idArtisan}
+					emailArtisan={emailArtisan}
+				/>
+			</div>
 		</div>
 	);
 };
