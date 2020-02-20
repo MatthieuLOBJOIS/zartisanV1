@@ -2,38 +2,17 @@ import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { NAME_SERVER } from 'src/store/register/actions';
 
-import {
-	Row,
-	Col,
-	Carousel,
-	Button,
-	Rate,
-	List,
-	Comment,
-	Tooltip,
-	Link,
-	Popover,
-	Icon,
-	Form,
-	Input,
-	Modal
-} from 'antd';
+import { Row, Col, Button, Rate, List, Comment, Popover, Icon, Form, Input, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-
-import classNames from 'classnames';
 
 import './style.sass';
-import moment from 'moment';
 import cookies from 'js-cookie';
 import { sendRate } from 'src/store/rate/actions';
 import { alertAdvice } from 'src/store/advice/actions';
 import { sendAdvice } from 'src/store/advice/actions';
 
 import { artisanData } from 'src/store/artisan/actions';
-import Carousel1 from 'src/styles/pictures/caroussel/artisan10.jpg';
-import Carousel2 from 'src/styles/pictures/caroussel/artisan11.jpg';
-import Carousel3 from 'src/styles/pictures/caroussel/artisan12.jpg';
+import CarouselArtisan from '../../components/CarouselArtisan';
 
 const { TextArea } = Input;
 const PageArtisan = () => {
@@ -355,23 +334,7 @@ const PageArtisan = () => {
 			</Row>
 
 			<div className="page-artisan-caroussel">
-				<Carousel autoplay>
-					<div>
-						<h3>
-							<img className="imgCarousel" src={Carousel1} alt="" />
-						</h3>
-					</div>
-					<div>
-						<h3>
-							<img className="imgCarousel" src={Carousel2} alt="" />
-						</h3>
-					</div>
-					<div>
-						<h3>
-							<img className="imgCarousel" src={Carousel3} alt="" />{' '}
-						</h3>
-					</div>
-				</Carousel>
+				<CarouselArtisan />
 			</div>
 
 			<div className="page-artisan-commentary" />
