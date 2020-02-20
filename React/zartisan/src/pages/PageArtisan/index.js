@@ -12,14 +12,12 @@ import { alertAdvice } from 'src/store/advice/actions';
 import { sendAdvice } from 'src/store/advice/actions';
 
 import { artisanData } from 'src/store/artisan/actions';
-import CarouselArtisan from '../../components/CarouselArtisan';
+import CarouselArtisan from 'src/components/CarouselArtisan';
+import RateArtisan from 'src/components/RateArtisan';
 
 const { TextArea } = Input;
 const PageArtisan = () => {
 	const artisanSelector = useSelector((state) => state.artisan);
-
-	const averageRate = useSelector((state) => state.rate);
-	//console.log('note moyenne', averageRate);
 
 	const advice = useSelector((state) => state.advice);
 
@@ -31,10 +29,6 @@ const PageArtisan = () => {
 		//console.log(artisanSelector[artisan]);
 		artisanObject = artisanSelector[0];
 		adviceObject = artisanSelector[1];
-	}
-
-	if (averageRate != null) {
-		artisanObject.averageRate = averageRate;
 	}
 
 	const connect = useSelector((state) => state.connect);
@@ -82,62 +76,10 @@ const PageArtisan = () => {
 
 	//console.log('picture: ', artisanObject.picture, 'note : ', artisanObject.averageRate);
 
-	const Rating = () => {
-		return (
-			<Rate
-				className="ratingCompany"
-				style={{ fontSize: '1em' }}
-				disabled
-				defaultValue={artisanObject.averageRate}
-			/>
-		);
-	};
-	/**
-   * Rate a artisan
-   */
-
-	/**Hooks for display popover of rate link */
-	const [ visibleRate, setVisibleRate ] = useState(false);
-	const [ value, setValue ] = useState(null);
-
-	/**
-   * open popover
-   */
-	const handleVisibleChange = () => {
-		setVisibleRate(true);
-	};
-
-	/**
-   * close popover
-   */
 	const dispatch = useDispatch();
 	const idArtisan = artisanObject.id;
 
 	const emailArtisan = artisanObject.email;
-
-	//console.log('request artisan', idArtisan, emailArtisan);
-
-	const hide = () => {
-		setVisibleRate(false);
-	};
-
-	/**
-   *  rate value
-   */
-
-	const handleChange = (event) => {
-		//console.log(event);
-		setValue(event);
-		//console.log("vote", event, "mail", mail, "id", idArtisan);
-		dispatch(sendRate(idArtisan, mail, event));
-	};
-
-	const content = (
-		<div onClick={hide}>
-			<p>Evaluer votre artisan :</p>
-			<Rate onChange={handleChange} value={value} />
-		</div>
-	);
 
 	/**
    * redirect to register user onClick Contacter
@@ -282,22 +224,13 @@ const PageArtisan = () => {
 										className="description-picture"
 										src={`${NAME_SERVER}/${artisanObject.picture}`}
 									/>
-									<Rating />
-									{user !== -1 || artisanUser !== -1 ? (
-										<div>
-											<Popover
-												placement="bottom"
-												trigger="click"
-												onVisibleChange={handleVisibleChange}
-												visible={visibleRate}
-												content={content}
-											>
-												<a className="evaluez">évaluez</a>
-											</Popover>
-										</div>
-									) : (
-										''
-									)}
+									<RateArtisan
+										user={user}
+										artisanUser={artisanUser}
+										artisanObject={artisanObject}
+										idArtisan={idArtisan}
+										mail={mail}
+									/>
 								</div>
 							</Col>
 							<Col span={12}>
