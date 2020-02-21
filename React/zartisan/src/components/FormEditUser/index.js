@@ -56,7 +56,7 @@ const FormEditUser = ({ profileUser, setProfileUser }) => {
 	return (
 		<Form className="artisan-form">
 			<Form.Item>
-				<UploadAvatar profileUser={profileUser} setProfileUser={setProfileUser} />
+				<UploadAvatar role={'user'} profileUser={profileUser} setProfileUser={setProfileUser} />
 			</Form.Item>
 
 			<Form.Item label="Pseudo" hasFeedback>

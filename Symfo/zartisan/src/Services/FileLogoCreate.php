@@ -26,6 +26,8 @@ class FileLogoCreate
     /**
      * @param string $picture64, $userEmail
      * @return string $file
+     * 
+     * create file picture in user's folder
      */
     public function createPicture(string $picture64, string $userEmail): string
     {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Upload, Icon, message } from 'antd';
 import { NAME_SERVER } from 'src/store/register/actions';
 
-const UploadAvatar = ({ profileUser, setProfileUser }) => {
+const UploadAvatar = ({ profileUser, setProfileUser, role, profileArtisan, setProfileArtisan }) => {
 	const [ loading, setLoading ] = useState(false);
 
 	const getBase64 = (img, callback) => {
@@ -31,10 +31,19 @@ const UploadAvatar = ({ profileUser, setProfileUser }) => {
 		if (info.file.status === 'done') {
 			// Get this url from response in real world.
 			getBase64(info.file.originFileObj, (imageUrl) => {
-				setProfileUser({
-					...profileUser,
-					...{ pictureAvatar: imageUrl }
-				});
+				if (role === 'user') {
+					setProfileUser({
+						...profileUser,
+						...{ pictureAvatar: imageUrl }
+					});
+				}
+
+				if (role === 'artisan') {
+					setProfileArtisan({
+						...profileArtisan,
+						...{ pictureAvatar: imageUrl }
+					});
+				}
 
 				return setLoading({
 					imageUrl,
@@ -53,6 +62,15 @@ const UploadAvatar = ({ profileUser, setProfileUser }) => {
 	const { imageUrl } = loading;
 	//console.log('imageUrl ' + imageUrl);
 
+	let profile = '';
+	if (role === 'user') {
+		profile = profileUser.pictureAvatar;
+	}
+
+	if (role === 'artisan') {
+		profile = profileArtisan.pictureAvatar;
+	}
+
 	return (
 		<div>
 			<Upload
@@ -66,8 +84,8 @@ const UploadAvatar = ({ profileUser, setProfileUser }) => {
 			>
 				{imageUrl ? (
 					<img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
-				) : profileUser.pictureAvatar != undefined ? (
-					<img src={`${NAME_SERVER}/${profileUser.pictureAvatar}`} alt="avatar" style={{ width: '100%' }} />
+				) : profile != '' ? (
+					<img src={`${NAME_SERVER}/${profile}`} alt="avatar" style={{ width: '100%' }} />
 				) : (
 					uploadButton
 				)}

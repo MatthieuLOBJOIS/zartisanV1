@@ -9,16 +9,16 @@ import { useSelector } from 'react-redux';
  */
 // React Components
 import Header from 'src/components/Header';
-import Home from 'src/components/Home';
+import Home from 'src/pages/Home';
 import Footer from 'src/components/Footer';
-import ListArtisan from 'src/components/ListArtisan';
-import PageArtisan from 'src/components/PageArtisan';
-import LegalNotices from 'src/components/LegalNotices';
-import PageError from 'src/components/PageError';
+import ListArtisan from 'src/pages/ListArtisan';
+import PageArtisan from 'src/pages/PageArtisan';
+import LegalNotices from 'src/pages/LegalNotices';
+import PageError from 'src/pages/PageError';
 import FormRegisterUser from 'src/components/FormRegisterUser';
 import FormRegisterArtisan from 'src/components/FormRegisterArtisan';
-import ForgottenPassword from 'src/components/ForgottenPassword';
-import ProfilSettingsArtisan from 'src/components/ProfilSettingsArtisan';
+import ForgottenPassword from 'src/pages/ForgottenPassword';
+import ProfilSettingsArtisan from 'src/pages/ProfilSettingsArtisan';
 import ProfileSettingsUser from 'src/pages/ProfileSettingsUser';
 
 /**
