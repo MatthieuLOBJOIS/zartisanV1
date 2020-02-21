@@ -15,6 +15,7 @@ import { NAME_SERVER } from 'src/store/register/actions';
 import ButtonSearchArtisanList from 'src/components/ButtonSearchArtisanList';
 import ButtonJob from '../../components/ButtonJob';
 import ButtonRegion from '../../components/ButtonRegion';
+import Loader from 'src/components/Loader';
 
 const ListArtisan = () => {
 	const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const ListArtisan = () => {
 	}
 
 	const listData = [];
-	let objectArtisan = {};
+	let objectArtisan = '';
 	for (let d in arrayArtisan) {
 		if (arrayArtisan[d].companyDescription == null) {
 			arrayArtisan[d].companyDescription = '';
@@ -52,59 +53,71 @@ const ListArtisan = () => {
 			{
 				'item compagny', item.company;
 			}
-			setTimeout(() => {
-				history.push(`/page-artisan/${item.company}`);
-			}, 1000);
+
+			history.push(`/page-artisan/${item.company}`);
 		};
 		return <a onClick={handleSearch}>{item.company}</a>;
 	});
 
 	return (
-		<div className="list-artisan-content">
+		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				<ButtonRegion
-					regionChange={regionChange}
-					setRegion={setRegion}
-					visibleButtonJobs={visibleButtonJobs}
-					setvisibleButtonJobs={setvisibleButtonJobs}
-				/>
+				{objectArtisan != '' ? (
+					<div className="list-artisan-content">
+						<Row type="flex" justify="space-around" align="middle">
+							<ButtonRegion
+								regionChange={regionChange}
+								setRegion={setRegion}
+								visibleButtonJobs={visibleButtonJobs}
+								setvisibleButtonJobs={setvisibleButtonJobs}
+							/>
 
-				<ButtonJob
-					jobChange={jobChange}
-					setJobChange={setJobChange}
-					setIdJob={setIdJob}
-					visibleButtonJobs={visibleButtonJobs}
-					setvisibleButtonJobs={setvisibleButtonJobs}
-				/>
+							<ButtonJob
+								jobChange={jobChange}
+								setJobChange={setJobChange}
+								setIdJob={setIdJob}
+								visibleButtonJobs={visibleButtonJobs}
+								setvisibleButtonJobs={setvisibleButtonJobs}
+							/>
 
-				<ButtonSearchArtisanList regionChange={regionChange} idJob={idJob} />
-			</Row>
+							<ButtonSearchArtisanList regionChange={regionChange} idJob={idJob} />
+						</Row>
 
-			<List
-				itemLayout="horizontal"
-				size="small"
-				pagination={{
-					onChange: (page) => {
-						//console.log(page);
-					},
-					pageSize: 5
-				}}
-				grid={{
-					gutter: 16
-				}}
-				dataSource={listData}
-				renderItem={(item) => (
-					<List.Item className="antListItem">
-						<List.Item.Meta
-							className="ant-list-item "
-							avatar={<img style={{ width: '60px' }} src={`${NAME_SERVER}/${objectArtisan.picture}`} />}
-							title={<LinkArtisan item={item} />}
-							description={item.companyDescription}
+						<List
+							itemLayout="horizontal"
+							size="small"
+							pagination={{
+								onChange: (page) => {
+									//console.log(page);
+								},
+								pageSize: 5
+							}}
+							grid={{
+								gutter: 16
+							}}
+							dataSource={listData}
+							renderItem={(item) => (
+								<List.Item className="antListItem">
+									<List.Item.Meta
+										className="ant-list-item "
+										avatar={
+											<img
+												style={{ width: '60px' }}
+												src={`${NAME_SERVER}/${objectArtisan.picture}`}
+											/>
+										}
+										title={<LinkArtisan item={item} />}
+										description={item.companyDescription}
+									/>
+									<Rate style={{ fontSize: '1em' }} disabled defaultValue={item.averageRate} />
+								</List.Item>
+							)}
 						/>
-						<Rate style={{ fontSize: '1em' }} disabled defaultValue={item.averageRate} />
-					</List.Item>
+					</div>
+				) : (
+					<Loader />
 				)}
-			/>
+			</Row>
 		</div>
 	);
 };

@@ -10,11 +10,12 @@ import cookies from 'js-cookie';
 import CarouselArtisan from 'src/components/CarouselArtisan';
 import RateArtisan from 'src/components/RateArtisan';
 import AdviceArtisan from 'src/components/AdviceArtisan';
+import Loader from 'src/components/Loader';
 
 const PageArtisan = () => {
 	const artisanSelector = useSelector((state) => state.artisan);
 
-	let artisanObject = {};
+	let artisanObject = '';
 	let adviceObject = [];
 	for (let artisan in artisanSelector) {
 		artisanObject = artisanSelector[0];
@@ -69,80 +70,92 @@ const PageArtisan = () => {
 	};
 
 	return (
-		<div id="page-artisan">
-			<Row>
-				<div className="page-artisan-description">
-					<Row>
-						<div>
-							<div id="companyName">
-								<h4>{artisanObject.company}</h4>
-							</div>
-						</div>
-					</Row>
-					<div className="artisan-description">
+		<div>
+			<Row type="flex" justify="space-around" align="middle">
+				{artisanObject != '' ? (
+					<div id="page-artisan">
 						<Row>
-							<Col span={12}>
-								<div>
-									<img
-										className="description-picture"
-										src={`${NAME_SERVER}/${artisanObject.picture}`}
-									/>
-									<RateArtisan
-										user={user}
-										artisanUser={artisanUser}
-										artisanObject={artisanObject}
-										idArtisan={idArtisan}
-										mail={mail}
-									/>
-								</div>
-							</Col>
-							<Col span={12}>
-								<div className="description-info">
+							<div className="page-artisan-description">
+								<Row>
 									<div>
-										{artisanObject.numberWay} {artisanObject.typeWay} {artisanObject.way}{' '}
-										{artisanObject.postalCode} {artisanObject.city}
+										<div id="companyName">
+											<h4>{artisanObject.company}</h4>
+										</div>
 									</div>
-								</div>
-							</Col>
+								</Row>
+								<div className="artisan-description">
+									<Row>
+										<Col span={12}>
+											<div>
+												<img
+													className="description-picture"
+													src={`${NAME_SERVER}/${artisanObject.picture}`}
+												/>
+												<RateArtisan
+													user={user}
+													artisanUser={artisanUser}
+													artisanObject={artisanObject}
+													idArtisan={idArtisan}
+													mail={mail}
+												/>
+											</div>
+										</Col>
+										<Col span={12}>
+											<div className="description-info">
+												<div>
+													{artisanObject.numberWay} {artisanObject.typeWay}{' '}
+													{artisanObject.way} {artisanObject.postalCode} {artisanObject.city}
+												</div>
+											</div>
+										</Col>
 
-							{user !== -1 || artisanUser !== -1 ? (
-								<Col span={24}>
-									<div className="divDescriptionEmailPhone">
-										<p>
-											Email : <a href={`mailto:${artisanObject.email}`}>{artisanObject.email}</a>
-										</p>
-										<p>
-											Téléphone : <a href={`tel:+33${phone}`}>{artisanObject.phone}</a>
-										</p>
-									</div>
-								</Col>
-							) : (
-								<ButtonContact />
-							)}
-							<Col span={24}>
-								<div>
-									<p>{artisanObject.companyDescription}</p>
+										{user !== -1 || artisanUser !== -1 ? (
+											<Col span={24}>
+												<div className="divDescriptionEmailPhone">
+													<p>
+														Email :{' '}
+														<a href={`mailto:${artisanObject.email}`}>
+															{artisanObject.email}
+														</a>
+													</p>
+													<p>
+														Téléphone :{' '}
+														<a href={`tel:+33${phone}`}>{artisanObject.phone}</a>
+													</p>
+												</div>
+											</Col>
+										) : (
+											<ButtonContact />
+										)}
+										<Col span={24}>
+											<div>
+												<p>{artisanObject.companyDescription}</p>
+											</div>
+										</Col>
+									</Row>
 								</div>
-							</Col>
+							</div>
 						</Row>
+
+						<div className="page-artisan-caroussel">
+							<CarouselArtisan />
+						</div>
+
+						<div className="page-artisan-commentary">
+							<AdviceArtisan
+								user={user}
+								artisanUser={artisanUser}
+								adviceObject={adviceObject}
+								mail={mail}
+								idArtisan={idArtisan}
+								emailArtisan={emailArtisan}
+							/>
+						</div>
 					</div>
-				</div>
+				) : (
+					<Loader />
+				)}
 			</Row>
-
-			<div className="page-artisan-caroussel">
-				<CarouselArtisan />
-			</div>
-
-			<div className="page-artisan-commentary">
-				<AdviceArtisan
-					user={user}
-					artisanUser={artisanUser}
-					adviceObject={adviceObject}
-					mail={mail}
-					idArtisan={idArtisan}
-					emailArtisan={emailArtisan}
-				/>
-			</div>
 		</div>
 	);
 };

@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import 'antd/dist/antd.css';
 
 import FormEditArtisan from 'src/components/FormEditArtisan';
+import Loader from 'src/components/Loader';
 
 const ProfilSettingsArtisan = () => {
 	// Select artisan in the global state
@@ -57,7 +58,11 @@ const ProfilSettingsArtisan = () => {
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				<FormEditArtisan profileArtisan={profileArtisan} setProfileArtisan={setProfileArtisan} />
+				{artisanObject != '' ? (
+					<FormEditArtisan profileArtisan={profileArtisan} setProfileArtisan={setProfileArtisan} />
+				) : (
+					<Loader />
+				)}
 			</Row>
 		</div>
 	);

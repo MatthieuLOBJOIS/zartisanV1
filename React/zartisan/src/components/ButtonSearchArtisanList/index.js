@@ -15,9 +15,8 @@ const ButtonSearchArtisanList = withRouter(({ history, idJob, regionChange }) =>
 	const dispatch = useDispatch();
 	const handleSearch = () => {
 		dispatch(postHomeSearch(regionChange, idJob));
-		setTimeout(() => {
-			history.push('/liste-artisan');
-		}, 1000);
+
+		history.push('/liste-artisan');
 	};
 
 	return (
