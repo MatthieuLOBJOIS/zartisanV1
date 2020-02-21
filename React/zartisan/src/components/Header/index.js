@@ -2,14 +2,12 @@
  * Imports of dependencies
  */
 
-import React, { useState, useEffect } from 'react';
-import { Row, Col, Button, Icon, Drawer, Typography, Modal } from 'antd';
+import React, { useState } from 'react';
+import { Row, Col, Button, Icon, Drawer, Typography } from 'antd';
 import 'antd/dist/antd.css';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { sendLogin, deconnect } from 'src/store/register/actions';
 import cookies from 'js-cookie';
-import { userSingle } from 'src/store/user/actions';
 
 /**
  * Local imports
@@ -17,56 +15,38 @@ import { userSingle } from 'src/store/user/actions';
 import './style.sass';
 import logo from './picture/logo-zartisan.svg';
 import FormLogin from 'src/components/FormLogin';
-
-import FormRegisterArtisan from 'src/components/FormRegisterArtisan';
-import { sendRegisterArtisan } from 'src/store/register/actions';
-import FormRegisterUser from 'src/components/FormRegisterUser';
-import { sendRegisterUser } from 'src/store/register/actions';
+import ModalGoToFormUserOrArtisan from 'src/components/ModalGoToFormUserOrArtisan';
 import { artisanData } from 'src/store/artisan/actions';
-/**
- * NAME SERVER
- */
 import { NAME_SERVER } from 'src/store/register/actions';
+import { userSingle } from 'src/store/user/actions';
+import { deconnect } from 'src/store/register/actions';
 /**
  * Code
  */
 const { Text } = Typography;
-
 const Header = () => {
 	const connect = useSelector((state) => state.connect);
 	const dispatch = useDispatch();
-	//console.log(connect);
 
 	/**Hooks for display or not menu burger */
 	const [ visible, setVisible ] = useState(false);
-
 	/**Hooks for display or not modal login */
 	const [ modalLogin, setModalLogin ] = useState(false);
-
 	/**Hooks for display or not modal register */
 	const [ modalRegister, setModalRegister ] = useState(false);
-
 	/**Hooks welcome */
 	const [ connectVisible, setConnectVisible ] = useState(false);
 
-	/**
-   * open menu burger
-   */
-
+	//open menu burger
 	const showDrawer = () => {
 		setVisible(true);
-		//dispatch(artisanData(tokenEmail));
 	};
 
-	/**
-   * close menu burger
-   */
+	//close menu burger
 	const onClose = () => {
 		setVisible(false);
 	};
-	/**
-   * open form login popup and close menu burger
-   */
+
 	const showModalLogin = () => {
 		onClose();
 		setTimeout(() => {
@@ -74,29 +54,16 @@ const Header = () => {
 		}, 1000);
 	};
 
-	const connectModalVisible = () => {
-		setConnectVisible(true);
-	};
-
-	/**
-   * open form register popup and close menu burger
-   */
 	const showModalRegister = () => {
 		onClose();
 		setTimeout(() => {
 			setModalRegister(true);
 		}, 1000);
 	};
-	/**
-   * close form popup
-   */
+
 	const handleCancel = () => {
 		setModalRegister(false);
 		setModalLogin(false);
-	};
-
-	const closeModalWelcome = () => {
-		setConnectVisible(false);
 	};
 
 	const deconnexion = () => {
@@ -104,92 +71,7 @@ const Header = () => {
 		dispatch(deconnect());
 	};
 
-	//const handleSubmitLogin allows to send an axios request
-	const handleSubmitLogin = (email, password) => {
-		return (event) => {
-			event.preventDefault();
-
-			dispatch(sendLogin(email, password));
-		};
-	};
-
-	// Close modalFormLogin after check_login valid, and value connect:true
-
-	useEffect(
-		() => {
-			if (connect === true) {
-				handleCancel();
-
-				hideModalRegisterArtisan();
-
-				connectModalVisible();
-				setTimeout(closeModalWelcome, 2000);
-			}
-		},
-		[ connect ]
-	);
-
-	/**
-   * button for navigate towards form register artisan (use withRouter for manage history url)
-   */
-
-	// const ButtonGoToArtisanForm = withRouter(({ history }) => {
-	//   return (
-	//     <Button
-	//       className="buttons"
-	//       onClick={() => {
-	//         handleCancel();
-	//         //return history.push("/inscription/professionnel");
-	//       }}
-	//       style={{ width: "40%", margin: "1.5em" }}
-	//     >
-	//       Professionnel
-	//     </Button>
-	//   );
-	// });
-
-	const ButtonGoToArtisanForm = () => {
-		return (
-			<Button
-				className="buttons"
-				onClick={() => {
-					handleCancel();
-
-					showModalRegisterArtisan();
-				}}
-				style={{ width: '40%', margin: '1.5em' }}
-			>
-				Professionnel
-			</Button>
-		);
-	};
-
-	/**
-   * button for navigate towards form register user (use withRouter for manage history url)
-   */
-
-	const ButtonGoToUserForm = () => {
-		return (
-			<Button
-				className="buttons"
-				onClick={() => {
-					handleCancel();
-
-					showModalRegisterUser();
-				}}
-				style={{ width: '40%' }}
-			>
-				Particulier
-			</Button>
-		);
-	};
-
-	/**
-   * admin connection
-   */
-
 	let token = cookies.get('TOKEN');
-
 	let parseJwt = (token) => {
 		try {
 			return JSON.parse(atob(token.split('.')[1]));
@@ -204,77 +86,10 @@ const Header = () => {
 	let tokenEmail = '';
 	if (token != null) {
 		admin = parseJwt(token).roles.indexOf('ROLE_ADMIN');
-		//console.log(admin);
 		user = parseJwt(token).roles.indexOf('ROLE_USER');
 		artisanUser = parseJwt(token).roles.indexOf('ROLE_ARTISAN');
-		//console.log(parseJwt(token));
-		//artisanUser = parseJwt(token).roles.indexOf('ROLE_ARTISAN');
 		tokenEmail = parseJwt(token).username;
-		console.log(tokenEmail);
-		//console.log(parseJwt(token).roles[0]);
 	}
-
-	/**
- * register artisan modal
- */
-	const [ registerVisibleArtisan, setRegisterVisibleArtisan ] = useState(false);
-
-	const showModalRegisterArtisan = () => {
-		setRegisterVisibleArtisan(true), 2000;
-	};
-
-	const hideModalRegisterArtisan = () => {
-		setTimeout(() => {
-			setRegisterVisibleArtisan(false), 2000;
-		});
-		//console.log('handle cancel');
-	};
-
-	//submit of form
-	const handleFormArtisan = (email, password, passwordCheck, siret) => {
-		return (event) => {
-			//console.log(email, password, passwordCheck);
-			event.preventDefault();
-			if (password === passwordCheck && password !== '') {
-				console.log('mots est correct');
-				dispatch(sendRegisterArtisan(email, password, siret));
-				hideModalRegisterArtisan();
-			}
-		};
-	};
-
-	/**
- * register user modal
- */
-
-	/**
- * register artisan modal
- */
-	const [ registerVisibleUser, setRegisterVisibleUser ] = useState(false);
-
-	const showModalRegisterUser = () => {
-		setRegisterVisibleUser(true);
-	};
-
-	const hideModalRegisterUser = () => {
-		setTimeout(() => {
-			setRegisterVisibleUser(false), 2000;
-		});
-		//console.log('handle cancel');
-	};
-
-	//submit of form
-	const handleFormUser = (email, password, passwordCheck) => {
-		return (event) => {
-			//console.log(email, password, passwordCheck);
-			event.preventDefault();
-			if (password === passwordCheck && password !== '') {
-				//console.log('mots est correct');
-				dispatch(sendRegisterUser(email, password));
-			}
-			hideModalRegisterUser();
-		};
-	};
 
 	const handleClickProfileArtisan = () => {
 		dispatch(artisanData(1, tokenEmail));
@@ -308,13 +123,12 @@ const Header = () => {
 											Connexion
 										</a>
 									)}
-									<Modal footer={null} title="Connexion" visible={modalLogin} onCancel={handleCancel}>
-										<FormLogin handleSubmitLogin={handleSubmitLogin} handleCancel={handleCancel} />
-									</Modal>
-									<Modal visible={connectVisible} onCancel={closeModalWelcome} footer={null}>
-										<p>Bonjour vous êtes connecté</p>
-									</Modal>
-
+									<FormLogin
+										handleCancel={handleCancel}
+										modalLogin={modalLogin}
+										connectVisible={connectVisible}
+										setConnectVisible={setConnectVisible}
+									/>
 									{connect === true && admin === -1 ? connect === true && artisanUser !== -1 ? (
 										<Link to="/profil/artisan" onClick={handleClickProfileArtisan}>
 											Profil
@@ -341,19 +155,7 @@ const Header = () => {
 								)}
 								{connect === true && <a onClick={deconnexion}>Deconnexion</a>}
 
-								<Modal
-									footer={null}
-									title="Inscription"
-									visible={modalRegister}
-									onCancel={handleCancel}
-								>
-									<Row type="flex" justify="center" align="top">
-										<ButtonGoToUserForm />
-									</Row>
-									<Row type="flex" justify="center" align="top">
-										<ButtonGoToArtisanForm />
-									</Row>
-								</Modal>
+								<ModalGoToFormUserOrArtisan modalRegister={modalRegister} handleCancel={handleCancel} />
 							</Row>
 						</Drawer>
 					</Col>
@@ -365,24 +167,7 @@ const Header = () => {
 						</Link>
 					</Col>
 				</Col>
-
-				<Modal
-					footer={null}
-					title="Inscription Particulier"
-					visible={registerVisibleUser}
-					onCancel={hideModalRegisterUser}
-				>
-					<FormRegisterUser handleFormUser={handleFormUser} />
-				</Modal>
 			</Row>
-			<Modal
-				footer={null}
-				title="Inscription Artisan"
-				visible={registerVisibleArtisan}
-				onCancel={hideModalRegisterArtisan}
-			>
-				<FormRegisterArtisan handleFormArtisan={handleFormArtisan} />
-			</Modal>
 		</div>
 	);
 };
