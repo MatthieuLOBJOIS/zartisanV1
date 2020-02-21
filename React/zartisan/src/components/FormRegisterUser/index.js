@@ -10,8 +10,9 @@ import { useDispatch } from 'react-redux';
  */
 
 import './style.sass';
+import { sendRegisterUser } from 'src/store/register/actions';
 
-const FormRegisterUser = ({ handleFormUser, registerVisibleUser, hideModalRegisterUser }) => {
+const FormRegisterUser = ({ registerVisibleUser, setRegisterVisibleUser }) => {
 	const dispatch = useDispatch();
 
 	const [ email, setEmail ] = useState('');
@@ -28,6 +29,25 @@ const FormRegisterUser = ({ handleFormUser, registerVisibleUser, hideModalRegist
 
 	const passwordCheckChangeValue = () => {
 		setPasswordCheck(event.target.value);
+	};
+
+	const hideModalRegisterUser = () => {
+		setTimeout(() => {
+			setRegisterVisibleUser(false), 2000;
+		});
+		//console.log('handle cancel');
+	};
+
+	const handleFormUser = (email, password, passwordCheck) => {
+		return (event) => {
+			//console.log(email, password, passwordCheck);
+			event.preventDefault();
+			if (password === passwordCheck && password !== '') {
+				//console.log('mots est correct');
+				dispatch(sendRegisterUser(email, password));
+			}
+			hideModalRegisterUser();
+		};
 	};
 
 	return (

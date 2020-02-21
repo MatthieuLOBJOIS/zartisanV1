@@ -9,8 +9,9 @@ import { useDispatch } from 'react-redux';
  * Local imports
  */
 import './style.sass';
+import { sendRegisterArtisan } from 'src/store/register/actions';
 
-const FormRegisterArtisan = ({ handleFormArtisan, registerVisibleArtisan, hideModalRegisterArtisan }) => {
+const FormRegisterArtisan = ({ registerVisibleArtisan, setRegisterVisibleArtisan }) => {
 	const dispatch = useDispatch();
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
@@ -31,6 +32,25 @@ const FormRegisterArtisan = ({ handleFormArtisan, registerVisibleArtisan, hideMo
 
 	const siretChangeValue = (event) => {
 		setSiret(event.target.value);
+	};
+
+	const handleFormArtisan = (email, password, passwordCheck, siret) => {
+		return (event) => {
+			//console.log(email, password, passwordCheck);
+			event.preventDefault();
+			if (password === passwordCheck && password !== '') {
+				console.log('mots est correct');
+				dispatch(sendRegisterArtisan(email, password, siret));
+				hideModalRegisterArtisan();
+			}
+		};
+	};
+
+	const hideModalRegisterArtisan = () => {
+		setTimeout(() => {
+			setRegisterVisibleArtisan(false), 2000;
+		});
+		//console.log('handle cancel');
 	};
 
 	return (

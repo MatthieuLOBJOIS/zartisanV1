@@ -6,8 +6,6 @@ import { Row, Button, Modal } from 'antd';
 
 import FormRegisterArtisan from 'src/components/FormRegisterArtisan';
 import FormRegisterUser from 'src/components/FormRegisterUser';
-import { sendRegisterArtisan } from 'src/store/register/actions';
-import { sendRegisterUser } from 'src/store/register/actions';
 
 const ModalGoToFormUserOrArtisan = ({ modalRegister, handleCancel }) => {
 	const [ registerVisibleArtisan, setRegisterVisibleArtisan ] = useState(false);
@@ -19,45 +17,6 @@ const ModalGoToFormUserOrArtisan = ({ modalRegister, handleCancel }) => {
 
 	const showModalRegisterUser = () => {
 		setRegisterVisibleUser(true);
-	};
-
-	const hideModalRegisterArtisan = () => {
-		setTimeout(() => {
-			setRegisterVisibleArtisan(false), 2000;
-		});
-		//console.log('handle cancel');
-	};
-
-	const hideModalRegisterUser = () => {
-		setTimeout(() => {
-			setRegisterVisibleUser(false), 2000;
-		});
-		//console.log('handle cancel');
-	};
-
-	// handleForm
-	const handleFormArtisan = (email, password, passwordCheck, siret) => {
-		return (event) => {
-			//console.log(email, password, passwordCheck);
-			event.preventDefault();
-			if (password === passwordCheck && password !== '') {
-				console.log('mots est correct');
-				dispatch(sendRegisterArtisan(email, password, siret));
-				hideModalRegisterArtisan();
-			}
-		};
-	};
-
-	const handleFormUser = (email, password, passwordCheck) => {
-		return (event) => {
-			//console.log(email, password, passwordCheck);
-			event.preventDefault();
-			if (password === passwordCheck && password !== '') {
-				//console.log('mots est correct');
-				dispatch(sendRegisterUser(email, password));
-			}
-			hideModalRegisterUser();
-		};
 	};
 
 	/**
@@ -107,14 +66,12 @@ const ModalGoToFormUserOrArtisan = ({ modalRegister, handleCancel }) => {
 				</Row>
 			</Modal>
 			<FormRegisterUser
-				handleFormUser={handleFormUser}
+				setRegisterVisibleUser={setRegisterVisibleUser}
 				registerVisibleUser={registerVisibleUser}
-				hideModalRegisterUser={hideModalRegisterUser}
 			/>
 			<FormRegisterArtisan
-				handleFormArtisan={handleFormArtisan}
+				setRegisterVisibleArtisan={setRegisterVisibleArtisan}
 				registerVisibleArtisan={registerVisibleArtisan}
-				hideModalRegisterArtisan={hideModalRegisterArtisan}
 			/>
 		</div>
 	);
