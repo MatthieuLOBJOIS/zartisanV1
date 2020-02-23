@@ -1,25 +1,18 @@
 /**
  * Imports of dependencies
  */
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Row, Button, Icon, Menu, Dropdown, Cascader } from 'antd';
-import { withRouter } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Button, Icon, Menu, Dropdown } from 'antd';
+
 import classNames from 'classnames';
 /**
  * Local imports
  */
 import './style.sass';
-import { getRegions } from 'src/store/regions/actions';
-import { getJobs } from 'src/store/jobs/actions';
-import { postHomeSearch } from 'src/store/search/actions';
-import FranceMap from '../../components/FranceMap';
 
-import ButtonSearchArtisanList from 'src/components/ButtonSearchArtisanList';
-
-const ButtonJob = ({ visibleButtonJobs, setvisibleButtonJobs, jobChange, setJobChange, setIdJob }) => {
+const ButtonJob = ({ visibleButtonJobs, jobChange, setJobChange, setIdJob }) => {
 	let jobs = useSelector((state) => state.jobs);
-	const dispatch = useDispatch();
 
 	/**
 	 * menu jobs
@@ -45,8 +38,6 @@ const ButtonJob = ({ visibleButtonJobs, setvisibleButtonJobs, jobChange, setJobC
 		'button-job--display': visibleButtonJobs == true
 	});
 
-	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-
 	if (arrayJobs != undefined) {
 		jobartisan = arrayJobs.map((job) => {
 			const handleJobChange = (event) => {
@@ -71,7 +62,7 @@ const ButtonJob = ({ visibleButtonJobs, setvisibleButtonJobs, jobChange, setJobC
 	const menuJobs = <Menu>{jobartisan}</Menu>;
 
 	return (
-		<Dropdown overlay={menuJobs} placement="bottomLeft">
+		<Dropdown overlay={menuJobs} trigger={[ 'click' ]} placement="bottomLeft">
 			<Button
 				className={klsDisplayButton}
 				style={{ backgroundColor: 'white', color: '#bb9574', border: '1px solid #bb9574' }}
