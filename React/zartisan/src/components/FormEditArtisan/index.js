@@ -8,6 +8,7 @@ import 'antd/dist/antd.css';
 import { artisanEdit } from 'src/store/artisan/actions';
 import UploadAvatar from 'src/components/UploadAvatar';
 import UploadPictureGalery from '../UploadPictureGalery';
+import ButtonDeleteAccount from 'src/components/ButtonDeleteAccount';
 
 const FormEditArtisan = ({ profileArtisan, setProfileArtisan }) => {
 	const dispatch = useDispatch();
@@ -98,9 +99,7 @@ const FormEditArtisan = ({ profileArtisan, setProfileArtisan }) => {
 				</Button>
 			</Form.Item>
 			<Form.Item>
-				<Button type="danger" htmlType="submit">
-					Supprimer le compte
-				</Button>
+				<ButtonDeleteAccount />
 			</Form.Item>
 		</Form>
 	);

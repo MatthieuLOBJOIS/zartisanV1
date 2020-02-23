@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 
 import UploadAvatar from 'src/components/UploadAvatar';
 import { editUser } from 'src/store/user/actions';
+import ButtonDeleteAccount from 'src/components/ButtonDeleteAccount';
 
 const FormEditUser = ({ profileUser, setProfileUser }) => {
 	//console.log('form', profileUser);
@@ -85,9 +86,7 @@ const FormEditUser = ({ profileUser, setProfileUser }) => {
 				</Button>
 			</Form.Item>
 			<Form.Item>
-				<Button type="danger" htmlType="submit">
-					Supprimer le compte
-				</Button>
+				<ButtonDeleteAccount profileUser={profileUser} />
 			</Form.Item>
 		</Form>
 	);
