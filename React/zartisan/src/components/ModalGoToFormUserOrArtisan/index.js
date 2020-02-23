@@ -4,20 +4,21 @@
 import React, { useState } from 'react';
 import { Row, Button, Modal } from 'antd';
 
-import FormRegisterArtisan from 'src/components/FormRegisterArtisan';
-import FormRegisterUser from 'src/components/FormRegisterUser';
+import FormRegister from 'src/components/FormRegister';
 
 const ModalGoToFormUserOrArtisan = ({ modalRegister, handleCancel }) => {
-	const [ registerVisibleArtisan, setRegisterVisibleArtisan ] = useState(false);
-	const [ registerVisibleUser, setRegisterVisibleUser ] = useState(false);
-	const [ registerValid, setRegisterValid ] = useState(false);
+	const [ registerState, setRegisterState ] = useState({
+		visible: false,
+		valid: false,
+		role: ''
+	});
 
 	const showModalRegisterArtisan = () => {
-		setRegisterVisibleArtisan(true), 2000;
+		setRegisterState({ ...registerState, ...{ visible: true }, ...{ role: 'Artisan' } });
 	};
 
 	const showModalRegisterUser = () => {
-		setRegisterVisibleUser(true);
+		setRegisterState({ ...registerState, ...{ visible: true }, ...{ role: 'Particulier' } });
 	};
 
 	/**
@@ -66,18 +67,7 @@ const ModalGoToFormUserOrArtisan = ({ modalRegister, handleCancel }) => {
 					<ButtonGoToArtisanForm />
 				</Row>
 			</Modal>
-			<FormRegisterUser
-				setRegisterVisibleUser={setRegisterVisibleUser}
-				registerVisibleUser={registerVisibleUser}
-				setRegisterValid={setRegisterValid}
-				registerValid={registerValid}
-			/>
-			<FormRegisterArtisan
-				setRegisterVisibleArtisan={setRegisterVisibleArtisan}
-				registerVisibleArtisan={registerVisibleArtisan}
-				setRegisterValid={setRegisterValid}
-				registerValid={registerValid}
-			/>
+			<FormRegister registerState={registerState} setRegisterState={setRegisterState} />
 		</div>
 	);
 };
