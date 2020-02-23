@@ -11,6 +11,7 @@ import { SEND_REGISTER_USER } from 'src/store/register/actions';
 import { SEND_REGISTER_ARTISAN } from 'src/store/register/actions';
 import { SEND_LOGIN } from 'src/store/register/actions';
 import { CONNECT } from 'src/store/register/actions';
+import { validRegister } from 'src/store/register/actions';
 /**
  * NAME SERVER
  */
@@ -71,6 +72,7 @@ export default (store) => (next) => (action) => {
 					// console.log(response);
 					if (response.status === 200) {
 						//console.log('inscription')
+						store.dispatch(validRegister());
 					}
 				})
 				.catch(function(error) {
@@ -102,6 +104,7 @@ export default (store) => (next) => (action) => {
 					// console.log(response);
 					if (response.status === 200) {
 						console.log('inscription');
+						store.dispatch(validRegister());
 					}
 				})
 				.catch(function(error) {

@@ -1,17 +1,18 @@
 /**
  * Imports of dependencies
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Row, Button, Modal } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 /**
  * Local imports
  */
 import './style.sass';
 import { sendRegisterArtisan } from 'src/store/register/actions';
+import { sendRegisterUser } from 'src/store/register/actions';
 
-const FormRegisterArtisan = ({ registerVisibleArtisan, setRegisterVisibleArtisan }) => {
+const FormRegister = ({ registerState, setRegisterState }) => {
 	const dispatch = useDispatch();
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
@@ -40,32 +41,59 @@ const FormRegisterArtisan = ({ registerVisibleArtisan, setRegisterVisibleArtisan
 			event.preventDefault();
 			if (password === passwordCheck && password !== '') {
 				console.log('mots est correct');
-				dispatch(sendRegisterArtisan(email, password, siret));
-				hideModalRegisterArtisan();
+				if (registerState.role === 'Artisan') {
+					dispatch(sendRegisterArtisan(email, password, siret));
+				}
+				if (registerState.role === 'Particulier') {
+					dispatch(sendRegisterUser(email, password));
+				}
+				hideModalRegister();
 			}
 		};
 	};
 
-	const hideModalRegisterArtisan = () => {
+	const hideModalRegister = () => {
 		setTimeout(() => {
-			setRegisterVisibleArtisan(false), 2000;
+			setRegisterState({ ...registerState, ...{ visible: false } }), 2000;
 		});
 		//console.log('handle cancel');
 	};
+
+	const registerModalVisible = () => {
+		setRegisterState({ ...registerState, ...{ valid: true } });
+	};
+
+	const registerModalClose = () => {
+		setRegisterState({ ...registerState, ...{ valid: false } });
+	};
+
+	const registerOk = useSelector((state) => state.connect);
+
+	useEffect(
+		() => {
+			if (registerOk === 'register') {
+				registerModalVisible();
+				console.log('lol');
+			}
+		},
+		[ registerOk ]
+	);
 
 	return (
 		<div className="register-artisan">
 			<Row type="flex" justify="space-around" align="middle">
 				<Modal
 					footer={null}
-					title="Inscription Artisan"
-					visible={registerVisibleArtisan}
-					onCancel={hideModalRegisterArtisan}
+					title={`Inscription ${registerState.role}`}
+					visible={registerState.visible}
+					onCancel={hideModalRegister}
 				>
 					<Form className="artisan-form" onSubmit={handleFormArtisan(email, password, passwordCheck, siret)}>
-						<Form.Item label="Siret">
-							<Input onChange={siretChangeValue} />
-						</Form.Item>
+						{registerState.role === 'Artisan' && (
+							<Form.Item label="Siret">
+								<Input onChange={siretChangeValue} />
+							</Form.Item>
+						)}
 						<Form.Item label="E-mail">
 							<Input onChange={emailChangeValue} />
 						</Form.Item>
@@ -82,9 +110,15 @@ const FormRegisterArtisan = ({ registerVisibleArtisan, setRegisterVisibleArtisan
 						</Form.Item>
 					</Form>
 				</Modal>
+				<Modal visible={registerState.valid} onCancel={registerModalClose} footer={null}>
+					<p>
+						Votre inscription a été prie en compte, une demande de validation vous a été envoyé par mail, à
+						très vite sur Z'artisan
+					</p>
+				</Modal>
 			</Row>
 		</div>
 	);
 };
 
-export default FormRegisterArtisan;
+export default FormRegister;
