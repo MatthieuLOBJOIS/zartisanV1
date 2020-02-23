@@ -10,6 +10,7 @@ import FormRegisterUser from 'src/components/FormRegisterUser';
 const ModalGoToFormUserOrArtisan = ({ modalRegister, handleCancel }) => {
 	const [ registerVisibleArtisan, setRegisterVisibleArtisan ] = useState(false);
 	const [ registerVisibleUser, setRegisterVisibleUser ] = useState(false);
+	const [ registerValid, setRegisterValid ] = useState(false);
 
 	const showModalRegisterArtisan = () => {
 		setRegisterVisibleArtisan(true), 2000;
@@ -68,10 +69,14 @@ const ModalGoToFormUserOrArtisan = ({ modalRegister, handleCancel }) => {
 			<FormRegisterUser
 				setRegisterVisibleUser={setRegisterVisibleUser}
 				registerVisibleUser={registerVisibleUser}
+				setRegisterValid={setRegisterValid}
+				registerValid={registerValid}
 			/>
 			<FormRegisterArtisan
 				setRegisterVisibleArtisan={setRegisterVisibleArtisan}
 				registerVisibleArtisan={registerVisibleArtisan}
+				setRegisterValid={setRegisterValid}
+				registerValid={registerValid}
 			/>
 		</div>
 	);

@@ -1,9 +1,9 @@
 /**
  * Imports of dependencies
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Row, Button, Modal } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 /**
  * Local imports
@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import './style.sass';
 import { sendRegisterUser } from 'src/store/register/actions';
 
-const FormRegisterUser = ({ registerVisibleUser, setRegisterVisibleUser }) => {
+const FormRegisterUser = ({ registerVisibleUser, setRegisterVisibleUser, setRegisterValid, registerValid }) => {
 	const dispatch = useDispatch();
 
 	const [ email, setEmail ] = useState('');
@@ -50,6 +50,26 @@ const FormRegisterUser = ({ registerVisibleUser, setRegisterVisibleUser }) => {
 		};
 	};
 
+	const registerModalVisible = () => {
+		setRegisterValid(true);
+	};
+
+	const registerModalClose = () => {
+		setRegisterValid(false);
+	};
+
+	const registerOk = useSelector((state) => state.connect);
+
+	useEffect(
+		() => {
+			if (registerOk === 'register') {
+				registerModalVisible();
+				setTimeout(registerModalClose, 2000);
+			}
+		},
+		[ registerOk ]
+	);
+
 	return (
 		<div className="register-user">
 			<Row type="flex" justify="space-around" align="middle">
@@ -75,6 +95,12 @@ const FormRegisterUser = ({ registerVisibleUser, setRegisterVisibleUser }) => {
 							</Button>
 						</Form.Item>
 					</Form>
+				</Modal>
+				<Modal visible={registerValid} onCancel={registerModalClose} footer={null}>
+					<p>
+						Votre inscription a été prie en compte, une demande de validation vous a été envoyé par mail, à
+						très vite sur Z'artisan
+					</p>
 				</Modal>
 			</Row>
 		</div>

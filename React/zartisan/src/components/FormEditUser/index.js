@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 
@@ -55,40 +55,46 @@ const FormEditUser = ({ profileUser, setProfileUser }) => {
 	};
 
 	return (
-		<Form className="artisan-form">
-			<Form.Item>
-				<UploadAvatar role={'user'} profileUser={profileUser} setProfileUser={setProfileUser} />
-			</Form.Item>
+		<div>
+			<Form className="artisan-form">
+				<Form.Item>
+					<UploadAvatar role={'user'} profileUser={profileUser} setProfileUser={setProfileUser} />
+				</Form.Item>
 
-			<Form.Item label="Pseudo" hasFeedback>
-				<Input placeholder="Pseudo" value={profileUser.nickname} onChange={handleChangeValue('nickname')} />
-			</Form.Item>
+				<Form.Item label="Pseudo" hasFeedback>
+					<Input placeholder="Pseudo" value={profileUser.nickname} onChange={handleChangeValue('nickname')} />
+				</Form.Item>
 
-			<Form.Item label="Nom" hasFeedback>
-				<Input placeholder="Nom" value={profileUser.lastname} onChange={handleChangeValue('lastname')} />
-			</Form.Item>
+				<Form.Item label="Nom" hasFeedback>
+					<Input placeholder="Nom" value={profileUser.lastname} onChange={handleChangeValue('lastname')} />
+				</Form.Item>
 
-			<Form.Item label="Prénom" hasFeedback>
-				<Input placeholder="Prénom" value={profileUser.firstname} onChange={handleChangeValue('firstname')} />
-			</Form.Item>
+				<Form.Item label="Prénom" hasFeedback>
+					<Input
+						placeholder="Prénom"
+						value={profileUser.firstname}
+						onChange={handleChangeValue('firstname')}
+					/>
+				</Form.Item>
 
-			<Form.Item label="Téléphone" hasFeedback>
-				<Input placeholder="Téléphone" value={profileUser.phone} onChange={handleChangeValue('phone')} />
-			</Form.Item>
+				<Form.Item label="Téléphone" hasFeedback>
+					<Input placeholder="Téléphone" value={profileUser.phone} onChange={handleChangeValue('phone')} />
+				</Form.Item>
 
-			<Form.Item label="Mail" hasFeedback>
-				<Input placeholder="Mail" value={profileUser.mail} onChange={handleChangeValue('mail')} />
-			</Form.Item>
+				<Form.Item label="Mail" hasFeedback>
+					<Input placeholder="Mail" value={profileUser.mail} onChange={handleChangeValue('mail')} />
+				</Form.Item>
 
-			<Form.Item>
-				<Button type="primary" className="buttons" htmlType="submit" onClick={handleSaveEdit}>
-					Sauvegarder
-				</Button>
-			</Form.Item>
-			<Form.Item>
-				<ButtonDeleteAccount profileUser={profileUser} />
-			</Form.Item>
-		</Form>
+				<Form.Item>
+					<Button type="primary" className="buttons" htmlType="submit" onClick={handleSaveEdit}>
+						Sauvegarder
+					</Button>
+				</Form.Item>
+				<Form.Item>
+					<ButtonDeleteAccount profileUser={profileUser} />
+				</Form.Item>
+			</Form>
+		</div>
 	);
 };
 

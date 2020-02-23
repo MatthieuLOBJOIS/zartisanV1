@@ -15,6 +15,12 @@ export const sendRegisterArtisan = (email, password, siret) => ({
 	siret
 });
 
+export const VALID_REGISTER = 'register/actions/VALID_REGISTER';
+
+export const validRegister = () => ({
+	type: VALID_REGISTER
+});
+
 export const SEND_PASSWORD_FORGET = 'register/actions/SEND_PASSWORD_FORGET';
 
 export const sendPasswordForget = (email, password) => ({

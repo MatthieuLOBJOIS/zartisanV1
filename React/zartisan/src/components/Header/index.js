@@ -118,7 +118,7 @@ const Header = () => {
 							</Row>
 							<Row type="flex" justify="center" align="top">
 								<Text>
-									{connect === false && (
+									{(connect === false || connect === 'register') && (
 										<a href="#" onClick={showModalLogin}>
 											Connexion
 										</a>
@@ -148,7 +148,7 @@ const Header = () => {
 								</Text>
 							</Row>
 							<Row type="flex" justify="center" align="top">
-								{connect === false && (
+								{(connect === false || connect === 'register') && (
 									<a href="#" onClick={showModalRegister}>
 										Inscription
 									</a>
