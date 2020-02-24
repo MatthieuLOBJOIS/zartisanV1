@@ -17,6 +17,8 @@ const ProfilSettingsArtisan = () => {
 		artisanObject = artisanSelector[0];
 	}
 
+	console.log(artisanObject);
+
 	// Local state Artisan
 	const [ profileArtisan, setProfileArtisan ] = useState({
 		firstname: '',

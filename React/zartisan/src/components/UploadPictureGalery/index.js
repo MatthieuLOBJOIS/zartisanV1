@@ -16,7 +16,14 @@ const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
 		});
 	}
 
-	const [ fileList, setFileList ] = useState([]);
+	const [ fileList, setFileList ] = useState([
+		{
+			uid: '-1',
+			name: 'image.png',
+			status: 'done',
+			url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+		}
+	]);
 	const [ pictureFolder, setPictureFolder ] = useState({
 		previewVisible: false,
 		previewImage: ''
@@ -70,6 +77,7 @@ const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
 				listType="picture-card"
 				onPreview={handlePreview}
 				onChange={handleChangeFile}
+				fileList={fileList}
 			>
 				{fileList.length >= 4 ? null : uploadButtonFile}
 			</Upload>

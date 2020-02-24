@@ -59,7 +59,7 @@ export default (store) => (next) => (action) => {
 					companyDescription: action.description,
 					picture: action.pictureAvatar,
 					phone: action.phone,
-					pictureGalery: action.pictureGalery
+					pictureFolder: action.pictureGalery
 				}
 			})
 				.then((response) => {
