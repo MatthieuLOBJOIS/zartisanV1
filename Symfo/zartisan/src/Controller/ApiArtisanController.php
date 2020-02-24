@@ -54,35 +54,54 @@ class ApiArtisanController extends AbstractController
             $userRole = 'ARTISAN';
             $foldersUser->isFolder($userEmail, $userRole);  // verification if folder exist
 
-            // if picture is uploaded
+            // TODO if picture is uploaded
             $picture64 = ($request->get('picture'));
             $image = substr("$picture64", 0, 6);
             if ($image != "assets") {
                 $file = $fileLogoCreate->createPicture($picture64, $userEmail);   // inject avatar in file logo
+                if ($file == 409) {
+                    return $this->json(['error' => 'Vous devez uploader un fichier de type png, jpg, jpeg'], 409);
+                }
+
                 $user->setPicture($file);
             }
 
-            // // if pictureFolder is uploaded 
-            // $pictureFolder64 = ($request->get('pictureFolder'));
-            // $counter = count($pictureFolder64);
+            // TODO if pictureFolder is uploaded 
+            $pictureFolder64 = ($request->get('pictureFolder'));
+            $counter = count($pictureFolder64);
 
-            // if ($counter != 0) {
-            //     $file = $fileTablePictures->createTablePictures($pictureFolder64, $userEmail);   // inject pictures in file compagny
-            //     if ($file == 409) {
-            //         return $this->json(['error' => 'Vous devez uploader un fichier de type png, jpg, jpeg'], 409);
-            //     }
-            //     //$user->setPictureFolder([$file]);
-            // }
+
+            if ($counter != 0) {
+                // TODO verify if old pictures
+                $controlOld = $fileTablePictures->controlPicturesOld($pictureFolder64);
+                //dd('controlold', $controlOld, 'counter', $counter);
+
+                // TODO if no pictures uploaded
+                if ($controlOld != $counter) {
+
+                    // TODO if new pictures uploaded
+                    if ($controlOld == 0) {
+                        $file = $fileTablePictures->createTableNewPictures($pictureFolder64, $userEmail);
+                        if ($file == 409) {
+                            return $this->json(['error' => 'Vous devez uploader un fichier de type png, jpg, jpeg'], 409);
+                        }
+                    } //($controlOld == 0)
+                    else {
+                        $file = $fileTablePictures->createTableMixPictures($pictureFolder64, $userEmail);
+                        if ($file == 409) {
+                            return $this->json(['error' => 'Vous devez uploader un fichier de type png, jpg, jpeg'], 409);
+                        }
+                        if ($file == 501) {
+                            return $this->json(['error' => 'Not Implemented'], 501);
+                        }
+                    }
+                    $user->setPictureFolder($file);
+                } //($controlOld != $counter)
+            } //($counter != 0)
 
 
             $user->setCompanyDescription($request->get('companyDescription'));
-
             $user->setPhone($request->get('phone'));
-            // TODO : Add this in register after set company
-            // $user->setPictureFolder($user->getCompany());
-            // if ($request->get('picture')) {
-            //     $user->setPicture($file);
-            // }
 
             $user->setUpdatedAt(new \DateTime());
 
