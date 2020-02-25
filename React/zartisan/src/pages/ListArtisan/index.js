@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, List, Rate } from 'antd';
 
 import 'antd/dist/antd.css';
@@ -27,12 +27,14 @@ const ListArtisan = () => {
 	 *  search object from home
 	 */
 	const artisandata = useSelector((state) => state.search);
+	//console.log('listeartisan', artisandata);
 	let arrayArtisan = [];
 	for (let data in artisandata) {
 		arrayArtisan = artisandata[data];
 	}
 
 	const listData = [];
+
 	let objectArtisan = '';
 	for (let d in arrayArtisan) {
 		if (arrayArtisan[d].companyDescription == null) {
@@ -41,6 +43,27 @@ const ListArtisan = () => {
 		objectArtisan = arrayArtisan[d];
 		listData.push(objectArtisan);
 	}
+
+	// const [ obj, setObj ] = useState('');
+
+	// console.log(obj, arrayArtisan);
+
+	// useEffect(
+	// 	() => {
+	// 		const listData = [];
+	// 		for (let d in arrayArtisan) {
+	// 			if (arrayArtisan[d].companyDescription == null) {
+	// 				arrayArtisan[d].companyDescription = '';
+	// 			}
+
+	// 			listData.push(arrayArtisan[d]);
+	// 		}
+	// 		console.log('list', listData);
+	// 		return setObj(listData);
+	// 		//listData.push(objectArtisan);
+	// 	},
+	// 	[ artisandata ]
+	// );
 
 	/**
    * Link artisan
@@ -101,10 +124,7 @@ const ListArtisan = () => {
 									<List.Item.Meta
 										className="ant-list-item "
 										avatar={
-											<img
-												style={{ width: '60px' }}
-												src={`${NAME_SERVER}/${objectArtisan.picture}`}
-											/>
+											<img style={{ width: '60px' }} src={`${NAME_SERVER}/${item.picture}`} />
 										}
 										title={<LinkArtisan item={item} />}
 										description={item.companyDescription}
