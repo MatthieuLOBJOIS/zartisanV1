@@ -12,7 +12,7 @@ const FormLogin = ({ setModalLogin, modalLogin, connectVisible, setConnectVisibl
 	const [ password, setPassword ] = useState({ value: '', status: '', help: '' });
 	const connect = useSelector((state) => state.connect);
 	const dispatch = useDispatch();
-	console.log('co or fail', connect);
+	//console.log('co or fail', connect);
 	const mailChangeValue = (event) => {
 		//console.log(event.target.value);
 		setEmail({ ...email, ...{ value: event.target.value } });
