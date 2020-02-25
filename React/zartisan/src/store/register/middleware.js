@@ -11,6 +11,7 @@ import { SEND_REGISTER_USER } from 'src/store/register/actions';
 import { SEND_REGISTER_ARTISAN } from 'src/store/register/actions';
 import { SEND_LOGIN } from 'src/store/register/actions';
 import { CONNECT } from 'src/store/register/actions';
+import { CONNECT_FAIL } from 'src/store/register/actions';
 import { validRegister } from 'src/store/register/actions';
 /**
  * NAME SERVER
@@ -39,6 +40,7 @@ export default (store) => (next) => (action) => {
 			.catch(function(error) {
 				// handle error
 				//console.log(error);
+				store.dispatch({ type: CONNECT_FAIL });
 			})
 			.finally(function() {
 				// always executed

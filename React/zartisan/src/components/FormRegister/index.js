@@ -130,8 +130,11 @@ const FormRegister = ({ registerState, setRegisterState }) => {
 	const hideModalRegister = () => {
 		setTimeout(() => {
 			setRegisterState({ ...registerState, ...{ visible: false } }), 2000;
+			setEmail({ ...email, ...{ value: '' }, ...{ status: '' }, ...{ help: '' } });
+			setSiret({ ...siret, ...{ value: '' }, ...{ status: '' }, ...{ help: '' } });
+			setPassword({ ...password, ...{ value: '' }, ...{ status: '' }, ...{ help: '' } });
+			setPasswordCheck({ ...passwordCheck, ...{ value: '' }, ...{ status: '' }, ...{ help: '' } });
 		});
-		//console.log('handle cancel');
 	};
 
 	const registerModalVisible = () => {
@@ -154,11 +157,11 @@ const FormRegister = ({ registerState, setRegisterState }) => {
 					<Form className="artisan-form" onSubmit={handleFormArtisan}>
 						{registerState.role === 'Artisan' && (
 							<Form.Item label="Siret" hasFeedback validateStatus={siret.status} help={siret.help}>
-								<Input onChange={siretChangeValue} />
+								<Input value={siret.value} onChange={siretChangeValue} />
 							</Form.Item>
 						)}
 						<Form.Item label="E-mail" hasFeedback validateStatus={email.status} help={email.help}>
-							<Input onChange={emailChangeValue} />
+							<Input value={email.value} onChange={emailChangeValue} />
 						</Form.Item>
 						<Form.Item
 							label="Mot de passe"
@@ -166,7 +169,7 @@ const FormRegister = ({ registerState, setRegisterState }) => {
 							validateStatus={password.status}
 							help={password.help}
 						>
-							<Input.Password onChange={passwordChangeValue} />
+							<Input.Password value={password.value} onChange={passwordChangeValue} />
 						</Form.Item>
 						<Form.Item
 							label="Confirmer votre mots de passe"
@@ -174,7 +177,7 @@ const FormRegister = ({ registerState, setRegisterState }) => {
 							validateStatus={passwordCheck.status}
 							help={passwordCheck.help}
 						>
-							<Input.Password onChange={passwordCheckChangeValue} />
+							<Input.Password value={passwordCheck.value} onChange={passwordCheckChangeValue} />
 						</Form.Item>
 						<Form.Item>
 							<Button type="primary" className="buttons" htmlType="submit">

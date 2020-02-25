@@ -6,12 +6,16 @@ import { Row, Button, Modal } from 'antd';
 
 import FormRegister from 'src/components/FormRegister';
 
-const ModalGoToFormUserOrArtisan = ({ modalRegister, handleCancel }) => {
+const ModalGoToFormUserOrArtisan = ({ modalRegister, setModalRegister }) => {
 	const [ registerState, setRegisterState ] = useState({
 		visible: false,
 		valid: false,
 		role: ''
 	});
+
+	const handleCancel = () => {
+		setModalRegister(false);
+	};
 
 	const showModalRegisterArtisan = () => {
 		setRegisterState({ ...registerState, ...{ visible: true }, ...{ role: 'Artisan' } });

@@ -61,11 +61,6 @@ const Header = () => {
 		}, 1000);
 	};
 
-	const handleCancel = () => {
-		setModalRegister(false);
-		setModalLogin(false);
-	};
-
 	const deconnexion = () => {
 		onClose();
 		dispatch(deconnect());
@@ -124,7 +119,7 @@ const Header = () => {
 										</a>
 									)}
 									<FormLogin
-										handleCancel={handleCancel}
+										setModalLogin={setModalLogin}
 										modalLogin={modalLogin}
 										connectVisible={connectVisible}
 										setConnectVisible={setConnectVisible}
@@ -155,7 +150,10 @@ const Header = () => {
 								)}
 								{connect === true && <a onClick={deconnexion}>Deconnexion</a>}
 
-								<ModalGoToFormUserOrArtisan modalRegister={modalRegister} handleCancel={handleCancel} />
+								<ModalGoToFormUserOrArtisan
+									modalRegister={modalRegister}
+									setModalRegister={setModalRegister}
+								/>
 							</Row>
 						</Drawer>
 					</Col>
