@@ -5,7 +5,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Button, Icon, Drawer, Typography } from 'antd';
 import 'antd/dist/antd.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import cookies from 'js-cookie';
 
@@ -27,6 +27,7 @@ const { Text } = Typography;
 const Header = () => {
 	const connect = useSelector((state) => state.connect);
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	/**Hooks for display or not menu burger */
 	const [ visible, setVisible ] = useState(false);
@@ -64,6 +65,7 @@ const Header = () => {
 	const deconnexion = () => {
 		onClose();
 		dispatch(deconnect());
+		history.push('/');
 	};
 
 	let token = cookies.get('TOKEN');
