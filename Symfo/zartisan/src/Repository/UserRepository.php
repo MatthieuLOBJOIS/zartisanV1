@@ -184,4 +184,5 @@ class UserRepository extends ServiceEntityRepository
             return $result;
         }
     }
+
 }
