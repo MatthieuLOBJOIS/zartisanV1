@@ -67,7 +67,7 @@ const ModalGoToFormUserOrArtisan = ({ modalRegister, handleCancel }) => {
 					<ButtonGoToArtisanForm />
 				</Row>
 			</Modal>
-			<FormRegister registerState={registerState} setRegisterState={setRegisterState} reset={`reset`} />
+			<FormRegister registerState={registerState} setRegisterState={setRegisterState} />
 		</div>
 	);
 };

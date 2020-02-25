@@ -12,88 +12,119 @@ import './style.sass';
 import { sendRegisterArtisan } from 'src/store/register/actions';
 import { sendRegisterUser } from 'src/store/register/actions';
 
-const FormRegister = ({ registerState, setRegisterState, reset }) => {
+const FormRegister = ({ registerState, setRegisterState }) => {
 	const dispatch = useDispatch();
-	const [ email, setEmail ] = useState('');
-	const [ password, setPassword ] = useState('');
-	const [ passwordCheck, setPasswordCheck ] = useState('');
-	const [ siret, setSiret ] = useState('');
-	const [ validInput, setValidInput ] = useState({
-		statusSiret: '',
-		helpSiret: '',
-		statusEmail: '',
-		helpEmail: '',
-		statusPassword: '',
-		helpPassword: '',
-		statusPasswordCheck: '',
-		helpPasswordCheck: ''
-	});
+
+	const registerOk = useSelector((state) => state.connect);
+
+	const [ email, setEmail ] = useState({ value: '', status: '', help: '' });
+	const [ password, setPassword ] = useState({ value: '', status: '', help: '' });
+	const [ passwordCheck, setPasswordCheck ] = useState({ value: '', status: '', help: '' });
+	const [ siret, setSiret ] = useState({ value: '', status: '', help: '' });
+
+	useEffect(
+		() => {
+			if (registerOk === 'register') {
+				registerModalVisible();
+			}
+		},
+		[ registerOk ]
+	);
 
 	const emailChangeValue = (event) => {
-		setEmail(event.target.value);
+		setEmail({ ...email, ...{ value: event.target.value } });
 	};
 
 	const passwordChangeValue = (event) => {
-		setPassword(event.target.value);
+		setPassword({ ...password, ...{ value: event.target.value } });
 	};
 
 	const passwordCheckChangeValue = (event) => {
-		setPasswordCheck(event.target.value);
+		setPasswordCheck({ ...passwordCheck, ...{ value: event.target.value } });
 	};
 
 	const siretChangeValue = (event) => {
-		setSiret(event.target.value);
+		setSiret({ ...siret, ...{ value: event.target.value } });
 	};
 
-	const handleFormArtisan = (email, password, passwordCheck, siret) => {
-		return (event) => {
-			//console.log(email, password, passwordCheck);
-			event.preventDefault();
-			const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-			const siretFormat = /[0-9]{14}/;
-			const passwordFormat = /[a-zA-Z0-9]{6}/;
+	const validateForm = () => {
+		const passwordFormat = /[a-zA-Z0-9]{6}/;
+		const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+		const siretFormat = /[0-9]{14}/;
 
-			if (email.match(mailFormat)) {
-				//setRegisterState({ ...registerState, ...{ status: 'success' }, ...{ help: '' } });
-				setValidInput({ ...validInput, ...{ statusEmail: 'success' }, ...{ helpEmail: '' } });
-			} else {
-				//setRegisterState({ ...registerState, ...{ status: 'error' }, ...{ help: 'Email invalide' } });
-				setValidInput({ ...validInput, ...{ statusEmail: 'error' }, ...{ helpEmail: 'Email invalide' } });
-				console.log('email', validInput);
-			}
+		if (email.value == '') {
+			setEmail({ ...email, ...{ status: 'warning' }, ...{ help: 'Veuillez indiquer email' } });
+		} else if (email.value.match(mailFormat)) {
+			setEmail({ ...email, ...{ status: 'success' }, ...{ help: '' } });
+		} else {
+			setEmail({
+				...email,
+				...{ status: 'error' },
+				...{ help: 'Email invalide' }
+			});
+		}
 
-			if (siret.match(siretFormat)) {
-				//setRegisterState({ ...registerState, ...{ status: 'success' }, ...{ help: '' } });
-				setValidInput({ ...validInput, ...{ statusSiret: 'success' }, ...{ helpSiret: '' } });
-			} else {
-				//setRegisterState({ ...registerState, ...{ status: 'error' }, ...{ help: 'Email invalide' } });
-				setValidInput({ ...validInput, ...{ statusSiret: 'error' }, ...{ helpSiret: 'Siret invalide' } });
-				console.log('email', validInput);
-			}
+		if (siret.value == '') {
+			setSiret({ ...siret, ...{ status: 'warning' }, ...{ help: '' } });
+		} else if (siret.value.match(siretFormat)) {
+			setSiret({ ...siret, ...{ status: 'success' }, ...{ help: '' } });
+		} else {
+			setSiret({
+				...siret,
+				...{ status: 'error' },
+				...{ help: 'Siret invalide' }
+			});
+		}
 
-			// if (password.match(passwordFormat)) {
-			// 	//setRegisterState({ ...registerState, ...{ status: 'success' }, ...{ help: '' } });
-			// 	setValidInput({ ...validInput, ...{ statusPassword: 'success' }, ...{ helpPassword: '' } });
-			// } else {
-			// 	//setRegisterState({ ...registerState, ...{ status: 'error' }, ...{ help: 'Email invalide' } });
-			// 	setValidInput({
-			// 		...validInput,
-			// 		...{ statusPassword: 'error' },
-			// 		...{ helpPassword: 'Password invalide' }
-			// 	});
-			// }
+		if (password.value == '') {
+			setPassword({ ...password, ...{ status: 'warning' }, ...{ help: '' } });
+		} else if (password.value.match(passwordFormat)) {
+			setPassword({ ...password, ...{ status: 'success' }, ...{ help: '' } });
+		} else {
+			setPassword({
+				...password,
+				...{ status: 'error' },
+				...{ help: 'Mot de passe invalide' }
+			});
+		}
 
-			if (password === passwordCheck && password !== '') {
-				console.log('mots est correct');
-				if (registerState.role === 'Artisan') {
-					dispatch(sendRegisterArtisan(email, password, siret));
-				}
-				if (registerState.role === 'Particulier') {
-					dispatch(sendRegisterUser(email, password));
-				}
-				hideModalRegister();
-			}
-		};
+		if (passwordCheck.value == '') {
+			setPasswordCheck({ ...passwordCheck, ...{ status: 'warning' }, ...{ help: '' } });
+		} else if (passwordCheck.value == password.value) {
+			setPasswordCheck({ ...passwordCheck, ...{ status: 'success' }, ...{ help: '' } });
+		} else {
+			setPasswordCheck({
+				...passwordCheck,
+				...{ status: 'error' },
+				...{ help: 'Siret invalide' }
+			});
+		}
+
+		if (
+			registerState.role === 'Artisan' &&
+			email.value.match(mailFormat) &&
+			siret.value.match(siretFormat) &&
+			password.value.match(passwordFormat) &&
+			passwordCheck.value == password.value
+		) {
+			dispatch(sendRegisterArtisan(email.value, password.value, siret.value));
+			hideModalRegister();
+		}
+
+		if (
+			registerState.role === 'Particulier' &&
+			email.value.match(mailFormat) &&
+			password.value.match(passwordFormat) &&
+			passwordCheck.value == password.value
+		) {
+			dispatch(sendRegisterUser(email.value, password.value));
+			hideModalRegister();
+		}
+	};
+
+	const handleFormArtisan = (event) => {
+		event.preventDefault();
+		validateForm();
 	};
 
 	const hideModalRegister = () => {
@@ -111,17 +142,6 @@ const FormRegister = ({ registerState, setRegisterState, reset }) => {
 		setRegisterState({ ...registerState, ...{ valid: false } });
 	};
 
-	const registerOk = useSelector((state) => state.connect);
-
-	useEffect(
-		() => {
-			if (registerOk === 'register') {
-				registerModalVisible();
-			}
-		},
-		[ registerOk ]
-	);
-
 	return (
 		<div className="register-artisan">
 			<Row type="flex" justify="space-around" align="middle">
@@ -131,38 +151,28 @@ const FormRegister = ({ registerState, setRegisterState, reset }) => {
 					visible={registerState.visible}
 					onCancel={hideModalRegister}
 				>
-					<Form className="artisan-form" onSubmit={handleFormArtisan(email, password, passwordCheck, siret)}>
+					<Form className="artisan-form" onSubmit={handleFormArtisan}>
 						{registerState.role === 'Artisan' && (
-							<Form.Item
-								label="Siret"
-								hasFeedback
-								validateStatus={validInput.statusSiret}
-								help={validInput.helpSiret}
-							>
+							<Form.Item label="Siret" hasFeedback validateStatus={siret.status} help={siret.help}>
 								<Input onChange={siretChangeValue} />
 							</Form.Item>
 						)}
-						<Form.Item
-							label="E-mail"
-							hasFeedback
-							validateStatus={validInput.statusEmail}
-							help={validInput.helpEmail}
-						>
+						<Form.Item label="E-mail" hasFeedback validateStatus={email.status} help={email.help}>
 							<Input onChange={emailChangeValue} />
 						</Form.Item>
 						<Form.Item
 							label="Mot de passe"
 							hasFeedback
-							validateStatus={validInput.statusPassword}
-							help={validInput.helpPassword}
+							validateStatus={password.status}
+							help={password.help}
 						>
 							<Input.Password onChange={passwordChangeValue} />
 						</Form.Item>
 						<Form.Item
 							label="Confirmer votre mots de passe"
 							hasFeedback
-							validateStatus={validInput.statusPasswordCheck}
-							help={validInput.helpPasswordCheck}
+							validateStatus={passwordCheck.status}
+							help={passwordCheck.help}
 						>
 							<Input.Password onChange={passwordCheckChangeValue} />
 						</Form.Item>

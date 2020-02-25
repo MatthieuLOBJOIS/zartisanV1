@@ -61,7 +61,7 @@ export default (store) => (next) => (action) => {
 				email: action.email,
 				password: action.password
 			};
-			// console.log(data);
+			console.log(data);
 
 			return axios({
 				method: 'post',
@@ -71,13 +71,13 @@ export default (store) => (next) => (action) => {
 				.then((response) => {
 					// console.log(response);
 					if (response.status === 200) {
-						//console.log('inscription')
+						console.log('inscription');
 						store.dispatch(validRegister());
 					}
 				})
 				.catch(function(error) {
 					// handle error
-					// console.log(error);
+					console.log(error);
 				})
 				.finally(function() {
 					// always executed
