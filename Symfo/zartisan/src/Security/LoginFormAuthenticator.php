@@ -71,6 +71,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
 
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['isConfirmMail' => $credentials['isConfirmMail']]);
+        dd($user);
+
         return $user;
     }
 

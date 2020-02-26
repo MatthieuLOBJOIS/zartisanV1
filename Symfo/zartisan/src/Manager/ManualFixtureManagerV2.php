@@ -124,76 +124,7 @@ class ManualFixtureManagerV2
         $this->userRepository = $userRepository;
     }
 
-    public function setFixtureUser($index){
-        $user = new User();
-        
-        // Program to set 1st admin & 2nd user & 3rd artisan after is random
-        if($index > 30){
-            $user->setRoles(["ROLE_USER"]);
-        }
-        elseif($index > 2){
-            $user->setRoles(["ROLE_ARTISAN"]);
-        }elseif($index == 2){
-            $user->setRoles(["ROLE_ARTISAN"]);
-        }elseif($index == 1){
-            $user->setRoles(["ROLE_USER"]);
-        }else{
-            $user->setRoles(["ROLE_ADMIN"]);
-        }
-
-        if (in_array("ROLE_ARTISAN", $user->getRoles())) {
-            //$user->setPicture("company".random_int(1,6).".png");
-            $user->setPicture("assets/images_default/craftsmen-1020156_640.jpg");
-            $user->setSiret($this->siretArray[$index]);
-        }
-
-        if($index < 2){
-            $user->setEmail($this->nameArray[$index]."@msn.com");
-        }else{
-            $user->setEmail($this->nameArray[random_int(0,40)].$this->nameArray[random_int(0,40)].$this->nameArray[random_int(0,40)]."@msn.com");
-        }
-
-        $user->setPassword(
-            $this->passwordEncoder->encodePassword(
-                $user,
-                '123456'
-            )
-        );
-        if (in_array("ROLE_USER", $user->getRoles())) {
-            //$user->setPicture("user".random_int(1,6).".png");
-            $user->setPicture("assets/images_default/user-1633249_640.png"); 
-            $user->setFirstname($this->nameArray[random_int(0,40)]);
-            $user->setLastname($this->nameArray[random_int(0,40)]);
-            $user->setNickname($this->nameArray[random_int(0,40)]." ".$this->nameArray[random_int(0,40)]);
-            $user->setPhone('0344566360');
-        }
-        $user->setIsConfirmMail(0);
-        $user->setIsStatus(1);
-        $user->setIsVerified(0);
-        $user->setIsReported(0);
-        $this->em->persist($user);
-        $this->em->flush();
-
-        if (in_array("ROLE_ARTISAN", $user->getRoles())) {
-            $user = $this->apiSireneManager->setSireneDataApi($this->siretArray[$index]);
-        }
-        
-        return $user;
-    }
-
-    public function setFixtureRate(){
-        $author = $this->userRepository->findUser();
-        $pro =  $this->userRepository->findArtisan();
-
-        shuffle($author);
-        shuffle($pro);
-        $rate = new Rate();
-        $rate->setValue(random_int(0,5));
-        $rate->setUserAuthor($author[0]);
-        $rate->setUserPro($pro[0]);
-        return $rate;
-    }
-
+    
     public function setFixtureAdvice(){
         $author = $this->userRepository->findUser();
         $pro =  $this->userRepository->findArtisan();
@@ -225,6 +156,77 @@ class ManualFixtureManagerV2
                 $this->em->flush();
             }
         }
+    }
+
+    public function setFixtureUser($index){
+        $user = new User();
+        
+        // Program to set 1st admin & 2nd user & 3rd artisan after is random
+        if($index > 30){
+            $user->setRoles(["ROLE_USER"]);
+        }
+        elseif($index > 2){
+            $user->setRoles(["ROLE_ARTISAN"]);
+        }elseif($index == 2){
+            $user->setRoles(["ROLE_ARTISAN"]);
+        }elseif($index == 1){
+            $user->setRoles(["ROLE_USER"]);
+        }else{
+            $user->setRoles(["ROLE_ADMIN"]);
+        }
+
+        if (in_array("ROLE_ARTISAN", $user->getRoles())) {
+            $user->setPicture("assets/images_default/craftsmen-1020156_640.jpg");
+            $user->setSiret($this->siretArray[$index]);
+        }
+
+        if($index < 2){
+            $user->setEmail($this->nameArray[$index]."@msn.com");
+        }else{
+            $user->setEmail($this->nameArray[random_int(0,40)].$this->nameArray[random_int(0,40)].$this->nameArray[random_int(0,40)]."@msn.com");
+        }
+
+        $user->setPassword(
+            $this->passwordEncoder->encodePassword(
+                $user,
+                '123456'
+            )
+        );
+        
+        if (in_array("ROLE_USER", $user->getRoles())) {
+            $user->setPicture("assets/images_default/user-1633249_640.png"); 
+            $user->setFirstname($this->nameArray[random_int(0,40)]);
+            $user->setLastname($this->nameArray[random_int(0,40)]);
+            $user->setNickname($this->nameArray[random_int(0,40)]." ".$this->nameArray[random_int(0,40)]);
+            $user->setPhone('0344566360');
+        }
+        $user->setIsConfirmMail(0);
+        $user->setIsStatus(1);
+        $user->setIsVerified(0);
+        $user->setIsReported(0);
+        $this->em->persist($user);
+        $this->em->flush();
+
+        if (in_array("ROLE_ARTISAN", $user->getRoles())) {
+            $user = $this->apiSireneManager->setSireneDataApi($this->siretArray[$index]);
+            $user->setPicture("assets/images_default/craftsmen-1020156_640.jpg");
+            $user->setPhone('0344566365');
+        }
+        
+        return $user;
+    }
+
+    public function setFixtureRate(){
+        $author = $this->userRepository->findUser();
+        $pro =  $this->userRepository->findArtisan();
+
+        shuffle($author);
+        shuffle($pro);
+        $rate = new Rate();
+        $rate->setValue(random_int(0,5));
+        $rate->setUserAuthor($author[0]);
+        $rate->setUserPro($pro[0]);
+        return $rate;
     }
 
 }

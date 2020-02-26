@@ -13,21 +13,39 @@ const RateArtisan = ({ user, artisanUser, artisanObject, idArtisan, mail }) => {
 
 	// let star = artisanObject.averageRate;
 	// if (averageRate != null) {
-	// 	star = averageRate;
+	// 	console.log('updatedddd', artisanObject.averageRate);
 	// }
 
-	console.log('rateartisan', artisanObject.averageRate);
+	//console.log('rateartisan', artisanObject.averageRate);
 	//console.log('object', artisanObject);
 
+	const [ star, setStar ] = useState(artisanObject.averageRate);
+	const [ updateStar, setUpdateStar ] = useState(null);
+	console.log('updatedddd', updateStar);
+	console.log('star', star);
+
+	useEffect(
+		() => {
+			setUpdateStar(averageRate);
+		},
+		[ averageRate ]
+	);
+
+	useEffect(
+		() => {
+			//console.log(artisanObject.averageRate, 'testinfeffectlist');
+			setStar(artisanObject.averageRate);
+			setUpdateStar(null);
+		},
+		[ artisanObject.averageRate ]
+	);
+
 	const Rating = () => {
-		return (
-			<Rate
-				className="ratingCompany"
-				style={{ fontSize: '1em' }}
-				disabled
-				defaultValue={artisanObject.averageRate}
-			/>
-		);
+		if (updateStar == null) {
+			return <Rate className="ratingCompany" style={{ fontSize: '1em' }} disabled defaultValue={star} />;
+		} else {
+			return <Rate className="ratingCompany" style={{ fontSize: '1em' }} disabled defaultValue={updateStar} />;
+		}
 	};
 
 	/**Hooks for display popover of rate link */

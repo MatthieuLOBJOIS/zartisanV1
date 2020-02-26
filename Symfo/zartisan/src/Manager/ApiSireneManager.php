@@ -201,8 +201,12 @@ class ApiSireneManager
             // TODO : Change api service or buy some credit for presentation day
             // Connection to ApiCompagnyManager to get info for user (phone + mail)
             // The api fonctionnality work fully but the cost of api service is really expensive
-            // 
-            $this->apiCompanyManager->setCompanyDataApi($user);
+
+            
+            // $this->apiCompanyManager->setCompanyDataApi($user);
+
+            
+
 
             // Connection to ApiNomenclaturesManager to reister job & category
             $this->apiNomenclaturesManager->setNomenclaturesDataApi($user);

@@ -72,8 +72,8 @@ class SecurityController extends AbstractController
             $user->setSiret($request->get('siret'));
 
             // TODO Add undefined role artisan if mail not validate
-            $user->setRoles(["ROLE_ARTISAN"]);
-            //$user->setRoles(["ROLE_UNDEFINED_ARTISAN"]);
+            //$user->setRoles(["ROLE_ARTISAN"]);
+            $user->setRoles(["ROLE_UNDEFINED_ARTISAN"]);
             $user->setIsConfirmMail(false);
             $user->setPicture("assets/images_default/craftsmen-1020156_640.jpg"); 
             $user->setIsStatus(true);
@@ -103,7 +103,7 @@ class SecurityController extends AbstractController
             // cause of not send mail to real personne            $userRole = 'USER';
             //$foldersUser->isFolder($userEmail, $userRole);  // verification if folder exist
             // TODO
-            // $this->mailController->sendMailValidation($request);
+            $this->mailController->sendMailValidation($request);
 
             return $this->json($user , 200, [], ['groups' => 'user_artisan_single']);
         }
@@ -143,7 +143,7 @@ class SecurityController extends AbstractController
             $user->setPicture("assets/images_default/user-1633249_640.png"); 
             $user->setRoles(["ROLE_UNDEFINED_USER"]);
             $user->setIsStatus(true);
-            $user->setFirstname("unknown");
+            //$user->setFirstname("unknown");
             $user->setIsVerified(false);
             $user->setIsReported(false);
 
@@ -174,10 +174,6 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        //if ($this->getUser()) {
-             //return $this->redirectToRoute('main');
-        //}
-
         $error = $authenticationUtils->getLastAuthenticationError();
         
         $lastUsername = $authenticationUtils->getLastUsername();
