@@ -125,7 +125,7 @@ const AdviceArtisan = ({ user, artisanUser, adviceObject, mail, idArtisan, email
 						dataSource={adviceObject}
 						renderItem={(item) => (
 							<li>
-								{console.log(item, 'itemlog')}
+								{/*console.log(item, 'itemlog')*/}
 								<Comment
 									author={item.userAuthor.firstname}
 									avatar={`${NAME_SERVER}/${item.userAuthor.picture}`}

@@ -27,6 +27,7 @@ const ListArtisan = () => {
 	 *  search object from home
 	 */
 	const artisandata = useSelector((state) => state.search);
+
 	//console.log('listeartisan', artisandata);
 	let arrayArtisan = [];
 	for (let data in artisandata) {
@@ -34,15 +35,31 @@ const ListArtisan = () => {
 	}
 
 	const listData = [];
+	console.log(listData);
 
 	let objectArtisan = '';
+
 	for (let d in arrayArtisan) {
 		if (arrayArtisan[d].companyDescription == null) {
 			arrayArtisan[d].companyDescription = '';
 		}
+
 		objectArtisan = arrayArtisan[d];
+
 		listData.push(objectArtisan);
 	}
+
+	// const [ updateRate, setUpdateRate ] = useState('');
+
+	// useEffect(
+	// 	() => {
+	// 		//setUpdateRate(objectArtisan.averageRate);
+
+	// 	},
+	// 	[ objectArtisan.averageRate ]
+	// );
+
+	console.log('note rate list artisan', objectArtisan.averageRate);
 
 	// const [ obj, setObj ] = useState('');
 
@@ -72,7 +89,7 @@ const ListArtisan = () => {
 	const LinkArtisan = withRouter(({ history, item }) => {
 		const handleSearch = () => {
 			dispatch(artisanData(item.id, item.email));
-			console.log('itemtest', item.id, item.email, item);
+			//console.log('itemtest', item.id, item.email, item);
 			{
 				'item compagny', item.company;
 			}
@@ -102,8 +119,9 @@ const ListArtisan = () => {
 								visibleButtonJobs={visibleButtonJobs}
 								setvisibleButtonJobs={setvisibleButtonJobs}
 							/>
-
-							<ButtonSearchArtisanList regionChange={regionChange} idJob={idJob} />
+							<div className="bloc-button-search-artisan">
+								<ButtonSearchArtisanList regionChange={regionChange} idJob={idJob} />
+							</div>
 						</Row>
 
 						<List

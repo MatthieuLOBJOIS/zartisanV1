@@ -16,11 +16,11 @@ const CarouselArtisan = () => {
 	for (let artisan in artisanSelector) {
 		artisanObject = artisanSelector[0];
 	}
-	console.log(artisanObject);
+	//console.log(artisanObject);
 	return (
 		<Carousel autoplay>
 			{artisanObject.pictureFolder.map((picture) => {
-				console.log(picture);
+				//console.log(picture);
 				return (
 					<div key={picture}>
 						<h3>

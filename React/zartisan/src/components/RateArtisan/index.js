@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { Rate, Popover } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,11 +9,15 @@ import { sendRate } from 'src/store/rate/actions';
 const RateArtisan = ({ user, artisanUser, artisanObject, idArtisan, mail }) => {
 	const dispatch = useDispatch();
 	const averageRate = useSelector((state) => state.rate);
-	//console.log('note moyenne', averageRate);
+	// //console.log('note moyenne', averageRate);
 
-	if (averageRate != null) {
-		artisanObject.averageRate = averageRate;
-	}
+	// let star = artisanObject.averageRate;
+	// if (averageRate != null) {
+	// 	star = averageRate;
+	// }
+
+	console.log('rateartisan', artisanObject.averageRate);
+	//console.log('object', artisanObject);
 
 	const Rating = () => {
 		return (
