@@ -23,5 +23,5 @@
 ###< lexik/jwt-authentication-bundle ###
 
 ###> public/images ###
-/public/assets/images/
+/public/assets/images/*
 ###< public/images ###

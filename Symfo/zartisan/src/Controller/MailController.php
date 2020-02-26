@@ -16,7 +16,7 @@ class MailController extends AbstractController
 {
     // Set private data for send mail mail 
     //private $baseUrl = "http://ec2-52-90-234-146.compute-1.amazonaws.com/back/confirmation";
-    private $baseUrl = "http://127.0.1.1:8010";
+    private $baseUrl = "http://localhost:8010/confirmation";
     private $securityManager;
     private $em;
     private $userRepository;
@@ -63,10 +63,11 @@ class MailController extends AbstractController
     }
 
     /**
-     * @Route("/confirmMail", name="mail_confirm")
+     * @Route("confirmMail", name="mail_confirm")
      */
     public function sendMailValidation(Request $request)
     {
+
         if ($request->get('email')) {
             $error = $this->securityManager->securityEmail($request->get('email'));
             if (isset($error)) {
@@ -88,7 +89,7 @@ class MailController extends AbstractController
             $this->em->persist($user);
             $this->em->flush();
 
-            $message = (new \Swift_Message('Zartisan: Confirmation d\'email'))
+            $message = (new \Swift_Message('Z\'artisan: Confirmation d\'email'))
                 ->setFrom('staff@zartisan.com')
                 ->setTo($user->getEmail())
                 ->setBody(
@@ -153,7 +154,7 @@ class MailController extends AbstractController
                         ['name' => $user->getEmail(), 'token' => $token, 'password' => $password, 'use' => $use, "baseUrl" => $this->baseUrl]
                     ),
                     'text/html'
-                );
+                );           
 
             if (!$this->mailer->send($message)) {
                 return $this->json(['error' => 'mail not send'], 304, []);
@@ -195,7 +196,8 @@ class MailController extends AbstractController
                     $user->setRoles($roles);
                     $this->em->persist($user);
                     $this->em->flush();
-                    return $this->redirect($this->generateUrl('main'));
+                    return $this->redirect('http://localhost:3000');
+                    // return $this->redirect($this->generateUrl('main'));
                 }
                 return $this->json(['error' => 'No user for this token'], 304, []);
             }
