@@ -35,7 +35,7 @@ const ListArtisan = () => {
 	}
 
 	const listData = [];
-	console.log(listData);
+	//console.log(listData);
 
 	let objectArtisan = '';
 
@@ -49,15 +49,19 @@ const ListArtisan = () => {
 		listData.push(objectArtisan);
 	}
 
-	// const [ updateRate, setUpdateRate ] = useState('');
+	const [ star, setStar ] = useState(1);
+	console.log('star', star);
+	useEffect(
+		() => {
+			console.log(objectArtisan.averageRate, 'testinfeffectlist');
+			setStar(objectArtisan.averageRate);
+		},
+		[ objectArtisan.averageRate ]
+	);
 
-	// useEffect(
-	// 	() => {
-	// 		//setUpdateRate(objectArtisan.averageRate);
-
-	// 	},
-	// 	[ objectArtisan.averageRate ]
-	// );
+	const RateStar = () => {
+		return <Rate style={{ fontSize: '1em' }} disabled defaultValue={star} />;
+	};
 
 	console.log('note rate list artisan', objectArtisan.averageRate);
 
@@ -102,7 +106,7 @@ const ListArtisan = () => {
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{objectArtisan != '' ? (
+				{artisandata != '' ? (
 					<div className="list-artisan-content">
 						<Row type="flex" justify="space-around" align="middle">
 							<ButtonRegion
@@ -147,7 +151,8 @@ const ListArtisan = () => {
 										title={<LinkArtisan item={item} />}
 										description={item.companyDescription}
 									/>
-									<Rate style={{ fontSize: '1em' }} disabled defaultValue={item.averageRate} />
+									{/*<Rate style={{ fontSize: '1em' }} disabled defaultValue={star} />*/}
+									<RateStar />
 								</List.Item>
 							)}
 						/>
