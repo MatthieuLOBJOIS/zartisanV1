@@ -142,7 +142,8 @@ class ManualFixtureManagerV2
         }
 
         if (in_array("ROLE_ARTISAN", $user->getRoles())) {
-            $user->setPicture("company".random_int(1,6).".png");
+            //$user->setPicture("company".random_int(1,6).".png");
+            $user->setPicture("assets/images_default/craftsmen-1020156_640.jpg");
             $user->setSiret($this->siretArray[$index]);
         }
 
@@ -159,7 +160,8 @@ class ManualFixtureManagerV2
             )
         );
         if (in_array("ROLE_USER", $user->getRoles())) {
-            $user->setPicture("user".random_int(1,6).".png"); 
+            //$user->setPicture("user".random_int(1,6).".png");
+            $user->setPicture("assets/images_default/user-1633249_640.png"); 
             $user->setFirstname($this->nameArray[random_int(0,40)]);
             $user->setLastname($this->nameArray[random_int(0,40)]);
             $user->setNickname($this->nameArray[random_int(0,40)]." ".$this->nameArray[random_int(0,40)]);

@@ -1,4 +1,5 @@
 import { CONNECT } from 'src/store/register/actions';
+import { CONNECT_FAIL } from 'src/store/register/actions';
 import { DECONNEXION } from 'src/store/register/actions';
 import { VALID_REGISTER } from 'src/store/register/actions';
 
@@ -14,6 +15,11 @@ export default (state = initialState, action) => {
 		case DECONNEXION: {
 			return (state = false);
 		}
+
+		case CONNECT_FAIL: {
+			return (state = 'fail');
+		}
+
 		case VALID_REGISTER: {
 			return (state = 'register');
 		}

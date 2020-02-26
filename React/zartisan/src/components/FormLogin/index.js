@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Icon, Input, Button, Modal } from 'antd';
+import { Form, Icon, Input, Button, Modal, Alert } from 'antd';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import 'antd/dist/antd.css';
@@ -7,20 +7,20 @@ import 'antd/dist/antd.css';
 import './style.sass';
 import { sendLogin } from 'src/store/register/actions';
 
-const FormLogin = ({ handleCancel, modalLogin, connectVisible, setConnectVisible }) => {
-	const [ email, setEmail ] = useState('');
-	const [ password, setPassword ] = useState('');
+const FormLogin = ({ setModalLogin, modalLogin, connectVisible, setConnectVisible }) => {
+	const [ email, setEmail ] = useState({ value: '', status: '', help: '' });
+	const [ password, setPassword ] = useState({ value: '', status: '', help: '' });
 	const connect = useSelector((state) => state.connect);
 	const dispatch = useDispatch();
-
+	//console.log('co or fail', connect);
 	const mailChangeValue = (event) => {
 		//console.log(event.target.value);
-		setEmail(event.target.value);
+		setEmail({ ...email, ...{ value: event.target.value } });
 	};
 	//console.log(email);
 	const passwordChangeValue = (event) => {
 		//console.log(event.target.value);
-		setPassword(event.target.value);
+		setPassword({ ...password, ...{ value: event.target.value } });
 	};
 
 	const handleSubmitLogin = (email, password) => {
@@ -29,6 +29,10 @@ const FormLogin = ({ handleCancel, modalLogin, connectVisible, setConnectVisible
 
 			dispatch(sendLogin(email, password));
 		};
+	};
+
+	const handleCancel = () => {
+		setModalLogin(false);
 	};
 
 	const connectModalVisible = () => {
@@ -67,14 +71,16 @@ const FormLogin = ({ handleCancel, modalLogin, connectVisible, setConnectVisible
 	return (
 		<div>
 			<Modal footer={null} title="Connexion" visible={modalLogin} onCancel={handleCancel}>
-				<Form method="POST" onSubmit={handleSubmitLogin(email, password)}>
-					<Form.Item>
+				<Form method="POST" onSubmit={handleSubmitLogin(email.value, password.value)}>
+					<Form.Item label="E-mail" hasFeedback validateStatus={email.status} help={email.help}>
 						<Input
 							onChange={mailChangeValue}
 							prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
 							placeholder="Email"
 							required
 						/>
+					</Form.Item>
+					<Form.Item label="Mot de passe" hasFeedback validateStatus={password.status} help={password.help}>
 						<Input
 							onChange={passwordChangeValue}
 							prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -82,12 +88,23 @@ const FormLogin = ({ handleCancel, modalLogin, connectVisible, setConnectVisible
 							placeholder="Mot de passe"
 							required
 						/>
+					</Form.Item>
+					<Form.Item>
 						<Link className="login-form-forgot" to="/mot-de-passe-oublié" onClick={handleCancel}>
 							Mot de passe oublié
 						</Link>
 					</Form.Item>
+
 					<ButtonLogin />
 				</Form>
+				{connect == 'fail' && (
+					<Alert
+						message="Alerte"
+						description="L'email ou le mot de passe est incorrect"
+						type="error"
+						showIcon
+					/>
+				)}
 			</Modal>
 			<Modal visible={connectVisible} onCancel={closeModalWelcome} footer={null}>
 				<p>Bonjour vous êtes connecté</p>

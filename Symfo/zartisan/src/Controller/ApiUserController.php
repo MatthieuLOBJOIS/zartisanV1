@@ -51,7 +51,7 @@ class ApiUserController extends AbstractController
             }
             $user = $userRepository->isFoundMail($userEmail);
 
-            // verify if folder existgit statu
+            // verify if folder exist
             $foldersUser->isFolder($userEmail);  // verification if folder exist
 
             // if picture is uploaded
@@ -63,7 +63,7 @@ class ApiUserController extends AbstractController
                     return $this->json(['error' => 'Vous devez uploader un fichier de type png, jpg, jpeg'], 409);
                 }
                 $user->setPicture($file);
-            }
+            } 
 
             $apiRegionController = new ApiRegionController();
             $region = $apiRegionController->getRegionFromCode($request->get('postalCode'));
@@ -121,6 +121,7 @@ class ApiUserController extends AbstractController
             // si user existe on modifie la base de données
             if ($user != null) {
                 $user->setIsStatus(false);
+                $user->setIsConfirmMail(false);
                 $em->flush();
                 return $this->json(['success' => 'utilisatuer disable'], 200);
             } else {

@@ -2,11 +2,27 @@
  * Imports of dependencies
  */
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Upload, Icon, Modal } from 'antd';
-
+import { NAME_SERVER } from 'src/store/register/actions';
 import 'antd/dist/antd.css';
 
 const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
+	const [ fileList, setFileList ] = useState([]);
+	const [ pictureFolder, setPictureFolder ] = useState({
+		previewVisible: false,
+		previewImage: ''
+	});
+
+	// Select artisan in the global state
+	const artisanSelector = useSelector((state) => state.artisan);
+	let artisanObject = '';
+	for (let artisan in artisanSelector) {
+		artisanObject = artisanSelector[0];
+	}
+
+	//console.log(artisanObject);
+
 	function getSecondeBase64(file) {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -16,34 +32,26 @@ const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
 		});
 	}
 
-	const [ fileList, setFileList ] = useState([
-		{
-			uid: '-1',
-			name: 'image.png',
+	const arrayPicture = artisanObject.pictureFolder.map((picture) => {
+		//console.log('pic', picture);
+		return {
+			uid: picture,
+			name: picture,
 			status: 'done',
-			url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-		}
-	]);
-	const [ pictureFolder, setPictureFolder ] = useState({
-		previewVisible: false,
-		previewImage: ''
+			url: `${NAME_SERVER}/${picture}`,
+			thumbUrl: `${NAME_SERVER}/${picture}`
+		};
 	});
+
+	//console.log(arrayPicture);
 
 	useEffect(
 		() => {
-			let urlGaleryPicture = [];
-
-			if (fileList.length >= 0) {
-				for (let objectFile in fileList) {
-					urlGaleryPicture.push(fileList[objectFile].thumbUrl);
-				}
-				setProfileArtisan({
-					...profileArtisan,
-					...{ pictureGalery: urlGaleryPicture }
-				});
+			if (artisanObject != '') {
+				setFileList(arrayPicture);
 			}
 		},
-		[ fileList ]
+		[ artisanObject ]
 	);
 
 	const handleCancel = () => setPreviewVisible(false);
@@ -59,6 +67,24 @@ const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
 
 	const handleChangeFile = (fileList) => {
 		if (fileList.file.thumbUrl != '') {
+			//console.log('changefilelist', fileList.fileList);
+			const urlFolder = fileList.fileList.map((file) => {
+				if (file.thumbUrl != undefined) {
+					const urlHttp = file.thumbUrl.indexOf('http');
+					if (urlHttp == 0) {
+						//console.log(file.thumbUrl);
+						return file.thumbUrl.slice(22);
+					}
+					return file.thumbUrl;
+				}
+			});
+
+			//console.log('url', urlFolder);
+
+			setProfileArtisan({
+				...profileArtisan,
+				...{ pictureGalery: urlFolder }
+			});
 			return setFileList(fileList.fileList);
 		}
 	};

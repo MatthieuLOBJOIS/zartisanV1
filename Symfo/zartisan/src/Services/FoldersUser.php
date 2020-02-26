@@ -10,11 +10,11 @@ class FoldersUser
     {
         $this->file = $file;
     }
-
+  
     /**
      * @param string $email, $userRole
      * @return void
-     */
+      */
     public function isFolder(string $email, string $userRole = '')
     {
         $this->file = "assets/images/" . $email;

@@ -16,13 +16,13 @@ const CarouselArtisan = () => {
 	for (let artisan in artisanSelector) {
 		artisanObject = artisanSelector[0];
 	}
-	console.log(artisanObject);
+	//console.log(artisanObject);
 	return (
 		<Carousel autoplay>
-			{artisanObject.pictureFolder.map((picture, index) => {
-				console.log(picture);
+			{artisanObject.pictureFolder.map((picture) => {
+				//console.log(picture);
 				return (
-					<div key={index}>
+					<div key={picture}>
 						<h3>
 							<img className="imgCarousel" src={`${NAME_SERVER}/${picture}`} alt="image-galery" />
 						</h3>

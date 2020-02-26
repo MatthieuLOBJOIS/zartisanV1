@@ -5,7 +5,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Button, Icon, Drawer, Typography } from 'antd';
 import 'antd/dist/antd.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import cookies from 'js-cookie';
 
@@ -27,6 +27,7 @@ const { Text } = Typography;
 const Header = () => {
 	const connect = useSelector((state) => state.connect);
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	/**Hooks for display or not menu burger */
 	const [ visible, setVisible ] = useState(false);
@@ -61,14 +62,10 @@ const Header = () => {
 		}, 1000);
 	};
 
-	const handleCancel = () => {
-		setModalRegister(false);
-		setModalLogin(false);
-	};
-
 	const deconnexion = () => {
 		onClose();
 		dispatch(deconnect());
+		history.push('/');
 	};
 
 	let token = cookies.get('TOKEN');
@@ -118,13 +115,13 @@ const Header = () => {
 							</Row>
 							<Row type="flex" justify="center" align="top">
 								<Text>
-									{(connect === false || connect === 'register') && (
+									{(connect === false || connect === 'register' || connect == 'fail') && (
 										<a href="#" onClick={showModalLogin}>
 											Connexion
 										</a>
 									)}
 									<FormLogin
-										handleCancel={handleCancel}
+										setModalLogin={setModalLogin}
 										modalLogin={modalLogin}
 										connectVisible={connectVisible}
 										setConnectVisible={setConnectVisible}
@@ -148,14 +145,17 @@ const Header = () => {
 								</Text>
 							</Row>
 							<Row type="flex" justify="center" align="top">
-								{(connect === false || connect === 'register') && (
+								{(connect === false || connect === 'register' || connect == 'fail') && (
 									<a href="#" onClick={showModalRegister}>
 										Inscription
 									</a>
 								)}
 								{connect === true && <a onClick={deconnexion}>Deconnexion</a>}
 
-								<ModalGoToFormUserOrArtisan modalRegister={modalRegister} handleCancel={handleCancel} />
+								<ModalGoToFormUserOrArtisan
+									modalRegister={modalRegister}
+									setModalRegister={setModalRegister}
+								/>
 							</Row>
 						</Drawer>
 					</Col>

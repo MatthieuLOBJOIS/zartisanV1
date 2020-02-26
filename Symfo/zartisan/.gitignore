@@ -22,7 +22,6 @@
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 
-
 ###> public/images ###
-/public/images/
+/public/assets/images/
 ###< public/images ###

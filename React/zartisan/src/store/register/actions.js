@@ -39,6 +39,8 @@ export const sendLogin = (email, password) => ({
 
 export const CONNECT = 'register/actions/CONNECT';
 
+export const CONNECT_FAIL = 'register/actions/CONNECT_FAIL';
+
 export const DECONNEXION = 'register/actions/DECONNEXION';
 
 export const deconnect = () => ({
