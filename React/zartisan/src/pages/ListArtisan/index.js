@@ -151,7 +151,6 @@ const ListArtisan = () => {
 										title={<LinkArtisan item={item} />}
 										description={item.companyDescription}
 									/>
-									{/*<Rate style={{ fontSize: '1em' }} disabled defaultValue={star} />*/}
 									<RateStar />
 								</List.Item>
 							)}

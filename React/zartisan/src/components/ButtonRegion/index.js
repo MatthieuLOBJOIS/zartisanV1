@@ -11,19 +11,17 @@ import { Button, Icon, Menu, Dropdown } from 'antd';
 import './style.sass';
 import { getRegions } from 'src/store/regions/actions';
 import { getJobs } from 'src/store/jobs/actions';
+import { visibleJobDropdown } from 'src/services/local-state-service';
 
 const ButtonRegion = ({ visibleButtonJobs, setvisibleButtonJobs, regionChange, setRegion }) => {
 	const regions = useSelector((state) => state.regions);
 	const dispatch = useDispatch();
 
-	const visibleJobDropdown = () => {
-		setvisibleButtonJobs(true);
-	};
-
 	const changeRegion = (event) => {
 		setRegion(event.item.props.value);
 		dispatch(getJobs(event.item.props.value));
-		visibleJobDropdown();
+		console.log(event.item.props.value);
+		visibleJobDropdown(setvisibleButtonJobs);
 	};
 
 	useEffect(() => {

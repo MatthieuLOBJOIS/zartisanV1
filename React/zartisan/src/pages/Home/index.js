@@ -42,7 +42,11 @@ const Home = () => {
 			</Row>
 
 			<Row type="flex" justify="space-around" align="middle" className="home-france">
-				<FranceMap />
+				<FranceMap
+					visibleButtonJobs={visibleButtonJobs}
+					setvisibleButtonJobs={setvisibleButtonJobs}
+					setRegion={setRegion}
+				/>
 				<ButtonSearchArtisanList regionChange={regionChange} idJob={idJob} />
 			</Row>
 		</div>
