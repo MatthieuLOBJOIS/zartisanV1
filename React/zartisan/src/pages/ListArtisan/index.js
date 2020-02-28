@@ -3,7 +3,7 @@ import { Row, List, Rate } from 'antd';
 
 import 'antd/dist/antd.css';
 import './style.sass';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { artisanData } from 'src/store/artisan/actions';
 import { NAME_SERVER } from 'src/store/register/actions';
@@ -20,7 +20,7 @@ import { useLoading } from 'src/hooks/loading';
 
 const ListArtisan = () => {
 	const dispatch = useDispatch();
-	const artisandata = useSelector((state) => state.search);
+
 	const [ visibleButtonJobs, setvisibleButtonJobs ] = useState(false);
 	const [ regionChange, setRegion ] = useState('Choisissez une Région');
 	const [ jobChange, setJobChange ] = useState('Choisissez votre métier');
@@ -31,7 +31,7 @@ const ListArtisan = () => {
 	const listData = [];
 	var data = JSON.parse(sessionStorage.getItem('ArtisanList'));
 
-	console.log('session', data);
+	//console.log('session', data);
 
 	//	let arrayArtisan = '';
 
@@ -48,7 +48,7 @@ const ListArtisan = () => {
 
 		listData.push(objectArtisan);
 	}
-	console.log(star, 'star');
+	//console.log(star, 'star');
 	useEffect(
 		() => {
 			setStar(objectArtisan.averageRate);
