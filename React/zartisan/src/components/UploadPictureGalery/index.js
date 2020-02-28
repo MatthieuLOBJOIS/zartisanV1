@@ -16,12 +16,13 @@ const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
 
 	// Select artisan in the global state
 	const artisanSelector = useSelector((state) => state.artisan);
-	let artisanObject = '';
-	for (let artisan in artisanSelector) {
-		artisanObject = artisanSelector[0];
-	}
+	const data = JSON.parse(sessionStorage.getItem('ArtisanPage'));
+	//console.log('1', artisanSelector, '2', data);
 
-	//console.log(artisanObject);
+	let artisanObject = '';
+	for (let artisan in data) {
+		artisanObject = data[0];
+	}
 
 	function getSecondeBase64(file) {
 		return new Promise((resolve, reject) => {
@@ -51,7 +52,7 @@ const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
 				setFileList(arrayPicture);
 			}
 		},
-		[ artisanObject ]
+		[ artisanSelector ]
 	);
 
 	const handleCancel = () => setPreviewVisible(false);
@@ -73,6 +74,7 @@ const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
 					const urlHttp = file.thumbUrl.indexOf('http');
 					if (urlHttp == 0) {
 						//console.log(file.thumbUrl);
+						// for localhost
 						return file.thumbUrl.slice(22);
 					}
 					return file.thumbUrl;
