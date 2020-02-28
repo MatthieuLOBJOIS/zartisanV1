@@ -9,8 +9,11 @@ import { useLoading } from 'src/hooks/loading';
 const ProfileSettingsUser = () => {
 	const userSelect = useSelector((state) => state.user);
 	const data = JSON.parse(sessionStorage.getItem('userProfile'));
+	let objUser = '';
 
-	//console.log('ussser', userSelect);
+	if (data != null) {
+		objUser = data;
+	}
 
 	const [ profileUser, setProfileUser ] = useState({
 		pictureAvatar: '',
@@ -20,27 +23,28 @@ const ProfileSettingsUser = () => {
 		phone: '',
 		mail: ''
 	});
+	//console.log('ussser', userSelect, data, profileUser);
 
 	useEffect(
 		() => {
 			setProfileUser({
-				pictureAvatar: data.picture,
-				nickname: data.nickname,
-				firstname: data.firstname,
-				lastname: data.lastname,
-				phone: data.phone,
-				mail: data.email
+				pictureAvatar: objUser.picture,
+				nickname: objUser.nickname,
+				firstname: objUser.firstname,
+				lastname: objUser.lastname,
+				phone: objUser.phone,
+				mail: objUser.email
 			});
 		},
 		[ userSelect ]
 	);
 
 	//console.log(profileUser);
-
+	//console.log('obj', objUser);
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{useLoading() == false && data != null ? (
+				{useLoading() == false && objUser != '' ? (
 					<FormEditUser profileUser={profileUser} setProfileUser={setProfileUser} />
 				) : (
 					<Loader />
