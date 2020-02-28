@@ -66,6 +66,7 @@ const Header = () => {
 		onClose();
 		dispatch(deconnect());
 		history.push('/');
+		sessionStorage.clear();
 	};
 
 	let token = cookies.get('TOKEN');

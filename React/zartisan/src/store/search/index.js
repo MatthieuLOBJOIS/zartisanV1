@@ -8,6 +8,7 @@ export default (state = initialState, action) => {
 	switch (action.type) {
 		case HOME_SEARCH: {
 			//console.log('action reducer search', action.dataArtisan);
+			sessionStorage.setItem('ArtisanList', JSON.stringify(action.dataArtisan));
 			return (state = [ action.dataArtisan ]);
 		}
 		default: {
