@@ -38,6 +38,8 @@ const Header = () => {
 	/**Hooks welcome */
 	const [ connectVisible, setConnectVisible ] = useState(false);
 
+	const sessionConnect = sessionStorage.getItem('sessionConnect');
+
 	//open menu burger
 	const showDrawer = () => {
 		setVisible(true);
@@ -116,7 +118,7 @@ const Header = () => {
 							</Row>
 							<Row type="flex" justify="center" align="top">
 								<Text>
-									{(connect === false || connect === 'register' || connect == 'fail') && (
+									{sessionConnect == null && (
 										<a href="#" onClick={showModalLogin}>
 											Connexion
 										</a>
@@ -127,7 +129,7 @@ const Header = () => {
 										connectVisible={connectVisible}
 										setConnectVisible={setConnectVisible}
 									/>
-									{connect === true && admin === -1 ? connect === true && artisanUser !== -1 ? (
+									{admin === -1 && sessionConnect ? artisanUser !== -1 && sessionConnect ? (
 										<Link to="/profil/artisan" onClick={handleClickProfileArtisan}>
 											Profil
 										</Link>
@@ -146,12 +148,12 @@ const Header = () => {
 								</Text>
 							</Row>
 							<Row type="flex" justify="center" align="top">
-								{(connect === false || connect === 'register' || connect == 'fail') && (
+								{sessionConnect == null && (
 									<a href="#" onClick={showModalRegister}>
 										Inscription
 									</a>
 								)}
-								{connect === true && <a onClick={deconnexion}>Deconnexion</a>}
+								{sessionConnect && <a onClick={deconnexion}>Deconnexion</a>}
 
 								<ModalGoToFormUserOrArtisan
 									modalRegister={modalRegister}
