@@ -7,16 +7,7 @@ import { Carousel } from 'antd';
 
 import './style.sass';
 
-import Carousel1 from 'src/styles/pictures/caroussel/artisan10.jpg';
-
-const CarouselArtisan = () => {
-	// Select artisan in the global state
-	const artisanSelector = useSelector((state) => state.artisan);
-	let artisanObject = '';
-	for (let artisan in artisanSelector) {
-		artisanObject = artisanSelector[0];
-	}
-	//console.log(artisanObject);
+const CarouselArtisan = ({ artisanObject }) => {
 	return (
 		<Carousel autoplay>
 			{artisanObject.pictureFolder.map((picture) => {

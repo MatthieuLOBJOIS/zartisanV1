@@ -141,7 +141,7 @@ const PageArtisan = () => {
 						</Row>
 
 						<div className="page-artisan-caroussel">
-							<CarouselArtisan />
+							<CarouselArtisan artisanObject={artisanObject} />
 						</div>
 
 						<div className="page-artisan-commentary">
