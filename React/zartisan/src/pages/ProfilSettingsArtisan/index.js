@@ -8,13 +8,17 @@ import 'antd/dist/antd.css';
 
 import FormEditArtisan from 'src/components/FormEditArtisan';
 import Loader from 'src/components/Loader';
+import { useLoading } from 'src/hooks/loading';
 
 const ProfilSettingsArtisan = () => {
 	// Select artisan in the global state
 	const artisanSelector = useSelector((state) => state.artisan);
+	const data = JSON.parse(sessionStorage.getItem('ArtisanPage'));
+	//console.log('1', artisanSelector, '2', data);
+
 	let artisanObject = '';
-	for (let artisan in artisanSelector) {
-		artisanObject = artisanSelector[0];
+	for (let artisan in data) {
+		artisanObject = data[0];
 	}
 
 	//console.log(artisanObject);
@@ -36,6 +40,8 @@ const ProfilSettingsArtisan = () => {
 		email: ''
 	});
 
+	//console.log(profileArtisan);
+
 	useEffect(
 		() => {
 			setProfileArtisan({
@@ -54,13 +60,13 @@ const ProfilSettingsArtisan = () => {
 				email: artisanObject.email
 			});
 		},
-		[ artisanObject ]
+		[ artisanSelector ]
 	);
 
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{artisanObject != '' ? (
+				{useLoading() == false && artisanObject != '' ? (
 					<FormEditArtisan profileArtisan={profileArtisan} setProfileArtisan={setProfileArtisan} />
 				) : (
 					<Loader />

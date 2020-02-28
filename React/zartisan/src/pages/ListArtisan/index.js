@@ -76,7 +76,7 @@ const ListArtisan = () => {
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{useLoading() == false ? (
+				{useLoading() == false && objectArtisan ? (
 					<div className="list-artisan-content">
 						<Row type="flex" justify="space-around" align="middle">
 							<ButtonRegion
