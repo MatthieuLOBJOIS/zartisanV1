@@ -29,7 +29,7 @@ const ListArtisan = () => {
 	//console.log('test', artisandata);
 	let objectArtisan = '';
 	const listData = [];
-	var data = JSON.parse(sessionStorage.getItem('ArtisanList'));
+	const data = JSON.parse(sessionStorage.getItem('ArtisanList'));
 
 	//console.log('session', data);
 

@@ -15,7 +15,7 @@ import { useLoading } from 'src/hooks/loading';
 
 const PageArtisan = () => {
 	//const artisanSelector = useSelector((state) => state.artisan);
-	var data = JSON.parse(sessionStorage.getItem('ArtisanPage'));
+	const data = JSON.parse(sessionStorage.getItem('ArtisanPage'));
 
 	let artisanObject = '';
 	let adviceObject = [];
