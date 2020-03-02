@@ -37,7 +37,6 @@ export default (store) => (next) => (action) => {
 		}
 		case EDIT_USER: {
 			console.log('middleware edit', action.data.mail);
-
 			return axios({
 				method: 'post',
 				url: `${NAME_SERVER}/v1/user/edit`,

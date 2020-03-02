@@ -1,3 +1,4 @@
+import cookies from 'js-cookie';
 import { ARTISAN_DATA } from 'src/store/artisan/actions';
 import { ARTISAN_EDIT } from 'src/store/artisan/actions';
 import { artisanInfo } from 'src/store/artisan/actions';
@@ -10,6 +11,7 @@ import { NAME_SERVER } from 'src/store/register/actions';
 import axios from 'axios';
 
 export default (store) => (next) => (action) => {
+	let token = cookies.get('TOKEN');
 	switch (action.type) {
 		case ARTISAN_DATA: {
 			//console.log('middleware artisan');
