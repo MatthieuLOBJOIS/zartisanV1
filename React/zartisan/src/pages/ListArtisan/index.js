@@ -19,31 +19,38 @@ import Loader from "src/components/Loader";
 
 const ListArtisan = () => {
   const dispatch = useDispatch();
-  const artisandata = useSelector(state => state.search);
+  const arrayArtisan = useSelector(state => state.search);
   const [visibleButtonJobs, setvisibleButtonJobs] = useState(false);
   const [regionChange, setRegion] = useState("Choisissez une Région");
   const [jobChange, setJobChange] = useState("Choisissez votre métier");
   const [idJob, setIdJob] = useState("");
   const [star, setStar] = useState(1);
-  const [loading, setLoading] = useState(true);
-  console.log("test", artisandata);
+
   let objectArtisan = "";
   const listData = [];
 
-  let arrayArtisan = [];
-  for (let data in artisandata) {
-    arrayArtisan = artisandata[data];
-  }
-
-  for (let d in arrayArtisan) {
-    if (arrayArtisan[d].companyDescription == null) {
-      arrayArtisan[d].companyDescription = "";
+  // let arrayArtisan = [];
+  // for (let data in artisandata) {
+  //   arrayArtisan = artisandata[data];
+  // }
+  // console.log("test2", arrayArtisan);
+  arrayArtisan.map(obj => {
+    if (obj.companyDescription == null) {
+      obj.companyDescription = "";
     }
-
-    objectArtisan = arrayArtisan[d];
-
+    objectArtisan = obj;
     listData.push(objectArtisan);
-  }
+  });
+
+  // for (let d in arrayArtisan) {
+  //   if (arrayArtisan[d].companyDescription == null) {
+  //     arrayArtisan[d].companyDescription = "";
+  //   }
+
+  //   objectArtisan = arrayArtisan[d];
+
+  //   listData.push(objectArtisan);
+  // }
 
   useEffect(() => {
     setStar(objectArtisan.averageRate);
@@ -69,7 +76,7 @@ const ListArtisan = () => {
   return (
     <div>
       <Row type="flex" justify="space-around" align="middle">
-        {artisandata != "" ? (
+        {arrayArtisan != "" ? (
           <div className="list-artisan-content">
             <Row type="flex" justify="space-around" align="middle">
               <ButtonRegion
