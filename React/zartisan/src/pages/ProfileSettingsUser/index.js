@@ -4,16 +4,11 @@ import { Row } from 'antd';
 import 'antd/dist/antd.css';
 import FormEditUser from 'src/components/FormEditUser';
 import Loader from 'src/components/Loader';
-import { useLoading } from 'src/hooks/loading';
 
 const ProfileSettingsUser = () => {
 	const userSelect = useSelector((state) => state.user);
-	const data = JSON.parse(sessionStorage.getItem('userProfile'));
-	let objUser = '';
 
-	if (data != null) {
-		objUser = data;
-	}
+	console.log('ussser', userSelect);
 
 	const [ profileUser, setProfileUser ] = useState({
 		pictureAvatar: '',
@@ -23,31 +18,30 @@ const ProfileSettingsUser = () => {
 		phone: '',
 		mail: ''
 	});
-	//console.log('ussser', userSelect, data, profileUser);
 
 	useEffect(
 		() => {
 			setProfileUser({
-				pictureAvatar: objUser.picture,
-				nickname: objUser.nickname,
-				firstname: objUser.firstname,
-				lastname: objUser.lastname,
-				phone: objUser.phone,
-				mail: objUser.email
+				pictureAvatar: userSelect.picture,
+				nickname: userSelect.nickname,
+				firstname: userSelect.firstname,
+				lastname: userSelect.lastname,
+				phone: userSelect.phone,
+				mail: userSelect.email
 			});
 		},
 		[ userSelect ]
 	);
 
 	//console.log(profileUser);
-	//console.log('obj', objUser);
+
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{useLoading() == false && objUser != '' ? (
-					<FormEditUser profileUser={profileUser} setProfileUser={setProfileUser} />
-				) : (
+				{userSelect == '' ? (
 					<Loader />
+				) : (
+					<FormEditUser profileUser={profileUser} setProfileUser={setProfileUser} />
 				)}
 			</Row>
 		</div>

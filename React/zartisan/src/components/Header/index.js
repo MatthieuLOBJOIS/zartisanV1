@@ -38,8 +38,6 @@ const Header = () => {
 	/**Hooks welcome */
 	const [ connectVisible, setConnectVisible ] = useState(false);
 
-	const sessionConnect = sessionStorage.getItem('sessionConnect');
-
 	//open menu burger
 	const showDrawer = () => {
 		setVisible(true);
@@ -68,7 +66,6 @@ const Header = () => {
 		onClose();
 		dispatch(deconnect());
 		history.push('/');
-		sessionStorage.clear();
 	};
 
 	let token = cookies.get('TOKEN');
@@ -118,7 +115,7 @@ const Header = () => {
 							</Row>
 							<Row type="flex" justify="center" align="top">
 								<Text>
-									{sessionConnect == null && (
+									{(connect === false || connect === 'register' || connect == 'fail') && (
 										<a href="#" onClick={showModalLogin}>
 											Connexion
 										</a>
@@ -129,7 +126,7 @@ const Header = () => {
 										connectVisible={connectVisible}
 										setConnectVisible={setConnectVisible}
 									/>
-									{admin === -1 && sessionConnect ? artisanUser !== -1 && sessionConnect ? (
+									{connect === true && admin === -1 ? connect === true && artisanUser !== -1 ? (
 										<Link to="/profil/artisan" onClick={handleClickProfileArtisan}>
 											Profil
 										</Link>
@@ -148,12 +145,12 @@ const Header = () => {
 								</Text>
 							</Row>
 							<Row type="flex" justify="center" align="top">
-								{sessionConnect == null && (
+								{(connect === false || connect === 'register' || connect == 'fail') && (
 									<a href="#" onClick={showModalRegister}>
 										Inscription
 									</a>
 								)}
-								{sessionConnect && <a onClick={deconnexion}>Deconnexion</a>}
+								{connect === true && <a onClick={deconnexion}>Deconnexion</a>}
 
 								<ModalGoToFormUserOrArtisan
 									modalRegister={modalRegister}

@@ -10,7 +10,6 @@ export default (state = initialState, action) => {
 
 	switch (action.type) {
 		case CONNECT: {
-			sessionStorage.setItem('sessionConnect', 'connect');
 			return (state = true);
 		}
 		case DECONNEXION: {

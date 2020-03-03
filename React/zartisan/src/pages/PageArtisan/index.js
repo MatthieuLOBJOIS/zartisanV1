@@ -11,18 +11,15 @@ import CarouselArtisan from 'src/components/CarouselArtisan';
 import RateArtisan from 'src/components/RateArtisan';
 import AdviceArtisan from 'src/components/AdviceArtisan';
 import Loader from 'src/components/Loader';
-import { useLoading } from 'src/hooks/loading';
 
 const PageArtisan = () => {
-	//const artisanSelector = useSelector((state) => state.artisan);
-	const data = JSON.parse(sessionStorage.getItem('ArtisanPage'));
+	const artisanSelector = useSelector((state) => state.artisan);
 
 	let artisanObject = '';
 	let adviceObject = [];
-
-	for (let artisan in data) {
-		artisanObject = data[0];
-		adviceObject = data[1];
+	for (let artisan in artisanSelector) {
+		artisanObject = artisanSelector[0];
+		adviceObject = artisanSelector[1];
 	}
 
 	const connect = useSelector((state) => state.connect);
@@ -75,7 +72,7 @@ const PageArtisan = () => {
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{useLoading() == false && artisanObject != '' ? (
+				{artisanObject != '' ? (
 					<div id="page-artisan">
 						<Row>
 							<div className="page-artisan-description">
@@ -141,7 +138,7 @@ const PageArtisan = () => {
 						</Row>
 
 						<div className="page-artisan-caroussel">
-							<CarouselArtisan artisanObject={artisanObject} />
+							<CarouselArtisan />
 						</div>
 
 						<div className="page-artisan-commentary">
