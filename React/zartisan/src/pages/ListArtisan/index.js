@@ -29,28 +29,21 @@ const ListArtisan = () => {
   let objectArtisan = "";
   const listData = [];
 
-  // let arrayArtisan = [];
-  // for (let data in artisandata) {
-  //   arrayArtisan = artisandata[data];
-  // }
-  // console.log("test2", arrayArtisan);
-  arrayArtisan.map(obj => {
-    if (obj.companyDescription == null) {
-      obj.companyDescription = "";
-    }
-    objectArtisan = obj;
-    listData.push(objectArtisan);
-  });
+  if (arrayArtisan != "") {
+    sessionStorage.setItem("ListArtisan", JSON.stringify(arrayArtisan));
+  }
 
-  // for (let d in arrayArtisan) {
-  //   if (arrayArtisan[d].companyDescription == null) {
-  //     arrayArtisan[d].companyDescription = "";
-  //   }
+  const sessionData = JSON.parse(sessionStorage.getItem("ListArtisan"));
 
-  //   objectArtisan = arrayArtisan[d];
-
-  //   listData.push(objectArtisan);
-  // }
+  if (sessionData != null) {
+    sessionData.map(obj => {
+      if (obj.companyDescription == null) {
+        obj.companyDescription = "";
+      }
+      objectArtisan = obj;
+      listData.push(objectArtisan);
+    });
+  }
 
   useEffect(() => {
     setStar(objectArtisan.averageRate);
@@ -76,7 +69,7 @@ const ListArtisan = () => {
   return (
     <div>
       <Row type="flex" justify="space-around" align="middle">
-        {arrayArtisan != "" ? (
+        {sessionData != null ? (
           <div className="list-artisan-content">
             <Row type="flex" justify="space-around" align="middle">
               <ButtonRegion
