@@ -2,7 +2,7 @@
  * Imports of dependencies
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Button, Icon, Drawer, Typography } from "antd";
 import "antd/dist/antd.css";
 import { Link, useHistory } from "react-router-dom";
@@ -37,6 +37,9 @@ const Header = () => {
   const [modalRegister, setModalRegister] = useState(false);
   /**Hooks welcome */
   const [connectVisible, setConnectVisible] = useState(false);
+
+  const sessionConnect = sessionStorage.getItem("Connect");
+  console.log("session header", sessionConnect);
 
   //open menu burger
   const showDrawer = () => {
@@ -129,9 +132,7 @@ const Header = () => {
               </Row>
               <Row type="flex" justify="center" align="top">
                 <Text>
-                  {(connect === false ||
-                    connect === "register" ||
-                    connect == "fail") && (
+                  {sessionConnect === null && (
                     <a href="#" onClick={showModalLogin}>
                       Connexion
                     </a>
@@ -142,8 +143,8 @@ const Header = () => {
                     connectVisible={connectVisible}
                     setConnectVisible={setConnectVisible}
                   />
-                  {connect === true && admin === -1 ? (
-                    connect === true && artisanUser !== -1 ? (
+                  {sessionConnect && admin === -1 ? (
+                    sessionConnect && artisanUser !== -1 ? (
                       <Link
                         to="/profil/artisan"
                         onClick={handleClickProfileArtisan}
@@ -161,7 +162,7 @@ const Header = () => {
                   ) : (
                     ""
                   )}
-                  {connect === true && admin !== -1 ? (
+                  {sessionConnect === "connect" && admin !== -1 ? (
                     <a href={`${NAME_SERVER}/admin`}>Admin </a>
                   ) : (
                     ""
@@ -169,14 +170,12 @@ const Header = () => {
                 </Text>
               </Row>
               <Row type="flex" justify="center" align="top">
-                {(connect === false ||
-                  connect === "register" ||
-                  connect == "fail") && (
+                {sessionConnect === null && (
                   <a href="#" onClick={showModalRegister}>
                     Inscription
                   </a>
                 )}
-                {connect === true && <a onClick={deconnexion}>Deconnexion</a>}
+                {sessionConnect && <a onClick={deconnexion}>Deconnexion</a>}
 
                 <ModalGoToFormUserOrArtisan
                   modalRegister={modalRegister}
