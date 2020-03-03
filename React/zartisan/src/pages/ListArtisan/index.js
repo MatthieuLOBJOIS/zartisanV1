@@ -26,16 +26,15 @@ const ListArtisan = () => {
   const [idJob, setIdJob] = useState("");
   const [star, setStar] = useState(1);
 
-  let objectArtisan = "";
-  const listData = [];
-
   if (arrayArtisan != "") {
     sessionStorage.setItem("ListArtisan", JSON.stringify(arrayArtisan));
   }
-
   const sessionData = JSON.parse(sessionStorage.getItem("ListArtisan"));
 
-  if (sessionData != null) {
+  let objectArtisan = "";
+  const listData = [];
+
+  if (sessionData != null && sessionData != "") {
     sessionData.map(obj => {
       if (obj.companyDescription == null) {
         obj.companyDescription = "";

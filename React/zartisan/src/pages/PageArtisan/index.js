@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "antd/dist/antd.css";
 import { NAME_SERVER } from "src/store/register/actions";
 
@@ -15,11 +15,18 @@ import Loader from "src/components/Loader";
 const PageArtisan = () => {
   const artisanSelector = useSelector(state => state.artisan);
 
+  if (artisanSelector != "") {
+    sessionStorage.setItem("PageArtisan", JSON.stringify(artisanSelector));
+  }
+
+  const sessionArtisan = JSON.parse(sessionStorage.getItem("PageArtisan"));
+
   let artisanObject = "";
   let adviceObject = [];
-  for (let artisan in artisanSelector) {
-    artisanObject = artisanSelector[0];
-    adviceObject = artisanSelector[1];
+
+  for (let artisan in sessionArtisan) {
+    artisanObject = sessionArtisan[0];
+    adviceObject = sessionArtisan[1];
   }
 
   const connect = useSelector(state => state.connect);
@@ -77,7 +84,7 @@ const PageArtisan = () => {
   return (
     <div>
       <Row type="flex" justify="space-around" align="middle">
-        {artisanObject != "" ? (
+        {sessionArtisan != null ? (
           <div id="page-artisan">
             <Row>
               <div className="page-artisan-description">
@@ -146,7 +153,7 @@ const PageArtisan = () => {
             </Row>
 
             <div className="page-artisan-caroussel">
-              <CarouselArtisan />
+              <CarouselArtisan artisanObject={artisanObject} />
             </div>
 
             <div className="page-artisan-commentary">
