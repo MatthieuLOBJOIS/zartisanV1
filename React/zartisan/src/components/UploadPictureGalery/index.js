@@ -7,7 +7,7 @@ import { Upload, Icon, Modal } from 'antd';
 import { NAME_SERVER } from 'src/store/register/actions';
 import 'antd/dist/antd.css';
 
-const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
+const UploadPictureGalery = ({ artisanObject, profileArtisan, setProfileArtisan }) => {
 	const [ fileList, setFileList ] = useState([]);
 	const [ pictureFolder, setPictureFolder ] = useState({
 		previewVisible: false,
@@ -16,12 +16,6 @@ const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
 
 	// Select artisan in the global state
 	const artisanSelector = useSelector((state) => state.artisan);
-	let artisanObject = '';
-	for (let artisan in artisanSelector) {
-		artisanObject = artisanSelector[0];
-	}
-
-	//console.log(artisanObject);
 
 	function getSecondeBase64(file) {
 		return new Promise((resolve, reject) => {
@@ -32,16 +26,19 @@ const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
 		});
 	}
 
-	const arrayPicture = artisanObject.pictureFolder.map((picture) => {
-		//console.log('pic', picture);
-		return {
-			uid: picture,
-			name: picture,
-			status: 'done',
-			url: `${NAME_SERVER}/${picture}`,
-			thumbUrl: `${NAME_SERVER}/${picture}`
-		};
-	});
+	let arrayPicture = [];
+	if (artisanObject != '') {
+		arrayPicture = artisanObject.pictureFolder.map((picture) => {
+			//console.log('pic', picture);
+			return {
+				uid: picture,
+				name: picture,
+				status: 'done',
+				url: `${NAME_SERVER}/${picture}`,
+				thumbUrl: `${NAME_SERVER}/${picture}`
+			};
+		});
+	}
 
 	//console.log(arrayPicture);
 
@@ -51,7 +48,7 @@ const UploadPictureGalery = ({ profileArtisan, setProfileArtisan }) => {
 				setFileList(arrayPicture);
 			}
 		},
-		[ artisanObject ]
+		[ artisanSelector ]
 	);
 
 	const handleCancel = () => setPreviewVisible(false);

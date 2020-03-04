@@ -39,7 +39,7 @@ const Header = () => {
   const [connectVisible, setConnectVisible] = useState(false);
 
   const sessionConnect = sessionStorage.getItem("Connect");
-  console.log("session header", sessionConnect);
+  //console.log("session header", sessionConnect);
 
   //open menu burger
   const showDrawer = () => {

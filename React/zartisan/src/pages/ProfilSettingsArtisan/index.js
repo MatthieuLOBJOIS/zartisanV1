@@ -12,56 +12,72 @@ import Loader from 'src/components/Loader';
 const ProfilSettingsArtisan = () => {
 	// Select artisan in the global state
 	const artisanSelector = useSelector((state) => state.artisan);
-	let artisanObject = '';
-	for (let artisan in artisanSelector) {
-		artisanObject = artisanSelector[0];
+
+	if (artisanSelector != '') {
+		sessionStorage.setItem('ProfileArtisan', JSON.stringify(artisanSelector));
 	}
 
-	//console.log(artisanObject);
+	const sessionArtisan = JSON.parse(sessionStorage.getItem('ProfileArtisan'));
+	console.log(artisanSelector, 'select obj');
+	let artisanObject = '';
+
+	for (let artisan in sessionArtisan) {
+		artisanObject = sessionArtisan[0];
+	}
+
+	console.log('oject', artisanObject);
 
 	// Local state Artisan
 	const [ profileArtisan, setProfileArtisan ] = useState({
-		firstname: '',
-		lastname: '',
-		siret: '',
-		company: '',
-		numberWay: '',
-		way: '',
-		postalCode: '',
-		city: '',
-		description: '',
-		pictureAvatar: '',
-		pictureGalery: '',
-		phone: '',
-		email: ''
+		firstname: artisanObject.firstname,
+		lastname: artisanObject.lastname,
+		siret: artisanObject.siret,
+		company: artisanObject.company,
+		numberWay: artisanObject.numberWay,
+		way: artisanObject.way,
+		postalCode: artisanObject.postalCode,
+		city: artisanObject.city,
+		description: artisanObject.companyDescription,
+		pictureAvatar: artisanObject.picture,
+		pictureGalery: artisanObject.pictureFolder,
+		phone: artisanObject.phone,
+		email: artisanObject.email
 	});
 
 	useEffect(
 		() => {
-			setProfileArtisan({
-				firstname: artisanObject.firstname,
-				lastname: artisanObject.lastname,
-				siret: artisanObject.siret,
-				company: artisanObject.company,
-				numberWay: artisanObject.numberWay,
-				way: artisanObject.way,
-				postalCode: artisanObject.postalCode,
-				city: artisanObject.city,
-				description: artisanObject.companyDescription,
-				pictureAvatar: artisanObject.picture,
-				pictureGalery: artisanObject.pictureFolder,
-				phone: artisanObject.phone,
-				email: artisanObject.email
-			});
+			if (sessionArtisan !== null) {
+				setProfileArtisan({
+					firstname: artisanObject.firstname,
+					lastname: artisanObject.lastname,
+					siret: artisanObject.siret,
+					company: artisanObject.company,
+					numberWay: artisanObject.numberWay,
+					way: artisanObject.way,
+					postalCode: artisanObject.postalCode,
+					city: artisanObject.city,
+					description: artisanObject.companyDescription,
+					pictureAvatar: artisanObject.picture,
+					pictureGalery: artisanObject.pictureFolder,
+					phone: artisanObject.phone,
+					email: artisanObject.email
+				});
+			}
 		},
-		[ artisanObject ]
+		[ artisanSelector ]
 	);
+
+	//console.log('profilearti', profileArtisan);
 
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{artisanObject != '' ? (
-					<FormEditArtisan profileArtisan={profileArtisan} setProfileArtisan={setProfileArtisan} />
+				{profileArtisan.siret !== undefined ? (
+					<FormEditArtisan
+						artisanObject={artisanObject}
+						profileArtisan={profileArtisan}
+						setProfileArtisan={setProfileArtisan}
+					/>
 				) : (
 					<Loader />
 				)}

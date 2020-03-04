@@ -14,29 +14,29 @@ export default (store) => (next) => (action) => {
 	switch (action.type) {
 		case ARTISAN_DATA: {
 			//console.log('middleware artisan');
-      //console.log(action.id, action.email);
-      let token = cookies.get('TOKEN');
+			//console.log(action.id, action.email);
+			let token = cookies.get('TOKEN');
 
 			return axios({
 				method: 'post',
 				url: `${NAME_SERVER}/v1/artisan/single`,
 				data: {
 					email: action.email
-        },
-        headers: { Authorization: `Bearer ${token}` }
+				},
+				headers: { Authorization: `Bearer ${token}` }
 			})
 				.then((response) => {
 					//console.log(response);
 					if (response.status === 200) {
-						//console.log('ok artisan');
-						//console.log('response', response.data);
+						console.log('ok artisan data');
+						//console.log('response');
 
 						store.dispatch(artisanInfo(response.data));
 					}
 				})
 				.catch(function(error) {
 					// handle error
-					//console.log(error);
+					console.log(error);
 				})
 				.finally(function() {
 					// always executed
@@ -52,8 +52,8 @@ export default (store) => (next) => (action) => {
 			// 	action.pictureAvatar,
 			// 	action.pictureGalery,
 			// 	action.phone
-      // );
-      let token = cookies.get('TOKEN');
+			// );
+			let token = cookies.get('TOKEN');
 
 			return axios({
 				method: 'post',
@@ -64,8 +64,8 @@ export default (store) => (next) => (action) => {
 					picture: action.pictureAvatar,
 					phone: action.phone,
 					pictureFolder: action.pictureGalery
-        },
-        headers: { Authorization: `Bearer ${token}` }
+				},
+				headers: { Authorization: `Bearer ${token}` }
 			})
 				.then((response) => {
 					//console.log(response);

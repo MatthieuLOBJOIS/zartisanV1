@@ -1,20 +1,19 @@
-import { ARTISAN_INFO } from "src/store/artisan/actions";
+import { ARTISAN_INFO } from 'src/store/artisan/actions';
 
-const initialState = "";
+const initialState = '';
 
 export default (state = initialState, action) => {
-  // console.log('reducer >>', action);
+	// console.log('reducer >>', action);
 
-  switch (action.type) {
-    case ARTISAN_INFO: {
-      //console.log("hello ici state artisan", action.data);
-      state = action.data;
-      //console.log(state);
+	switch (action.type) {
+		case ARTISAN_INFO: {
+			state = action.data;
+			//console.log(state);
 
-      return state;
-    }
-    default: {
-      return state;
-    }
-  }
+			return state;
+		}
+		default: {
+			return state;
+		}
+	}
 };
