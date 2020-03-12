@@ -9,10 +9,26 @@ import { artisanEdit } from 'src/store/artisan/actions';
 import UploadAvatar from 'src/components/UploadAvatar';
 import UploadPictureGalery from '../UploadPictureGalery';
 import ButtonDeleteAccount from 'src/components/ButtonDeleteAccount';
+import { artisanData } from 'src/store/artisan/actions';
+import cookies from 'js-cookie';
 
-const FormEditArtisan = ({ profileArtisan, setProfileArtisan }) => {
+const FormEditArtisan = ({ artisanObject, profileArtisan, setProfileArtisan }) => {
 	const dispatch = useDispatch();
 	const { TextArea } = Input;
+
+	let token = cookies.get('TOKEN');
+	let parseJwt = (token) => {
+		try {
+			return JSON.parse(atob(token.split('.')[1]));
+		} catch (e) {
+			return null;
+		}
+	};
+
+	let tokenEmail = '';
+	if (token != null) {
+		tokenEmail = parseJwt(token).username;
+	}
 
 	const handleSaveClick = () => {
 		dispatch(
@@ -24,6 +40,7 @@ const FormEditArtisan = ({ profileArtisan, setProfileArtisan }) => {
 				profileArtisan.phone
 			)
 		);
+		dispatch(artisanData(1, tokenEmail));
 	};
 
 	const handleChangeValue = (keys) => {
@@ -90,7 +107,11 @@ const FormEditArtisan = ({ profileArtisan, setProfileArtisan }) => {
 			</Form.Item>
 
 			<Form.Item>
-				<UploadPictureGalery profileArtisan={profileArtisan} setProfileArtisan={setProfileArtisan} />
+				<UploadPictureGalery
+					artisanObject={artisanObject}
+					profileArtisan={profileArtisan}
+					setProfileArtisan={setProfileArtisan}
+				/>
 			</Form.Item>
 
 			<Form.Item>

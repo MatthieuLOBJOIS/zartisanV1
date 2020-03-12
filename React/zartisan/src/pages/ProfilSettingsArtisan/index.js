@@ -8,66 +8,76 @@ import 'antd/dist/antd.css';
 
 import FormEditArtisan from 'src/components/FormEditArtisan';
 import Loader from 'src/components/Loader';
-import { useLoading } from 'src/hooks/loading';
 
 const ProfilSettingsArtisan = () => {
 	// Select artisan in the global state
 	const artisanSelector = useSelector((state) => state.artisan);
-	const data = JSON.parse(sessionStorage.getItem('ArtisanPage'));
-	//console.log('1', artisanSelector, '2', data);
 
-	let artisanObject = '';
-	for (let artisan in data) {
-		artisanObject = data[0];
+	if (artisanSelector != '') {
+		sessionStorage.setItem('ProfileArtisan', JSON.stringify(artisanSelector));
 	}
 
-	//console.log(artisanObject);
+	const sessionArtisan = JSON.parse(sessionStorage.getItem('ProfileArtisan'));
+	console.log(artisanSelector, 'select obj');
+	let artisanObject = '';
+
+	for (let artisan in sessionArtisan) {
+		artisanObject = sessionArtisan[0];
+	}
+
+	console.log('oject', artisanObject);
 
 	// Local state Artisan
 	const [ profileArtisan, setProfileArtisan ] = useState({
-		firstname: '',
-		lastname: '',
-		siret: '',
-		company: '',
-		numberWay: '',
-		way: '',
-		postalCode: '',
-		city: '',
-		description: '',
-		pictureAvatar: '',
-		pictureGalery: '',
-		phone: '',
-		email: ''
+		firstname: artisanObject.firstname,
+		lastname: artisanObject.lastname,
+		siret: artisanObject.siret,
+		company: artisanObject.company,
+		numberWay: artisanObject.numberWay,
+		way: artisanObject.way,
+		postalCode: artisanObject.postalCode,
+		city: artisanObject.city,
+		description: artisanObject.companyDescription,
+		pictureAvatar: artisanObject.picture,
+		pictureGalery: artisanObject.pictureFolder,
+		phone: artisanObject.phone,
+		email: artisanObject.email
 	});
-
-	//console.log(profileArtisan);
 
 	useEffect(
 		() => {
-			setProfileArtisan({
-				firstname: artisanObject.firstname,
-				lastname: artisanObject.lastname,
-				siret: artisanObject.siret,
-				company: artisanObject.company,
-				numberWay: artisanObject.numberWay,
-				way: artisanObject.way,
-				postalCode: artisanObject.postalCode,
-				city: artisanObject.city,
-				description: artisanObject.companyDescription,
-				pictureAvatar: artisanObject.picture,
-				pictureGalery: artisanObject.pictureFolder,
-				phone: artisanObject.phone,
-				email: artisanObject.email
-			});
+			if (sessionArtisan !== null) {
+				setProfileArtisan({
+					firstname: artisanObject.firstname,
+					lastname: artisanObject.lastname,
+					siret: artisanObject.siret,
+					company: artisanObject.company,
+					numberWay: artisanObject.numberWay,
+					way: artisanObject.way,
+					postalCode: artisanObject.postalCode,
+					city: artisanObject.city,
+					description: artisanObject.companyDescription,
+					pictureAvatar: artisanObject.picture,
+					pictureGalery: artisanObject.pictureFolder,
+					phone: artisanObject.phone,
+					email: artisanObject.email
+				});
+			}
 		},
 		[ artisanSelector ]
 	);
 
+	//console.log('profilearti', profileArtisan);
+
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{useLoading() == false && artisanObject != '' ? (
-					<FormEditArtisan profileArtisan={profileArtisan} setProfileArtisan={setProfileArtisan} />
+				{profileArtisan.siret !== undefined ? (
+					<FormEditArtisan
+						artisanObject={artisanObject}
+						profileArtisan={profileArtisan}
+						setProfileArtisan={setProfileArtisan}
+					/>
 				) : (
 					<Loader />
 				)}

@@ -1,101 +1,143 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Button } from 'antd';
-import 'antd/dist/antd.css';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Form, Input, Button } from "antd";
+import "antd/dist/antd.css";
 
-import UploadAvatar from 'src/components/UploadAvatar';
-import { editUser } from 'src/store/user/actions';
-import ButtonDeleteAccount from 'src/components/ButtonDeleteAccount';
+import UploadAvatar from "src/components/UploadAvatar";
+import { editUser } from "src/store/user/actions";
+import ButtonDeleteAccount from "src/components/ButtonDeleteAccount";
+import cookies from "js-cookie";
+import { userSingle } from "src/store/user/actions";
 
 const FormEditUser = ({ profileUser, setProfileUser }) => {
-	//console.log('form', profileUser);
-	const dispatch = useDispatch();
+  //console.log('form', profileUser);
+  const dispatch = useDispatch();
 
-	const handleChangeValue = (keys) => {
-		return (event) => {
-			switch (keys) {
-				case 'nickname':
-					setProfileUser({
-						...profileUser,
-						...{ nickname: event.target.value }
-					});
-					break;
-				case 'lastname':
-					setProfileUser({
-						...profileUser,
-						...{ lastname: event.target.value }
-					});
-					break;
-				case 'firstname':
-					setProfileUser({
-						...profileUser,
-						...{ firstname: event.target.value }
-					});
-					break;
-				case 'phone':
-					setProfileUser({
-						...profileUser,
-						...{ phone: event.target.value }
-					});
-					break;
-				case 'mail':
-					setProfileUser({
-						...profileUser,
-						...{ mail: event.target.value }
-					});
-					break;
-				default:
-					console.log('Aucun changement');
-			}
-		};
-	};
+  const handleChangeValue = keys => {
+    return event => {
+      switch (keys) {
+        case "nickname":
+          setProfileUser({
+            ...profileUser,
+            ...{ nickname: event.target.value }
+          });
+          break;
+        case "lastname":
+          setProfileUser({
+            ...profileUser,
+            ...{ lastname: event.target.value }
+          });
+          break;
+        case "firstname":
+          setProfileUser({
+            ...profileUser,
+            ...{ firstname: event.target.value }
+          });
+          break;
+        case "phone":
+          setProfileUser({
+            ...profileUser,
+            ...{ phone: event.target.value }
+          });
+          break;
+        case "mail":
+          setProfileUser({
+            ...profileUser,
+            ...{ mail: event.target.value }
+          });
+          break;
+        default:
+          console.log("Aucun changement");
+      }
+    };
+  };
 
-	const handleSaveEdit = () => {
-		dispatch(editUser(profileUser));
-	};
+  let token = cookies.get("TOKEN");
+  let parseJwt = token => {
+    try {
+      return JSON.parse(atob(token.split(".")[1]));
+    } catch (e) {
+      return null;
+    }
+  };
 
-	return (
-		<div>
-			<Form className="artisan-form">
-				<Form.Item>
-					<UploadAvatar role={'user'} profileUser={profileUser} setProfileUser={setProfileUser} />
-				</Form.Item>
+  let tokenEmail = "";
+  if (token != null) {
+    tokenEmail = parseJwt(token).username;
+  }
 
-				<Form.Item label="Pseudo" hasFeedback>
-					<Input placeholder="Pseudo" value={profileUser.nickname} onChange={handleChangeValue('nickname')} />
-				</Form.Item>
+  const handleSaveEdit = () => {
+    dispatch(editUser(profileUser));
+    dispatch(userSingle(tokenEmail));
+  };
 
-				<Form.Item label="Nom" hasFeedback>
-					<Input placeholder="Nom" value={profileUser.lastname} onChange={handleChangeValue('lastname')} />
-				</Form.Item>
+  return (
+    <div>
+      <Form className="artisan-form">
+        <Form.Item>
+          <UploadAvatar
+            role={"user"}
+            profileUser={profileUser}
+            setProfileUser={setProfileUser}
+          />
+        </Form.Item>
 
-				<Form.Item label="Prénom" hasFeedback>
-					<Input
-						placeholder="Prénom"
-						value={profileUser.firstname}
-						onChange={handleChangeValue('firstname')}
-					/>
-				</Form.Item>
+        <Form.Item label="Pseudo" hasFeedback>
+          <Input
+            placeholder="Pseudo"
+            value={profileUser.nickname}
+            onChange={handleChangeValue("nickname")}
+          />
+        </Form.Item>
 
-				<Form.Item label="Téléphone" hasFeedback>
-					<Input placeholder="Téléphone" value={profileUser.phone} onChange={handleChangeValue('phone')} />
-				</Form.Item>
+        <Form.Item label="Nom" hasFeedback>
+          <Input
+            placeholder="Nom"
+            value={profileUser.lastname}
+            onChange={handleChangeValue("lastname")}
+          />
+        </Form.Item>
 
-				<Form.Item label="Mail" hasFeedback>
-					<Input placeholder="Mail" value={profileUser.mail} onChange={handleChangeValue('mail')} />
-				</Form.Item>
+        <Form.Item label="Prénom" hasFeedback>
+          <Input
+            placeholder="Prénom"
+            value={profileUser.firstname}
+            onChange={handleChangeValue("firstname")}
+          />
+        </Form.Item>
 
-				<Form.Item>
-					<Button type="primary" className="buttons" htmlType="submit" onClick={handleSaveEdit}>
-						Sauvegarder
-					</Button>
-				</Form.Item>
-				<Form.Item>
-					<ButtonDeleteAccount profileUser={profileUser} />
-				</Form.Item>
-			</Form>
-		</div>
-	);
+        <Form.Item label="Téléphone" hasFeedback>
+          <Input
+            placeholder="Téléphone"
+            value={profileUser.phone}
+            onChange={handleChangeValue("phone")}
+          />
+        </Form.Item>
+
+        <Form.Item label="Mail" hasFeedback>
+          <Input
+            placeholder="Mail"
+            value={profileUser.mail}
+            onChange={handleChangeValue("mail")}
+          />
+        </Form.Item>
+
+        <Form.Item>
+          <Button
+            type="primary"
+            className="buttons"
+            htmlType="submit"
+            onClick={handleSaveEdit}
+          >
+            Sauvegarder
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <ButtonDeleteAccount profileUser={profileUser} />
+        </Form.Item>
+      </Form>
+    </div>
+  );
 };
 
 export default FormEditUser;

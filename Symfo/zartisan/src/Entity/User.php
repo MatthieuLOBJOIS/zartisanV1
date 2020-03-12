@@ -272,6 +272,26 @@ class User implements UserInterface
         return $this->email;
     }
 
+    // ajout fonctions
+
+
+    /**
+     * @return bool
+     */
+    public function isEmailVerified(): bool
+    {
+        return $this->isConfirmMail;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStatusEnable(): bool
+    {
+        return $this->isStatus;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -362,10 +382,10 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getIsConfirmMail(): ?bool
-    {
-        return $this->isConfirmMail;
-    }
+     public function getIsConfirmMail(): ?bool
+     {
+         return $this->isConfirmMail;
+     }
 
     public function setIsConfirmMail(bool $isConfirmMail): self
     {

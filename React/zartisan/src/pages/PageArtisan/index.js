@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { NAME_SERVER } from 'src/store/register/actions';
 
@@ -11,23 +11,27 @@ import CarouselArtisan from 'src/components/CarouselArtisan';
 import RateArtisan from 'src/components/RateArtisan';
 import AdviceArtisan from 'src/components/AdviceArtisan';
 import Loader from 'src/components/Loader';
-import { useLoading } from 'src/hooks/loading';
 
 const PageArtisan = () => {
-	//const artisanSelector = useSelector((state) => state.artisan);
-	var data = JSON.parse(sessionStorage.getItem('ArtisanPage'));
+	const artisanSelector = useSelector((state) => state.artisan);
+
+	if (artisanSelector != '') {
+		sessionStorage.setItem('PageArtisan', JSON.stringify(artisanSelector));
+	}
+
+	const sessionArtisan = JSON.parse(sessionStorage.getItem('PageArtisan'));
 
 	let artisanObject = '';
 	let adviceObject = [];
 
-	for (let artisan in data) {
-		artisanObject = data[0];
-		adviceObject = data[1];
+	for (let artisan in sessionArtisan) {
+		artisanObject = sessionArtisan[0];
+		adviceObject = sessionArtisan[1];
 	}
 
-	const connect = useSelector((state) => state.connect);
+	const sessionConnect = sessionStorage.getItem('Connect');
 	let token = '';
-	if (connect === true) {
+	if (sessionConnect) {
 		token = cookies.get('TOKEN');
 	}
 
@@ -42,11 +46,14 @@ const PageArtisan = () => {
 	let user = -1;
 	let artisanUser = -1;
 	let mail = '';
+
 	if (parseJwt(token) != null) {
 		user = parseJwt(token).roles.indexOf('ROLE_USER');
 		artisanUser = parseJwt(token).roles.indexOf('ROLE_ARTISAN');
 		mail = parseJwt(token).username;
 	}
+
+	//console.log(sessionToken, 'token token');
 
 	let phone = '';
 	artisanObject.phone != undefined ? (phone = artisanObject.phone.slice(1)) : phone;
@@ -75,7 +82,7 @@ const PageArtisan = () => {
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{useLoading() == false && artisanObject != '' ? (
+				{sessionArtisan != null ? (
 					<div id="page-artisan">
 						<Row>
 							<div className="page-artisan-description">

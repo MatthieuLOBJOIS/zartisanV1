@@ -15,14 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route("v1/artisan", name="api_artisan_")
- */
+
 class ApiArtisanController extends AbstractController
 {
 
     /**
-     * @Route("/edit", name="edit")
+     * @Route("api/v1/artisan/edit", name="api_artisan_edit")
      */
     public function edit(
         UserRepository $userRepository,
@@ -123,7 +121,7 @@ class ApiArtisanController extends AbstractController
     }
 
     /**
-     * @Route("/list", name="all")
+     * @Route("v1/artisan/list", name="artisan_all")
      */
     public function all(UserRepository $userRepository)
     {
@@ -145,7 +143,7 @@ class ApiArtisanController extends AbstractController
 
 
     /**
-     * @Route("/recherche", name="recherche")
+     * @Route("v1/artisan/recherche", name="artisan_recherche")
      */
     public function searchByRate(UserRepository $userRepository, Request $request)
     {
@@ -164,7 +162,7 @@ class ApiArtisanController extends AbstractController
 
 
     /**
-     * @Route("/single", name="single")
+     * @Route("v1/artisan/single", name="artisan_single")
      */
     public function single(
         Request $request,
