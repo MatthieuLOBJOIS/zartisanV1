@@ -51,16 +51,26 @@ const UploadPictureGalery = ({ artisanObject, profileArtisan, setProfileArtisan 
 		[ artisanSelector ]
 	);
 
-	const handleCancel = () => setPreviewVisible(false);
+	const handleCancel = () =>
+		setPictureFolder({
+			...pictureFolder,
+			...{ previewVisible: false }
+		});
 
 	const handlePreview = async (file) => {
+		console.log(file);
 		if (!file.url && !file.preview) {
 			file.preview = await getSecondeBase64(file.originFileObj);
 		}
 
-		setPictureFolder(...pictureFolder, ...{ previewVisible: true });
-		setPictureFolder(...pictureFolder, ...{ previewImage: file.url || file.preview });
+		setPictureFolder({
+			...pictureFolder,
+			...{ previewVisible: true },
+			...{ previewImage: file.url || file.preview }
+		});
 	};
+
+	console.log(pictureFolder);
 
 	const handleChangeFile = (fileList) => {
 		if (fileList.file.thumbUrl != '') {

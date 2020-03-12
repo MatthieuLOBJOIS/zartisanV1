@@ -15,6 +15,7 @@ export default (store) => (next) => (action) => {
        * Artisan register
        */
 		case GET_JOBS: {
+			console.log('jobs', action.region);
 			return axios({
 				method: 'post',
 				url: `${NAME_SERVER}/v1/job/category/listV2`,
@@ -26,7 +27,7 @@ export default (store) => (next) => (action) => {
 					//console.log(response);
 					if (response.status === 200) {
 						//console.log('jobs');
-						//console.log('jobs middleware data ', response.data);
+						console.log('jobs middleware data ', response.data);
 						store.dispatch(jobs(response.data));
 					}
 				})
