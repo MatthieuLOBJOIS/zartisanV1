@@ -2,199 +2,59 @@
  * Imports of dependencies
  */
 
-import React, { useState, useEffect } from "react";
-import { Row, Col, Button, Icon, Drawer, Typography } from "antd";
-import "antd/dist/antd.css";
-import { Link, useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import cookies from "js-cookie";
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Button, Icon, Drawer, Typography } from 'antd';
+import 'antd/dist/antd.css';
+import { Link, useHistory } from 'react-router-dom';
 
 /**
  * Local imports
  */
-import "./style.sass";
-import logo from "./picture/logo-zartisan.svg";
-import FormLogin from "src/components/FormLogin";
-import ModalGoToFormUserOrArtisan from "src/components/ModalGoToFormUserOrArtisan";
-import { artisanData } from "src/store/artisan/actions";
-import { NAME_SERVER } from "src/store/register/actions";
-import { userSingle } from "src/store/user/actions";
-import { deconnect } from "src/store/register/actions";
+import './style.sass';
+import logo from './picture/logo-zartisan.svg';
+import ShowAccount from 'src/components/ShowAccount';
 /**
  * Code
  */
-const { Text } = Typography;
+
 const Header = () => {
-  const connect = useSelector(state => state.connect);
-  const dispatch = useDispatch();
-  const history = useHistory();
+	/**Hooks for display or not menu burger */
+	const [ visible, setVisible ] = useState(false);
 
-  /**Hooks for display or not menu burger */
-  const [visible, setVisible] = useState(false);
-  /**Hooks for display or not modal login */
-  const [modalLogin, setModalLogin] = useState(false);
-  /**Hooks for display or not modal register */
-  const [modalRegister, setModalRegister] = useState(false);
-  /**Hooks welcome */
-  const [connectVisible, setConnectVisible] = useState(false);
+	//open menu burger
+	const showDrawer = () => {
+		setVisible(true);
+	};
 
-  const sessionConnect = sessionStorage.getItem("Connect");
-  //console.log("session header", sessionConnect);
+	//close menu burger
+	const onClose = () => {
+		setVisible(false);
+	};
 
-  //open menu burger
-  const showDrawer = () => {
-    setVisible(true);
-  };
+	return (
+		<div>
+			<Row className="header" type="flex" justify="space-around">
+				{/** Button Burger */}
+				<Button className="header-burger-button header-burger-button--hidden" onClick={showDrawer}>
+					<Icon type="menu" />
+				</Button>
 
-  //close menu burger
-  const onClose = () => {
-    setVisible(false);
-  };
+				{/** Menu of Burger */}
+				<Drawer placement="top" onClose={onClose} visible={visible} closable={true}>
+					<Row type="flex" justify="center" align="top">
+						<img src={logo} alt="zartisan image" className="logo-zartisan" />
+					</Row>
+					<ShowAccount onClose={onClose} hidden={false} />
+				</Drawer>
+				<ShowAccount onClose={onClose} hidden={true} />
 
-  const showModalLogin = () => {
-    onClose();
-    setTimeout(() => {
-      setModalLogin(true);
-    }, 1000);
-  };
-
-  const showModalRegister = () => {
-    onClose();
-    setTimeout(() => {
-      setModalRegister(true);
-    }, 1000);
-  };
-
-  const deconnexion = () => {
-    onClose();
-    dispatch(deconnect());
-    history.push("/");
-    sessionStorage.clear();
-  };
-
-  let token = cookies.get("TOKEN");
-  let parseJwt = token => {
-    try {
-      return JSON.parse(atob(token.split(".")[1]));
-    } catch (e) {
-      return null;
-    }
-  };
-
-  let admin = -1;
-  let user = -1;
-  let artisanUser = -1;
-  let tokenEmail = "";
-  if (token != null) {
-    admin = parseJwt(token).roles.indexOf("ROLE_ADMIN");
-    user = parseJwt(token).roles.indexOf("ROLE_USER");
-    artisanUser = parseJwt(token).roles.indexOf("ROLE_ARTISAN");
-    tokenEmail = parseJwt(token).username;
-  }
-
-  const handleClickProfileArtisan = () => {
-    dispatch(artisanData(1, tokenEmail));
-    onClose();
-  };
-
-  const handleClickProfileUser = () => {
-    dispatch(userSingle(tokenEmail));
-    onClose();
-  };
-
-  return (
-    <div id="zheader">
-      <Row className="header" type="flex" justify="space-around">
-        <Col span={24}>
-          <Col span={6}>
-            {/** Button Burger */}
-            <Button
-              className="header-burger-button"
-              id="burger"
-              onClick={showDrawer}
-            >
-              <Icon type="menu" />
-            </Button>
-
-            {/** Menu of Burger */}
-            <Drawer
-              placement="top"
-              onClose={onClose}
-              visible={visible}
-              closable={true}
-            >
-              <Row type="flex" justify="center" align="top">
-                <img
-                  src={logo}
-                  alt="zartisan image"
-                  className="logo-zartisan"
-                />
-              </Row>
-              <Row type="flex" justify="center" align="top">
-                <Text>
-                  {sessionConnect === null && (
-                    <a href="#" onClick={showModalLogin}>
-                      Connexion
-                    </a>
-                  )}
-                  <FormLogin
-                    setModalLogin={setModalLogin}
-                    modalLogin={modalLogin}
-                    connectVisible={connectVisible}
-                    setConnectVisible={setConnectVisible}
-                  />
-                  {sessionConnect && admin === -1 ? (
-                    sessionConnect && artisanUser !== -1 ? (
-                      <Link
-                        to="/profil/artisan"
-                        onClick={handleClickProfileArtisan}
-                      >
-                        Profil
-                      </Link>
-                    ) : (
-                      <Link
-                        to="/profil/particulier"
-                        onClick={handleClickProfileUser}
-                      >
-                        Profil
-                      </Link>
-                    )
-                  ) : (
-                    ""
-                  )}
-                  {sessionConnect === "connect" && admin !== -1 ? (
-                    <a href={`${NAME_SERVER}/admin`}>Admin </a>
-                  ) : (
-                    ""
-                  )}
-                </Text>
-              </Row>
-              <Row type="flex" justify="center" align="top">
-                {sessionConnect === null && (
-                  <a href="#" onClick={showModalRegister}>
-                    Inscription
-                  </a>
-                )}
-                {sessionConnect && <a onClick={deconnexion}>Deconnexion</a>}
-
-                <ModalGoToFormUserOrArtisan
-                  modalRegister={modalRegister}
-                  setModalRegister={setModalRegister}
-                />
-              </Row>
-            </Drawer>
-          </Col>
-
-          {/** logo header */}
-          <Col span={18}>
-            <Link to="/">
-              <img src={logo} alt="zartisan image" className="logo-zartisan" />
-            </Link>
-          </Col>
-        </Col>
-      </Row>
-    </div>
-  );
+				{/** logo header */}
+				<Link to="/">
+					<img src={logo} alt="zartisan image" className="logo-zartisan" />
+				</Link>
+			</Row>
+		</div>
+	);
 };
 
 export default Header;
