@@ -88,7 +88,7 @@ const ShowAccount = ({ onClose, hidden }) => {
 			<Row type="flex" justify="center" align="top">
 				<Text>
 					{sessionConnect === null && (
-						<Link className="kls1" to="/" onClick={showModalLogin}>
+						<Link className="kls1" to="#" onClick={showModalLogin}>
 							Connexion
 						</Link>
 					)}
@@ -120,12 +120,12 @@ const ShowAccount = ({ onClose, hidden }) => {
 			</Row>
 			<Row type="flex" justify="center" align="top">
 				{sessionConnect === null && (
-					<Link className="kls2" to="/" onClick={showModalRegister}>
+					<Link className="kls2" to="#" onClick={showModalRegister}>
 						Inscription
 					</Link>
 				)}
 				{sessionConnect && (
-					<Link className="kls2" to="/" onClick={deconnexion}>
+					<Link className="kls2" to="#" onClick={deconnexion}>
 						Deconnexion
 					</Link>
 				)}
