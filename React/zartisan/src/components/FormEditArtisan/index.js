@@ -115,7 +115,7 @@ const FormEditArtisan = ({ artisanObject, profileArtisan, setProfileArtisan }) =
 			</Form.Item>
 
 			<Form.Item>
-				<Button onClick={handleSaveClick} type="primary" className="buttons" htmlType="submit">
+				<Button onClick={handleSaveClick} type="primary" danger className="buttons" htmlType="submit">
 					Sauvegarder
 				</Button>
 			</Form.Item>
