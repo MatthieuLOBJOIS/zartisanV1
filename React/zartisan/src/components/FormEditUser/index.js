@@ -1,18 +1,14 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Form, Input, Button } from "antd";
+import React from "react";
+import { Form, Input } from "antd";
 import "antd/dist/antd.css";
 
 import UploadAvatar from "src/components/UploadAvatar";
 import { editUser } from "src/store/user/actions";
 import ButtonDeleteAccount from "src/components/ButtonDeleteAccount";
-import cookies from "js-cookie";
+
 import { userSingle } from "src/store/user/actions";
 
 const FormEditUser = ({ profileUser, setProfileUser }) => {
-  //console.log('form', profileUser);
-  const dispatch = useDispatch();
-
   const handleChangeValue = keys => {
     return event => {
       switch (keys) {
@@ -50,25 +46,6 @@ const FormEditUser = ({ profileUser, setProfileUser }) => {
           console.log("Aucun changement");
       }
     };
-  };
-
-  let token = cookies.get("TOKEN");
-  let parseJwt = token => {
-    try {
-      return JSON.parse(atob(token.split(".")[1]));
-    } catch (e) {
-      return null;
-    }
-  };
-
-  let tokenEmail = "";
-  if (token != null) {
-    tokenEmail = parseJwt(token).username;
-  }
-
-  const handleSaveEdit = () => {
-    dispatch(editUser(profileUser));
-    dispatch(userSingle(tokenEmail));
   };
 
   return (
@@ -121,19 +98,16 @@ const FormEditUser = ({ profileUser, setProfileUser }) => {
             onChange={handleChangeValue("mail")}
           />
         </Form.Item>
-
         <Form.Item>
-          <Button
-            type="primary"
-            className="buttons"
-            htmlType="submit"
-            onClick={handleSaveEdit}
-          >
-            Sauvegarder
-          </Button>
+          <ButtonSaveAccount
+            profileRole="user"
+            profileUser={profileUser}
+            editUser={editUser}
+            userSingle={userSingle}
+          />
         </Form.Item>
         <Form.Item>
-          <ButtonDeleteAccount profileUser={profileUser} />
+          <ButtonDeleteAccount profileUser={profileUser} profileRole="user" />
         </Form.Item>
       </Form>
     </div>

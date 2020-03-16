@@ -61,9 +61,10 @@
     "react-modele": "bin/run.js"
   },
   "dependencies": {
+    "@ant-design/pro-layout": "^5.0.6",
     "@babel/polyfill": "^7.8.3",
     "@svgr/cli": "^5.2.0",
-    "antd": "^3.26.13",
+    "antd": "^3.26.12",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "js-cookie": "^2.2.1",
