@@ -5,7 +5,7 @@ import "antd/dist/antd.css";
 import UploadAvatar from "src/components/UploadAvatar";
 import { editUser } from "src/store/user/actions";
 import ButtonDeleteAccount from "src/components/ButtonDeleteAccount";
-
+import ButtonSaveAccount from "src/components/ButtonDeleteAccount";
 import { userSingle } from "src/store/user/actions";
 
 const FormEditUser = ({ profileUser, setProfileUser }) => {
