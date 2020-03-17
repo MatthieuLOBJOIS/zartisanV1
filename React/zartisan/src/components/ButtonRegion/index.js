@@ -44,7 +44,7 @@ const ButtonRegion = ({ visibleButtonJobs, setvisibleButtonJobs, regionChange, s
 		return item;
 	});
 
-	const menuRegion = <Menu>{itemRegions}</Menu>;
+	const menuRegion = <Menu className="menu-region">{itemRegions}</Menu>;
 
 	return (
 		<Dropdown overlay={menuRegion} trigger={[ 'click' ]} placement="bottomLeft">
