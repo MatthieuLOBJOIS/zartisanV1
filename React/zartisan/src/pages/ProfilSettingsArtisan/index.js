@@ -71,7 +71,7 @@ const ProfilSettingsArtisan = () => {
 	//console.log('profilearti', profileArtisan);
 
 	return (
-		<div className="profile-content-artisan">
+		<div>
 			<Row type="flex" justify="space-around" align="middle">
 				{profileArtisan.siret !== undefined ? (
 					<FormEditArtisan
