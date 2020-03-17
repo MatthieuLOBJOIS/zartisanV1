@@ -42,7 +42,7 @@ const Header = () => {
 				{/** Menu of Burger */}
 				<Drawer placement="top" onClose={onClose} visible={visible} closable={true}>
 					<Row type="flex" justify="center" align="top">
-						<img src={logo} alt="zartisan image" className="logo-zartisan" />
+						<img src={logo} alt="zartisan image" className="logo-zartisan drawer" />
 					</Row>
 					<ShowAccount onClose={onClose} hidden={false} />
 				</Drawer>
