@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import './style.sass';
 
 /**
  * Local imports
@@ -24,7 +25,7 @@ import ProfileSettingsUser from 'src/pages/ProfileSettingsUser';
  */
 const App = () => {
 	return (
-		<div id="app">
+		<div className="app">
 			<Router>
 				<Header />
 				<Switch>
