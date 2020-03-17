@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row } from 'antd';
 import { useSelector } from 'react-redux';
+import './style.sass';
 import 'antd/dist/antd.css';
 
 import FormEditArtisan from 'src/components/FormEditArtisan';
@@ -70,7 +71,7 @@ const ProfilSettingsArtisan = () => {
 	//console.log('profilearti', profileArtisan);
 
 	return (
-		<div>
+		<div className="profile-content-artisan">
 			<Row type="flex" justify="space-around" align="middle">
 				{profileArtisan.siret !== undefined ? (
 					<FormEditArtisan

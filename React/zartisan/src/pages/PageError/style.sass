@@ -1,5 +1,26 @@
 @import src/styles/vars
 
-.img404
-  height : 100%
-  margin-top : -150px
+.error-404
+  background: url("../../styles/pictures/404/404.png") no-repeat
+  height: $height-content
+  width: 100%
+  display: flex
+  justify-content: center
+  align-items: flex-end
+
+.link-404
+  margin-bottom: 1em
+
+@media screen and (max-width: 759px)
+  .error-404
+    background-size: 100% 100%
+
+@media screen and (min-width: 760px)
+  .error-404
+    background-size: 80% 100%
+    background-position: center
+
+@media screen and (min-width: 1400px)
+  .error-404
+    background-size: 30% 100%
+    background-position: center
