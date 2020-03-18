@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Icon, Input, Button, Modal, Alert } from 'antd';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
+import PropTypes from 'prop-types';
 
 import './style.sass';
 import { sendLogin } from 'src/store/register/actions';
@@ -111,6 +112,13 @@ const FormLogin = ({ setModalLogin, modalLogin, connectVisible, setConnectVisibl
 			</Modal>
 		</div>
 	);
+};
+
+FormLogin.propTypes = {
+	setModalLogin: PropTypes.func.isRequired,
+	modalLogin: PropTypes.bool.isRequired,
+	connectVisible: PropTypes.bool.isRequired,
+	setConnectVisible: PropTypes.func.isRequired
 };
 
 export default FormLogin;

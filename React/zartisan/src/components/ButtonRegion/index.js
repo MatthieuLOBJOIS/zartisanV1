@@ -4,6 +4,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Icon, Menu, Dropdown } from 'antd';
+import PropTypes from 'prop-types';
 
 /**
  * Local imports
@@ -13,7 +14,7 @@ import { getRegions } from 'src/store/regions/actions';
 import { getJobs } from 'src/store/jobs/actions';
 import { visibleJobDropdown } from 'src/services/local-state-service';
 
-const ButtonRegion = ({ visibleButtonJobs, setvisibleButtonJobs, regionChange, setRegion }) => {
+const ButtonRegion = ({ setvisibleButtonJobs, regionChange, setRegion }) => {
 	const regions = useSelector((state) => state.regions);
 	const dispatch = useDispatch();
 
@@ -53,6 +54,12 @@ const ButtonRegion = ({ visibleButtonJobs, setvisibleButtonJobs, regionChange, s
 			</Button>
 		</Dropdown>
 	);
+};
+
+ButtonRegion.propTypes = {
+	setvisibleButtonJobs: PropTypes.func.isRequired,
+	regionChange: PropTypes.string.isRequired,
+	setRegion: PropTypes.func.isRequired
 };
 
 export default ButtonRegion;

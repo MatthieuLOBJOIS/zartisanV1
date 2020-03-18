@@ -5,6 +5,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from 'antd';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 /**
  * Local imports
  */
@@ -25,5 +26,10 @@ const ButtonSearchArtisanList = withRouter(({ history, idJob, regionChange }) =>
 		</Button>
 	);
 });
+
+ButtonSearchArtisanList.propTypes = {
+	idJob: PropTypes.string.isRequired,
+	regionChange: PropTypes.string.isRequired
+};
 
 export default ButtonSearchArtisanList;

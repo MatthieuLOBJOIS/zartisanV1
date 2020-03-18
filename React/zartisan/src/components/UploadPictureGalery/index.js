@@ -4,8 +4,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Upload, Icon, Modal } from 'antd';
-import { NAME_SERVER } from 'src/store/register/actions';
 import 'antd/dist/antd.css';
+import PropTypes from 'prop-types';
+
+import { NAME_SERVER } from 'src/store/register/actions';
 
 const UploadPictureGalery = ({ artisanObject, profileArtisan, setProfileArtisan }) => {
 	const [ fileList, setFileList ] = useState([]);
@@ -119,6 +121,12 @@ const UploadPictureGalery = ({ artisanObject, profileArtisan, setProfileArtisan 
 			</Modal>
 		</div>
 	);
+};
+
+UploadPictureGalery.propTypes = {
+	artisanObject: PropTypes.object.isRequired,
+	profileArtisan: PropTypes.object.isRequired,
+	setProfileArtisan: PropTypes.func.isRequired
 };
 
 export default UploadPictureGalery;

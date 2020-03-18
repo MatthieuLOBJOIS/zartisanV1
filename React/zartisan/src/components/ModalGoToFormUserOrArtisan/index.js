@@ -3,6 +3,7 @@
  */
 import React, { useState } from 'react';
 import { Row, Button, Modal } from 'antd';
+import PropTypes from 'prop-types';
 
 import FormRegister from 'src/components/FormRegister';
 
@@ -74,6 +75,11 @@ const ModalGoToFormUserOrArtisan = ({ modalRegister, setModalRegister }) => {
 			<FormRegister registerState={registerState} setRegisterState={setRegisterState} />
 		</div>
 	);
+};
+
+ModalGoToFormUserOrArtisan.propTypes = {
+	modalRegister: PropTypes.bool.isRequired,
+	setModalRegister: PropTypes.func.isRequired
 };
 
 export default ModalGoToFormUserOrArtisan;

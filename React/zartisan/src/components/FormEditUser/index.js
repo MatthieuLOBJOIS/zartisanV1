@@ -1,11 +1,13 @@
 import React from 'react';
 import { Form, Input } from 'antd';
 import 'antd/dist/antd.css';
+import PropTypes from 'prop-types';
 
 import UploadAvatar from 'src/components/UploadAvatar';
-import { editUser } from 'src/store/user/actions';
 import ButtonDeleteAccount from 'src/components/ButtonDeleteAccount';
 import ButtonSaveAccount from 'src/components/ButtonSaveAccount';
+
+import { editUser } from 'src/store/user/actions';
 import { userSingle } from 'src/store/user/actions';
 
 const FormEditUser = ({ profileUser, setProfileUser }) => {
@@ -92,6 +94,11 @@ const FormEditUser = ({ profileUser, setProfileUser }) => {
 			</Form>
 		</div>
 	);
+};
+
+FormEditUser.propTypes = {
+	profileUser: PropTypes.object.isRequired,
+	setProfileUser: PropTypes.func.isRequired
 };
 
 export default FormEditUser;

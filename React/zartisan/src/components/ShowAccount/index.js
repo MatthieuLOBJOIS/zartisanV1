@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Button, Icon, Drawer, Typography } from 'antd';
+import React, { useState } from 'react';
+import { Row, Typography } from 'antd';
+import classNames from 'classnames';
+import cookies from 'js-cookie';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import FormLogin from 'src/components/FormLogin';
 import ModalGoToFormUserOrArtisan from 'src/components/ModalGoToFormUserOrArtisan';
@@ -7,10 +12,6 @@ import { artisanData } from 'src/store/artisan/actions';
 import { NAME_SERVER } from 'src/store/register/actions';
 import { userSingle } from 'src/store/user/actions';
 import { deconnect } from 'src/store/register/actions';
-import { Link, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import classNames from 'classnames';
-import cookies from 'js-cookie';
 import './style.sass';
 
 const ShowAccount = ({ onClose, hidden }) => {
@@ -134,6 +135,11 @@ const ShowAccount = ({ onClose, hidden }) => {
 			</Row>
 		</div>
 	);
+};
+
+ShowAccount.propTypes = {
+	onClose: PropTypes.func.isRequired,
+	hidden: PropTypes.bool.isRequired
 };
 
 export default ShowAccount;

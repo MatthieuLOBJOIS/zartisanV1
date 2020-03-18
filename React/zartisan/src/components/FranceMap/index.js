@@ -1,10 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
-import './style.sass';
 import { getJobs } from 'src/store/jobs/actions';
 import { visibleJobDropdown } from 'src/services/local-state-service';
-import { useDispatch } from 'react-redux';
+import './style.sass';
 
 const FranceMap = ({ setvisibleButtonJobs, setRegion, regionChange }) => {
 	const dispatch = useDispatch();
@@ -151,6 +152,12 @@ const FranceMap = ({ setvisibleButtonJobs, setRegion, regionChange }) => {
 			</svg>
 		</div>
 	);
+};
+
+FranceMap.propTypes = {
+	setvisibleButtonJob: PropTypes.func,
+	setRegion: PropTypes.func.isRequired,
+	regionChange: PropTypes.string.isRequired
 };
 
 export default FranceMap;
