@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import FormEditUser from 'src/components/FormEditUser';
 import Loader from 'src/components/Loader';
 import './style.sass';
+import { useLoading } from 'src/hooks/useLoading';
 
 const ProfileSettingsUser = () => {
 	const userSelect = useSelector((state) => state.user);
@@ -41,10 +42,12 @@ const ProfileSettingsUser = () => {
 
 	console.log('profile', profileUser);
 
+	let toLoading = useLoading();
+
 	return (
 		<div className="profile-content-user">
 			<Row type="flex" justify="space-around" align="middle">
-				{sessionUser === null ? (
+				{sessionUser === null && toLoading === false ? (
 					<Loader />
 				) : (
 					<FormEditUser profileUser={profileUser} setProfileUser={setProfileUser} />

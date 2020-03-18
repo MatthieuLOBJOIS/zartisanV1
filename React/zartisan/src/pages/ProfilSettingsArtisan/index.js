@@ -9,6 +9,7 @@ import 'antd/dist/antd.css';
 
 import FormEditArtisan from 'src/components/FormEditArtisan';
 import Loader from 'src/components/Loader';
+import { useLoading } from 'src/hooks/useLoading';
 
 const ProfilSettingsArtisan = () => {
 	// Select artisan in the global state
@@ -70,10 +71,11 @@ const ProfilSettingsArtisan = () => {
 
 	//console.log('profilearti', profileArtisan);
 
+	let toLoading = useLoading();
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{profileArtisan.siret !== undefined ? (
+				{profileArtisan.siret !== undefined && toLoading === false ? (
 					<FormEditArtisan
 						artisanObject={artisanObject}
 						profileArtisan={profileArtisan}

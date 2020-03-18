@@ -16,8 +16,10 @@ import ButtonSearchArtisanList from 'src/components/ButtonSearchArtisanList';
 import ButtonJob from '../../components/ButtonJob';
 import ButtonRegion from '../../components/ButtonRegion';
 import Loader from 'src/components/Loader';
+import { useLoading } from 'src/hooks/useLoading';
 
 const ListArtisan = () => {
+	console.log('load', useLoading());
 	const dispatch = useDispatch();
 	const arrayArtisan = useSelector((state) => state.search);
 	const [ visibleButtonJobs, setvisibleButtonJobs ] = useState(false);
@@ -69,10 +71,11 @@ const ListArtisan = () => {
 		return <a onClick={handleSearch}>{item.company}</a>;
 	});
 
+	let toLoading = useLoading();
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{sessionData != null ? (
+				{toLoading === false ? (
 					<div className="list-artisan-content">
 						<div align="middle">
 							<ButtonRegion
