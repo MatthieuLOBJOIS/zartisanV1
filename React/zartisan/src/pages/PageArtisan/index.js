@@ -11,6 +11,7 @@ import CarouselArtisan from 'src/components/CarouselArtisan';
 import RateArtisan from 'src/components/RateArtisan';
 import AdviceArtisan from 'src/components/AdviceArtisan';
 import Loader from 'src/components/Loader';
+import { useLoading } from 'src/hooks/useLoading';
 
 const PageArtisan = () => {
 	const artisanSelector = useSelector((state) => state.artisan);
@@ -79,10 +80,12 @@ const PageArtisan = () => {
 		);
 	};
 
+	let toLoading = useLoading();
+
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{sessionArtisan != null ? (
+				{sessionArtisan != null && toLoading === false ? (
 					<div id="page-artisan">
 						<Row>
 							<div className="page-artisan-description">
