@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Row, Button, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 /**
  * Local imports
@@ -195,6 +196,11 @@ const FormRegister = ({ registerState, setRegisterState }) => {
 			</Row>
 		</div>
 	);
+};
+
+FormRegister.propTypes = {
+	registerState: PropTypes.object.isRequired,
+	setRegisterState: PropTypes.func.isRequired
 };
 
 export default FormRegister;

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { NAME_SERVER } from 'src/store/register/actions';
-
 import { Carousel } from 'antd';
 import 'antd/dist/antd.css';
+import PropTypes from 'prop-types';
 
 import './style.sass';
 
@@ -26,6 +25,10 @@ const CarouselArtisan = ({ artisanObject }) => {
 			</Carousel>
 		</div>
 	);
+};
+
+CarouselArtisan.propTypes = {
+	artisanObject: PropTypes.object.isRequired
 };
 
 export default CarouselArtisan;

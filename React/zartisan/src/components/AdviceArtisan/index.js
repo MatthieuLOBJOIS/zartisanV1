@@ -4,6 +4,7 @@ import { NAME_SERVER } from 'src/store/register/actions';
 
 import { Row, Col, Button, List, Comment, Popover, Icon, Form, Input, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import './style.sass';
 import { alertAdvice } from 'src/store/advice/actions';
@@ -152,6 +153,15 @@ const AdviceArtisan = ({ user, artisanUser, adviceObject, mail, idArtisan, email
 			)}
 		</div>
 	);
+};
+
+AdviceArtisan.propTypes = {
+	user: PropTypes.number.isRequired,
+	artisanUser: PropTypes.number.isRequired,
+	adviceObject: PropTypes.array.isRequired,
+	mail: PropTypes.string.isRequired,
+	idArtisan: PropTypes.number.isRequired,
+	emailArtisan: PropTypes.string.isRequired
 };
 
 export default AdviceArtisan;

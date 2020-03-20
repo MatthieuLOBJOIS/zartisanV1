@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { Button, Icon, Menu, Dropdown } from 'antd';
 
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 /**
  * Local imports
  */
@@ -48,9 +49,9 @@ const ButtonJob = ({ visibleButtonJobs, jobChange, setJobChange, setIdJob }) => 
 
 			const chooseJob = (job) => {
 				setJobChange(job);
-				//console.log(jobName.length, "test");
 			};
 			let jobName = job.name.slice(0, 40);
+
 			if (jobName.length === 40) {
 				jobName = `${jobName}...`;
 			}
@@ -80,6 +81,13 @@ const ButtonJob = ({ visibleButtonJobs, jobChange, setJobChange, setIdJob }) => 
 			</Button>
 		</Dropdown>
 	);
+};
+
+ButtonJob.propTypes = {
+	visibleButtonJobs: PropTypes.bool.isRequired,
+	jobChange: PropTypes.string.isRequired,
+	setJobChange: PropTypes.func.isRequired,
+	setIdJob: PropTypes.func.isRequired
 };
 
 export default ButtonJob;

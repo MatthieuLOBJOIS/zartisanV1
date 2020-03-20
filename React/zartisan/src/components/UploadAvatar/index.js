@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Upload, Icon, message } from 'antd';
+import PropTypes from 'prop-types';
+
 import { NAME_SERVER } from 'src/store/register/actions';
 
 const UploadAvatar = ({ profileUser, setProfileUser, role, profileArtisan, setProfileArtisan }) => {
@@ -92,6 +94,14 @@ const UploadAvatar = ({ profileUser, setProfileUser, role, profileArtisan, setPr
 			</Upload>
 		</div>
 	);
+};
+
+UploadAvatar.propTypes = {
+	profileUser: PropTypes.object,
+	setProfileUser: PropTypes.func,
+	role: PropTypes.string.isRequired,
+	profileArtisan: PropTypes.object,
+	setProfileArtisan: PropTypes.func
 };
 
 export default UploadAvatar;

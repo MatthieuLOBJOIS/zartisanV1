@@ -11,8 +11,8 @@ import { Link, useHistory } from 'react-router-dom';
  * Local imports
  */
 import './style.sass';
-import logo from './picture/logo-zartisan.svg';
 import ShowAccount from 'src/components/ShowAccount';
+import { NAME_SERVER } from 'src/store/register/actions';
 /**
  * Code
  */
@@ -42,7 +42,11 @@ const Header = () => {
 				{/** Menu of Burger */}
 				<Drawer placement="top" onClose={onClose} visible={visible} closable={true}>
 					<Row type="flex" justify="center" align="top">
-						<img src={logo} alt="zartisan image" className="logo-zartisan drawer" />
+						<img
+							src={`${NAME_SERVER}/assets/images_default/zartisan.svg`}
+							alt="zartisan image"
+							className="logo-zartisan drawer"
+						/>
 					</Row>
 					<ShowAccount onClose={onClose} hidden={false} />
 				</Drawer>
@@ -50,7 +54,11 @@ const Header = () => {
 
 				{/** logo header */}
 				<Link to="/">
-					<img src={logo} alt="zartisan image" className="logo-zartisan" />
+					<img
+						src={`${NAME_SERVER}/assets/images_default/zartisan.svg`}
+						alt="zartisan image"
+						className="logo-zartisan"
+					/>
 				</Link>
 			</Row>
 		</div>
