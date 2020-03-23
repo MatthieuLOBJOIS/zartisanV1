@@ -1,36 +1,22 @@
+//Imports of dependencies
 import React, { useState, useEffect } from 'react';
-import { Form, Icon, Input, Button, Modal, Alert } from 'antd';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
-import PropTypes from 'prop-types';
+import { Form, Icon, Input, Button, Modal, Alert } from 'antd';
 
-import './style.sass';
+//Local imports
 import { sendLogin } from 'src/store/register/actions';
+import './style.sass';
 
+//Components use for components "Header" : Display a form login
 const FormLogin = ({ setModalLogin, modalLogin, connectVisible, setConnectVisible }) => {
+	//Hooks
 	const [ email, setEmail ] = useState({ value: '', status: '', help: '' });
 	const [ password, setPassword ] = useState({ value: '', status: '', help: '' });
 	const connect = useSelector((state) => state.connect);
 	const dispatch = useDispatch();
-	//console.log('co or fail', connect);
-	const mailChangeValue = (event) => {
-		//console.log(event.target.value);
-		setEmail({ ...email, ...{ value: event.target.value } });
-	};
-	//console.log(email);
-	const passwordChangeValue = (event) => {
-		//console.log(event.target.value);
-		setPassword({ ...password, ...{ value: event.target.value } });
-	};
-
-	const handleSubmitLogin = (email, password) => {
-		return (event) => {
-			event.preventDefault();
-
-			dispatch(sendLogin(email, password));
-		};
-	};
 
 	const handleCancel = () => {
 		setModalLogin(false);
@@ -54,6 +40,23 @@ const FormLogin = ({ setModalLogin, modalLogin, connectVisible, setConnectVisibl
 		},
 		[ connect ]
 	);
+
+	//Event handle onChange that detect every value change on the input and update local state
+	const mailChangeValue = (event) => {
+		setEmail({ ...email, ...{ value: event.target.value } });
+	};
+	const passwordChangeValue = (event) => {
+		setPassword({ ...password, ...{ value: event.target.value } });
+	};
+
+	//Event handle onSubmit: send email and password and trigger a action that send a request
+	const handleSubmitLogin = (email, password) => {
+		return (event) => {
+			event.preventDefault();
+
+			dispatch(sendLogin(email, password));
+		};
+	};
 
 	const ButtonLogin = () => {
 		return (
@@ -114,6 +117,7 @@ const FormLogin = ({ setModalLogin, modalLogin, connectVisible, setConnectVisibl
 	);
 };
 
+//PropTypes
 FormLogin.propTypes = {
 	setModalLogin: PropTypes.func.isRequired,
 	modalLogin: PropTypes.bool.isRequired,

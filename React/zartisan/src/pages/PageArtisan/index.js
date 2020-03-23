@@ -1,41 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import 'antd/dist/antd.css';
-import { NAME_SERVER } from 'src/store/register/actions';
-
-import { Row, Col, Button, Popover } from 'antd';
+//Imports of dependencies
+import React from 'react';
 import { useSelector } from 'react-redux';
-
-import './style.sass';
 import cookies from 'js-cookie';
+import 'antd/dist/antd.css';
+import { Row, Col, Button, Popover } from 'antd';
+
+//Local imports
+import { NAME_SERVER } from 'src/store/register/actions';
+import { useLoading } from 'src/hooks/useLoading';
+import './style.sass';
+
+//Components
 import CarouselArtisan from 'src/components/CarouselArtisan';
 import RateArtisan from 'src/components/RateArtisan';
 import AdviceArtisan from 'src/components/AdviceArtisan';
 import Loader from 'src/components/Loader';
-import { useLoading } from 'src/hooks/useLoading';
 
+//Components content of page-artisan
 const PageArtisan = () => {
+	//Hooks
 	const artisanSelector = useSelector((state) => state.artisan);
+	let toLoading = useLoading();
 
+	//Creat session for page-artisan
 	if (artisanSelector != '') {
 		sessionStorage.setItem('PageArtisan', JSON.stringify(artisanSelector));
 	}
-
 	const sessionArtisan = JSON.parse(sessionStorage.getItem('PageArtisan'));
+	const sessionConnect = sessionStorage.getItem('Connect');
 
 	let artisanObject = '';
 	let adviceObject = [];
-
+	//Loop the different advice and data of artisan
 	for (let artisan in sessionArtisan) {
 		artisanObject = sessionArtisan[0];
 		adviceObject = sessionArtisan[1];
 	}
 
-	const sessionConnect = sessionStorage.getItem('Connect');
+	//tokenJWT: parse the token for read the data token
 	let token = '';
 	if (sessionConnect) {
 		token = cookies.get('TOKEN');
 	}
-
 	let parseJwt = (token) => {
 		try {
 			return JSON.parse(atob(token.split('.')[1]));
@@ -47,14 +53,11 @@ const PageArtisan = () => {
 	let user = -1;
 	let artisanUser = -1;
 	let mail = '';
-
 	if (parseJwt(token) != null) {
 		user = parseJwt(token).roles.indexOf('ROLE_USER');
 		artisanUser = parseJwt(token).roles.indexOf('ROLE_ARTISAN');
 		mail = parseJwt(token).username;
 	}
-
-	//console.log(sessionToken, 'token token');
 
 	let phone = '';
 	artisanObject.phone != undefined ? (phone = artisanObject.phone.slice(1)) : phone;
@@ -62,8 +65,7 @@ const PageArtisan = () => {
 	const idArtisan = artisanObject.id;
 	const emailArtisan = artisanObject.email;
 
-	// contact
-
+	//Button contact display if user is not connect
 	const contentContact = (
 		<div>
 			<p>Pour accéder aux informations de contact veuillez-vous enregistrer et valider votre adresse email</p>
@@ -79,8 +81,6 @@ const PageArtisan = () => {
 			</Popover>
 		);
 	};
-
-	let toLoading = useLoading();
 
 	return (
 		<div>

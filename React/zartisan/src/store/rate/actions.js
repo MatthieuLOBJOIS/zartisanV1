@@ -1,15 +1,16 @@
-export const SEND_RATE = "rate/actions/SEND_RATE";
+//actions type
+export const SEND_RATE = 'rate/actions/SEND_RATE';
+export const RATE = 'rate/actions/RATE';
 
+//action creators
 export const sendRate = (id, mail, value) => ({
-  type: SEND_RATE,
-  id,
-  mail,
-  value
+	type: SEND_RATE,
+	id,
+	mail,
+	value
 });
 
-export const RATE = "rate/actions/RATE";
-
-export const rate = averageRate => ({
-  type: RATE,
-  averageRate
+export const rate = (averageRate) => ({
+	type: RATE,
+	averageRate
 });

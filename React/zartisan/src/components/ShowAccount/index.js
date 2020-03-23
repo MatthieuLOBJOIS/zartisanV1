@@ -1,32 +1,33 @@
+//Imports of dependencies
 import React, { useState } from 'react';
-import { Row, Typography } from 'antd';
-import classNames from 'classnames';
-import cookies from 'js-cookie';
+import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import cookies from 'js-cookie';
+import classNames from 'classnames';
+import { Row, Typography } from 'antd';
 
+//Local imports
+import { artisanData } from 'src/store/artisan/actions';
+import { NAME_SERVER, deconnect } from 'src/store/register/actions';
+import { userSingle } from 'src/store/user/actions';
+import './style.sass';
+
+//Components
 import FormLogin from 'src/components/FormLogin';
 import ModalGoToFormUserOrArtisan from 'src/components/ModalGoToFormUserOrArtisan';
-import { artisanData } from 'src/store/artisan/actions';
-import { NAME_SERVER } from 'src/store/register/actions';
-import { userSingle } from 'src/store/user/actions';
-import { deconnect } from 'src/store/register/actions';
-import './style.sass';
 
 const ShowAccount = ({ onClose, hidden }) => {
 	const { Text } = Typography;
-	/**Hooks for display or not modal login */
-	const [ modalLogin, setModalLogin ] = useState(false);
-	/**Hooks for display or not modal register */
-	const [ modalRegister, setModalRegister ] = useState(false);
-	/**Hooks welcome */
-	const [ connectVisible, setConnectVisible ] = useState(false);
-	//const connect = useSelector(state => state.connect);
+	//Hooks
 	const dispatch = useDispatch();
 	const history = useHistory();
+
+	const [ modalLogin, setModalLogin ] = useState(false);
+	const [ modalRegister, setModalRegister ] = useState(false);
+	const [ connectVisible, setConnectVisible ] = useState(false);
+
 	const sessionConnect = sessionStorage.getItem('Connect');
-	//console.log("session header", sessionConnect);
 
 	const showModalLogin = () => {
 		onClose();
@@ -49,6 +50,7 @@ const ShowAccount = ({ onClose, hidden }) => {
 		sessionStorage.clear();
 	};
 
+	//tokenJWT: parse the token for read the data token
 	let token = cookies.get('TOKEN');
 	let parseJwt = (token) => {
 		try {
@@ -69,16 +71,19 @@ const ShowAccount = ({ onClose, hidden }) => {
 		tokenEmail = parseJwt(token).username;
 	}
 
+	//Event handle onClick go to profile artisan
 	const handleClickProfileArtisan = () => {
 		dispatch(artisanData(1, tokenEmail));
 		onClose();
 	};
 
+	//Event handle onClick go to profile user
 	const handleClickProfileUser = () => {
 		dispatch(userSingle(tokenEmail));
 		onClose();
 	};
 
+	//Modal display
 	const klsHidden = classNames({
 		[`hidden-show-account`]: hidden === true,
 		[`manage-show-account`]: hidden === true
@@ -137,6 +142,7 @@ const ShowAccount = ({ onClose, hidden }) => {
 	);
 };
 
+//PropTypes
 ShowAccount.propTypes = {
 	onClose: PropTypes.func.isRequired,
 	hidden: PropTypes.bool.isRequired

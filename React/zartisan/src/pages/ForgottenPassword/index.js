@@ -1,43 +1,44 @@
+//Imports of dependencies
 import React, { useState } from 'react';
-import { Form, Input, Row, Button, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
-import { sendPasswordForget } from 'src/store/register/actions';
 import { useHistory } from 'react-router-dom';
+import { Form, Input, Row, Button } from 'antd';
+
+//Local imports
+import { sendPasswordForget } from 'src/store/register/actions';
 import './style.sass';
 
-const ForgettenPassword = () => {
+//Components forget password
+const ForgottenPassword = () => {
+	//Hooks
+	let history = useHistory();
 	const dispatch = useDispatch();
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ passwordCheck, setPasswordCheck ] = useState('');
 
+	const emailChangeValue = (event) => {
+		setEmail(event.target.value);
+	};
+
+	const passwordChangeValue = (event) => {
+		setPassword(event.target.value);
+	};
+	const passwordCheckChangeValue = () => {
+		setPasswordCheck(event.target.value);
+	};
+
+	//Event handle onSubmit: trigger action for recover password
 	const handleFormUser = (email, password, passwordCheck) => {
 		return (event) => {
-			//console.log(email, password);
 			event.preventDefault();
 			if (password === passwordCheck && password !== '') {
-				//console.log('mots est correct');
 				dispatch(sendPasswordForget(email, password));
 			}
 		};
 	};
 
-	const emailChangeValue = (event) => {
-		setEmail(event.target.value);
-		//console.log(event.target.value);
-	};
-
-	const passwordChangeValue = (event) => {
-		setPassword(event.target.value);
-		//console.log(event.target.value);
-	};
-	const passwordCheckChangeValue = () => {
-		setPasswordCheck(event.target.value);
-		//console.log(event.target.value);
-	};
-
-	let history = useHistory();
-
+	//Redirect to the home page after confirmed new password
 	const timeoutHist = () => {
 		setTimeout(() => history.push('/'), 4000);
 	};
@@ -67,4 +68,4 @@ const ForgettenPassword = () => {
 	);
 };
 
-export default ForgettenPassword;
+export default ForgottenPassword;

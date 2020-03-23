@@ -1,33 +1,25 @@
-/**
- * Imports of dependencies
- */
+//Imports of dependencies
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import classNames from 'classnames';
 import { Button, Icon, Menu, Dropdown } from 'antd';
 
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-/**
- * Local imports
- */
+//Local imports
 import './style.sass';
 
+//Components for page "Home and ListArtisan" : Implements a button for select a job
+//Need select a region for display button job
 const ButtonJob = ({ visibleButtonJobs, jobChange, setJobChange, setIdJob }) => {
+	//Hooks
 	let jobs = useSelector((state) => state.jobs);
 
-	/**
-   * menu jobs
-   */
-
 	let arrayJobs = jobs[0];
-	//console.log('array', arrayJobs);
 	let jobartisan = '';
 
 	useEffect(
 		() => {
-			//console.log('new ', jobs);
 			if (jobs != null) {
-				//setJobChange('Choisissez votre métier');
 			} else {
 				setJobChange('Aucun métier');
 			}
@@ -35,14 +27,15 @@ const ButtonJob = ({ visibleButtonJobs, jobChange, setJobChange, setIdJob }) => 
 		[ jobs ]
 	);
 
+	//Class for manage the display of button job
 	const klsDisplayButton = classNames('home-button-region -cascader-jobs button-job', {
 		'button-job--display': visibleButtonJobs == true
 	});
 
+	//List of job by region
 	if (arrayJobs != undefined) {
 		jobartisan = arrayJobs.map((job) => {
 			const handleJobChange = (event) => {
-				//console.log('id job', event.item.props.eventKey);
 				chooseJob(event.item.props.value);
 				setIdJob(event.item.props.eventKey);
 			};
@@ -50,8 +43,8 @@ const ButtonJob = ({ visibleButtonJobs, jobChange, setJobChange, setIdJob }) => 
 			const chooseJob = (job) => {
 				setJobChange(job);
 			};
+			//Reduce the length of strings that are too long
 			let jobName = job.name.slice(0, 40);
-
 			if (jobName.length === 40) {
 				jobName = `${jobName}...`;
 			}
@@ -62,7 +55,6 @@ const ButtonJob = ({ visibleButtonJobs, jobChange, setJobChange, setIdJob }) => 
 				</Menu.Item>
 			);
 		});
-		//console.log('final ', jobartisan);
 	}
 
 	const menuJobs = <Menu className="menu-job">{jobartisan}</Menu>;
@@ -83,6 +75,7 @@ const ButtonJob = ({ visibleButtonJobs, jobChange, setJobChange, setIdJob }) => 
 	);
 };
 
+//PropTypes
 ButtonJob.propTypes = {
 	visibleButtonJobs: PropTypes.bool.isRequired,
 	jobChange: PropTypes.string.isRequired,

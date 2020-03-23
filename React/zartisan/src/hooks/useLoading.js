@@ -1,3 +1,4 @@
+//Imports of dependencies
 import { useState, useEffect } from 'react';
 
 export const useLoading = () => {

@@ -1,35 +1,23 @@
-/**
- * Imports of dependencies
- */
+//Imports of dependencies
 import React, { useState, useEffect } from 'react';
-import { Row } from 'antd';
 import { useSelector } from 'react-redux';
-import './style.sass';
+import { Row } from 'antd';
 import 'antd/dist/antd.css';
 
+//Local imports
+import { useLoading } from 'src/hooks/useLoading';
+import './style.sass';
+
+//Components
 import FormEditArtisan from 'src/components/FormEditArtisan';
 import Loader from 'src/components/Loader';
-import { useLoading } from 'src/hooks/useLoading';
 
+//Components content of page profile artisan
 const ProfilSettingsArtisan = () => {
-	// Select artisan in the global state
+	//Hooks
+	let toLoading = useLoading();
 	const artisanSelector = useSelector((state) => state.artisan);
 
-	if (artisanSelector != '') {
-		sessionStorage.setItem('ProfileArtisan', JSON.stringify(artisanSelector));
-	}
-
-	const sessionArtisan = JSON.parse(sessionStorage.getItem('ProfileArtisan'));
-	console.log(artisanSelector, 'select obj');
-	let artisanObject = '';
-
-	for (let artisan in sessionArtisan) {
-		artisanObject = sessionArtisan[0];
-	}
-
-	console.log('oject', artisanObject);
-
-	// Local state Artisan
 	const [ profileArtisan, setProfileArtisan ] = useState({
 		firstname: artisanObject.firstname,
 		lastname: artisanObject.lastname,
@@ -45,6 +33,17 @@ const ProfilSettingsArtisan = () => {
 		phone: artisanObject.phone,
 		email: artisanObject.email
 	});
+
+	//Creat session for account artisan
+	if (artisanSelector != '') {
+		sessionStorage.setItem('ProfileArtisan', JSON.stringify(artisanSelector));
+	}
+	const sessionArtisan = JSON.parse(sessionStorage.getItem('ProfileArtisan'));
+	let artisanObject = '';
+
+	for (let artisan in sessionArtisan) {
+		artisanObject = sessionArtisan[0];
+	}
 
 	useEffect(
 		() => {
@@ -69,9 +68,6 @@ const ProfilSettingsArtisan = () => {
 		[ artisanSelector ]
 	);
 
-	//console.log('profilearti', profileArtisan);
-
-	let toLoading = useLoading();
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">

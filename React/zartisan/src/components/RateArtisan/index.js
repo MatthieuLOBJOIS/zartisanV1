@@ -1,17 +1,23 @@
+//Imports of dependencies
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import 'antd/dist/antd.css';
 import { Rate, Popover } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 
+//Local imports
 import { sendRate } from 'src/store/rate/actions';
 import './style.sass';
 
+//Components for page "PageArtisan" : Display rate popover
 const RateArtisan = ({ user, artisanUser, artisanObject, idArtisan, mail }) => {
+	//Hooks
 	const dispatch = useDispatch();
 	const averageRate = useSelector((state) => state.rate);
 	const [ star, setStar ] = useState(artisanObject.averageRate);
 	const [ updateStar, setUpdateStar ] = useState(null);
+	const [ visibleRate, setVisibleRate ] = useState(false);
+	const [ value, setValue ] = useState(null);
 
 	useEffect(
 		() => {
@@ -28,30 +34,22 @@ const RateArtisan = ({ user, artisanUser, artisanObject, idArtisan, mail }) => {
 		[ artisanObject.averageRate ]
 	);
 
+	//Open popover
+	const handleVisibleChange = () => {
+		setVisibleRate(true);
+	};
+
+	//Close popover
+	const hide = () => {
+		setVisibleRate(false);
+	};
+
 	const Rating = () => {
 		if (updateStar == null) {
 			return <Rate className="ratingCompany" style={{ fontSize: '1em' }} disabled defaultValue={star} />;
 		} else {
 			return <Rate className="ratingCompany" style={{ fontSize: '1em' }} disabled defaultValue={updateStar} />;
 		}
-	};
-
-	/**Hooks for display popover of rate link */
-	const [ visibleRate, setVisibleRate ] = useState(false);
-	const [ value, setValue ] = useState(null);
-
-	/**
-   * open popover
-   */
-	const handleVisibleChange = () => {
-		setVisibleRate(true);
-	};
-
-	/**
-   * close popover
-   */
-	const hide = () => {
-		setVisibleRate(false);
 	};
 
 	const handleChange = (event) => {
@@ -88,6 +86,7 @@ const RateArtisan = ({ user, artisanUser, artisanObject, idArtisan, mail }) => {
 	);
 };
 
+//PropTypes
 RateArtisan.propTypes = {
 	user: PropTypes.number.isRequired,
 	artisanUser: PropTypes.number.isRequired,

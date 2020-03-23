@@ -1,18 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Upload, Icon, message } from 'antd';
+//Imports of dependencies
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Upload, Icon, message } from 'antd';
 
+//Local imports
 import { NAME_SERVER } from 'src/store/register/actions';
 
+//Components for page "ProfileSettingsUser and ProfileSettingsArtisan" : Implements the button upload avatar.
 const UploadAvatar = ({ profileUser, setProfileUser, role, profileArtisan, setProfileArtisan }) => {
+	//Hooks
 	const [ loading, setLoading ] = useState(false);
 
+	//get base64: format of picture
 	const getBase64 = (img, callback) => {
 		const reader = new FileReader();
 		reader.addEventListener('load', () => callback(reader.result));
 		reader.readAsDataURL(img);
 	};
 
+	//Condition of upload picture
 	const beforeUpload = (file) => {
 		const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
 		if (!isJpgOrPng) {
@@ -25,6 +31,7 @@ const UploadAvatar = ({ profileUser, setProfileUser, role, profileArtisan, setPr
 		return isJpgOrPng && isLt2M;
 	};
 
+	// Event handle onChange: update state local for every change of picture
 	const handleChange = (info) => {
 		if (info.file.status === 'uploading') {
 			setLoading({ loading: true });
@@ -62,8 +69,8 @@ const UploadAvatar = ({ profileUser, setProfileUser, role, profileArtisan, setPr
 	);
 
 	const { imageUrl } = loading;
-	//console.log('imageUrl ' + imageUrl);
 
+	//Dynamic src
 	let profile = '';
 	if (role === 'user') {
 		profile = profileUser.pictureAvatar;
@@ -96,6 +103,7 @@ const UploadAvatar = ({ profileUser, setProfileUser, role, profileArtisan, setPr
 	);
 };
 
+//PropTypes
 UploadAvatar.propTypes = {
 	profileUser: PropTypes.object,
 	setProfileUser: PropTypes.func,

@@ -1,18 +1,23 @@
+//Imports of dependencies
 import React, { useState } from 'react';
-import 'antd/dist/antd.css';
-import { NAME_SERVER } from 'src/store/register/actions';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import { Row, Col, Button, List, Comment, Popover, Icon, Form, Input, Modal } from 'antd';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import 'antd/dist/antd.css';
 
-import './style.sass';
-import { alertAdvice } from 'src/store/advice/actions';
+//Local imports
+import { NAME_SERVER } from 'src/store/register/actions';
 import { sendAdvice } from 'src/store/advice/actions';
+import { alertAdvice } from 'src/store/advice/actions';
 import { artisanData } from 'src/store/artisan/actions';
+import './style.sass';
 
+//Components for page "PageArtisan" : Implements the differents advice message for a artisan.
 const AdviceArtisan = ({ user, artisanUser, adviceObject, mail, idArtisan, emailArtisan }) => {
 	const { TextArea } = Input;
+
+	//Hooks
 	const dispatch = useDispatch();
 	const [ visibleSendAdvice, setVisibleSendAdvice ] = useState(false);
 	const [ changeAdvice, setChangeAdvice ] = useState(null);
@@ -31,10 +36,10 @@ const AdviceArtisan = ({ user, artisanUser, adviceObject, mail, idArtisan, email
 
 	const changeArea = (value) => {
 		let valueArea = value.target.value;
-		//console.log(valueArea);
 		changeValueArea(valueArea);
 	};
 
+	//Form to send an advice
 	const handleAreaComment = (event) => {
 		event.preventDefault();
 		hidePopAdvice();
@@ -45,6 +50,7 @@ const AdviceArtisan = ({ user, artisanUser, adviceObject, mail, idArtisan, email
 		}, 2000);
 	};
 
+	//If user is connected display areaComment
 	const areaComment = (
 		<div>
 			<Form onSubmit={handleAreaComment}>
@@ -60,16 +66,18 @@ const AdviceArtisan = ({ user, artisanUser, adviceObject, mail, idArtisan, email
 		</div>
 	);
 
+	//If user is disconnected display contentAdvice
 	const contentAdvice = (
 		<div>
 			<p>Pour accéder aux commentaires veuillez-vous enregistrer et valider votre adresse email</p>
 		</div>
 	);
 
+	//Button for display areaComment or contentAdvice
+	//user = -1 if is not connected
 	const ButtonAdvice = () => {
 		const handleAdvice = () => {
 			if (user !== -1 || artisanUser !== -1) {
-				//console.log("commentaire");
 				visiblePopAdvice();
 			}
 		};
@@ -90,11 +98,8 @@ const AdviceArtisan = ({ user, artisanUser, adviceObject, mail, idArtisan, email
 			);
 		}
 	};
-
-	/**
-   * report a advice
-   */
-
+	//Alert a illegal advice
+	//setTimout for activate artisanData() after alertAdvice() and avoid conflict
 	const handleAlert = (event) => {
 		dispatch(alertAdvice(event.target.value));
 
@@ -126,7 +131,6 @@ const AdviceArtisan = ({ user, artisanUser, adviceObject, mail, idArtisan, email
 						dataSource={adviceObject}
 						renderItem={(item) => (
 							<li>
-								{/*console.log(item, 'itemlog')*/}
 								<Comment
 									author={item.userAuthor.firstname}
 									avatar={`${NAME_SERVER}/${item.userAuthor.picture}`}
@@ -155,6 +159,7 @@ const AdviceArtisan = ({ user, artisanUser, adviceObject, mail, idArtisan, email
 	);
 };
 
+//PropTypes
 AdviceArtisan.propTypes = {
 	user: PropTypes.number.isRequired,
 	artisanUser: PropTypes.number.isRequired,

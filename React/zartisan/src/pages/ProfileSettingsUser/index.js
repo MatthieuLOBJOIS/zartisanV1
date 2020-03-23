@@ -1,19 +1,22 @@
+//Imports of dependencies
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Row } from 'antd';
+import { useSelector } from 'react-redux';
 import 'antd/dist/antd.css';
+import { Row } from 'antd';
+
+//Local imports
+import { useLoading } from 'src/hooks/useLoading';
+import './style.sass';
+
+//Components
 import FormEditUser from 'src/components/FormEditUser';
 import Loader from 'src/components/Loader';
-import './style.sass';
-import { useLoading } from 'src/hooks/useLoading';
 
+//Components content of page profile user
 const ProfileSettingsUser = () => {
+	//Hooks
 	const userSelect = useSelector((state) => state.user);
-
-	if (userSelect != '') {
-		sessionStorage.setItem('ProfileUser', JSON.stringify(userSelect));
-	}
-	const sessionUser = JSON.parse(sessionStorage.getItem('ProfileUser'));
+	let toLoading = useLoading();
 
 	const [ profileUser, setProfileUser ] = useState({
 		pictureAvatar: '',
@@ -23,6 +26,12 @@ const ProfileSettingsUser = () => {
 		phone: '',
 		mail: ''
 	});
+
+	//Creat session for account user
+	if (userSelect != '') {
+		sessionStorage.setItem('ProfileUser', JSON.stringify(userSelect));
+	}
+	const sessionUser = JSON.parse(sessionStorage.getItem('ProfileUser'));
 
 	useEffect(
 		() => {
@@ -39,10 +48,6 @@ const ProfileSettingsUser = () => {
 		},
 		[ userSelect ]
 	);
-
-	console.log('profile', profileUser);
-
-	let toLoading = useLoading();
 
 	return (
 		<div className="profile-content-user">

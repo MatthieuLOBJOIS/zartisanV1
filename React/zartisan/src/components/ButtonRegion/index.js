@@ -1,27 +1,25 @@
-/**
- * Imports of dependencies
- */
+//Imports of dependencies
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Icon, Menu, Dropdown } from 'antd';
-import PropTypes from 'prop-types';
 
-/**
- * Local imports
- */
-import './style.sass';
+//Local imports
 import { getRegions } from 'src/store/regions/actions';
 import { getJobs } from 'src/store/jobs/actions';
 import { visibleJobDropdown } from 'src/services/local-state-service';
+import './style.sass';
 
+//Components for page "Home and ListArtisan" : Implements a button for select a region
 const ButtonRegion = ({ setvisibleButtonJobs, regionChange, setRegion }) => {
+	//Hooks
 	const regions = useSelector((state) => state.regions);
 	const dispatch = useDispatch();
 
+	//Choose a region for display button job and send request list jobs
 	const changeRegion = (event) => {
 		setRegion(event.item.props.value);
 		dispatch(getJobs(event.item.props.value));
-		console.log(event.item.props.value);
 		visibleJobDropdown(setvisibleButtonJobs);
 	};
 
@@ -29,6 +27,8 @@ const ButtonRegion = ({ setvisibleButtonJobs, regionChange, setRegion }) => {
 		dispatch(getRegions());
 	}, []);
 
+	//List of region
+	//Select region on the map France
 	const itemRegions = regions.map((regionObject) => {
 		const array = [];
 		for (let regionCode in regionObject) {
@@ -56,6 +56,7 @@ const ButtonRegion = ({ setvisibleButtonJobs, regionChange, setRegion }) => {
 	);
 };
 
+//PropTypes
 ButtonRegion.propTypes = {
 	setvisibleButtonJobs: PropTypes.func.isRequired,
 	regionChange: PropTypes.string.isRequired,

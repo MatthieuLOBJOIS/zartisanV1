@@ -1,19 +1,15 @@
-import { SEND_RATE } from 'src/store/rate/actions';
-import { rate } from 'src/store/rate/actions';
+//Imports of dependencies
 import axios from 'axios';
 import cookies from 'js-cookie';
-/**
- * NAME SERVER
- */
+
+//Local imports
 import { NAME_SERVER } from 'src/store/register/actions';
+import { SEND_RATE } from 'src/store/rate/actions';
+import { rate } from 'src/store/rate/actions';
 
 export default (store) => (next) => (action) => {
 	switch (action.type) {
-		/**
-     * rate
-     */
 		case SEND_RATE: {
-			//console.log('middleware rate');
 			const token = cookies.get('TOKEN');
 			return axios({
 				method: 'post',
@@ -26,9 +22,7 @@ export default (store) => (next) => (action) => {
 				headers: { Authorization: `Bearer ${token}` }
 			})
 				.then((response) => {
-					//console.log(response);
 					if (response.status === 200) {
-						console.log(response.data);
 						store.dispatch(rate(response.data));
 					}
 				})

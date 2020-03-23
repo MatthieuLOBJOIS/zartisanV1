@@ -1,22 +1,17 @@
+//Imports of dependencies
 import cookies from 'js-cookie';
+import axios from 'axios';
+
+//Local imports
 import { ARTISAN_DATA } from 'src/store/artisan/actions';
 import { ARTISAN_EDIT } from 'src/store/artisan/actions';
 import { artisanInfo } from 'src/store/artisan/actions';
-
-/**
- * NAME SERVER
- */
 import { NAME_SERVER } from 'src/store/register/actions';
-
-import axios from 'axios';
 
 export default (store) => (next) => (action) => {
 	switch (action.type) {
 		case ARTISAN_DATA: {
-			//console.log('middleware artisan');
-			//console.log(action.id, action.email);
 			let token = cookies.get('TOKEN');
-
 			return axios({
 				method: 'post',
 				url: `${NAME_SERVER}/v1/artisan/single`,
@@ -26,17 +21,13 @@ export default (store) => (next) => (action) => {
 				headers: { Authorization: `Bearer ${token}` }
 			})
 				.then((response) => {
-					//console.log(response);
 					if (response.status === 200) {
-						console.log('ok artisan data');
-						//console.log('response');
-
 						store.dispatch(artisanInfo(response.data));
 					}
 				})
 				.catch(function(error) {
 					// handle error
-					console.log(error);
+					//console.log(error);
 				})
 				.finally(function() {
 					// always executed
@@ -44,17 +35,7 @@ export default (store) => (next) => (action) => {
 		}
 
 		case ARTISAN_EDIT: {
-			console.log(action);
-			// console.log(
-			// 	'value',
-			// 	action.email,
-			// 	action.description,
-			// 	action.pictureAvatar,
-			// 	action.pictureGalery,
-			// 	action.phone
-			// );
 			let token = cookies.get('TOKEN');
-
 			return axios({
 				method: 'post',
 				url: `${NAME_SERVER}/api/v1/artisan/edit`,
@@ -67,15 +48,10 @@ export default (store) => (next) => (action) => {
 				},
 				headers: { Authorization: `Bearer ${token}` }
 			})
-				.then((response) => {
-					//console.log(response);
-					if (response.status === 200) {
-						console.log('ok artisan');
-					}
-				})
+				.then((response) => {})
 				.catch(function(error) {
 					// handle error
-					console.log(error);
+					//console.log(error);
 				})
 				.finally(function() {
 					// always executed

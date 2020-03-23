@@ -1,5 +1,7 @@
+//Imports of dependencies
 import { combineReducers } from 'redux';
 
+//Local imports
 import jobs from 'src/store/jobs';
 import regions from 'src/store/regions';
 import connect from 'src/store/register';

@@ -1,14 +1,10 @@
-/**
- * Imports of dependencies
- */
+//Imports of dependencies
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './style.sass';
 
-/**
- * Local imports
- */
-// React Components
+//Local imports
+//React Components
 import Header from 'src/components/Header';
 import Home from 'src/pages/Home';
 import Footer from 'src/components/Footer';
@@ -20,9 +16,6 @@ import ForgottenPassword from 'src/pages/ForgottenPassword';
 import ProfilSettingsArtisan from 'src/pages/ProfilSettingsArtisan';
 import ProfileSettingsUser from 'src/pages/ProfileSettingsUser';
 
-/**
- * Code
- */
 const App = () => {
 	return (
 		<div className="app">
@@ -60,7 +53,4 @@ const App = () => {
 	);
 };
 
-/**
- * Export
- */
 export default App;

@@ -1,16 +1,21 @@
+//Imports of dependencies
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form, Input } from 'antd';
 import 'antd/dist/antd.css';
-import PropTypes from 'prop-types';
 
+//Local imports
+import { editUser } from 'src/store/user/actions';
+import { userSingle } from 'src/store/user/actions';
+
+//Components
 import UploadAvatar from 'src/components/UploadAvatar';
 import ButtonDeleteAccount from 'src/components/ButtonDeleteAccount';
 import ButtonSaveAccount from 'src/components/ButtonSaveAccount';
 
-import { editUser } from 'src/store/user/actions';
-import { userSingle } from 'src/store/user/actions';
-
+//Components for page "profileSettingsUser" : Implements the form of User for edit user account
 const FormEditUser = ({ profileUser, setProfileUser }) => {
+	//Event handle onChange that detect every value change on the input and update local state
 	const handleChangeValue = (keys) => {
 		return (event) => {
 			switch (keys) {
@@ -96,6 +101,7 @@ const FormEditUser = ({ profileUser, setProfileUser }) => {
 	);
 };
 
+//PropTypes
 FormEditUser.propTypes = {
 	profileUser: PropTypes.object.isRequired,
 	setProfileUser: PropTypes.func.isRequired
