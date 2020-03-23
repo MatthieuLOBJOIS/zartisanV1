@@ -1,27 +1,29 @@
+//Imports of dependencies
 import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import 'antd/dist/antd.css';
 import { Row, List, Rate } from 'antd';
 
-import 'antd/dist/antd.css';
-import './style.sass';
-import { useSelector, useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { artisanData } from 'src/store/artisan/actions';
+//Local imports
 import { NAME_SERVER } from 'src/store/register/actions';
+import { artisanData } from 'src/store/artisan/actions';
+import { useLoading } from 'src/hooks/useLoading';
+import './style.sass';
 
-/**
- * Local imports
- */
-
+//Components
 import ButtonSearchArtisanList from 'src/components/ButtonSearchArtisanList';
 import ButtonJob from '../../components/ButtonJob';
 import ButtonRegion from '../../components/ButtonRegion';
 import Loader from 'src/components/Loader';
-import { useLoading } from 'src/hooks/useLoading';
 
+//Components content of page list-artisan
 const ListArtisan = () => {
-	console.log('load', useLoading());
+	//Hooks
+	let toLoading = useLoading();
 	const dispatch = useDispatch();
 	const arrayArtisan = useSelector((state) => state.search);
+
 	const [ visibleButtonJobs, setvisibleButtonJobs ] = useState(false);
 	const [ regionChange, setRegion ] = useState('Choisissez une Région');
 	const [ jobChange, setJobChange ] = useState('Choisissez votre métier');
@@ -30,13 +32,13 @@ const ListArtisan = () => {
 
 	let objectArtisan = '';
 	const listData = [];
-
+	//Creat session for list-artisan
 	if (arrayArtisan != '') {
 		sessionStorage.setItem('ListArtisan', JSON.stringify(arrayArtisan));
 	}
-
 	const sessionData = JSON.parse(sessionStorage.getItem('ListArtisan'));
 
+	//Loop the different artisan of the search
 	if (sessionData != null) {
 		sessionData.map((obj) => {
 			if (obj.companyDescription == null) {
@@ -58,10 +60,10 @@ const ListArtisan = () => {
 		return <Rate style={{ fontSize: '1em' }} disabled defaultValue={star} />;
 	};
 
+	//Redirect to page-artisan
 	const LinkArtisan = withRouter(({ history, item }) => {
 		const handleSearch = () => {
 			dispatch(artisanData(item.id, item.email));
-			//console.log('itemtest', item.id, item.email, item);
 			{
 				'item compagny', item.company;
 			}
@@ -71,7 +73,6 @@ const ListArtisan = () => {
 		return <a onClick={handleSearch}>{item.company}</a>;
 	});
 
-	let toLoading = useLoading();
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
@@ -102,9 +103,7 @@ const ListArtisan = () => {
 							itemLayout="horizontal"
 							size="small"
 							pagination={{
-								onChange: (page) => {
-									//console.log(page);
-								},
+								onChange: (page) => {},
 								pageSize: 5
 							}}
 							grid={{

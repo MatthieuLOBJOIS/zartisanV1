@@ -1,19 +1,17 @@
+//Imports of dependencies
 import cookies from 'js-cookie';
 import axios from 'axios';
 
-import { alertSuccess } from 'src/store/advice/actions';
+//Local imports
 import { ALERT_ADVICE } from 'src/store/advice/actions';
+import { alertSuccess } from 'src/store/advice/actions';
 import { SEND_ADVICE } from 'src/store/advice/actions';
 import { advice } from 'src/store/advice/actions';
-/**
- * NAME SERVER
- */
 import { NAME_SERVER } from 'src/store/register/actions';
 
 export default (store) => (next) => (action) => {
 	switch (action.type) {
 		case ALERT_ADVICE: {
-			//console.log('middleware advice');
 			let token = cookies.get('TOKEN');
 			return axios({
 				method: 'post',
@@ -24,9 +22,7 @@ export default (store) => (next) => (action) => {
 				headers: { Authorization: `Bearer ${token}` }
 			})
 				.then((response) => {
-					//console.log(response);
 					if (response.status === 200) {
-						//console.log(response.data);
 						store.dispatch(alertSuccess(response.data));
 					}
 				})
@@ -39,7 +35,6 @@ export default (store) => (next) => (action) => {
 				});
 		}
 		case SEND_ADVICE: {
-			//console.log('action mail :', action.mail, 'action body', action.body, 'action idartisan', action.idArtisan);
 			let token = cookies.get('TOKEN');
 			return axios({
 				method: 'post',
@@ -52,9 +47,7 @@ export default (store) => (next) => (action) => {
 				headers: { Authorization: `Bearer ${token}` }
 			})
 				.then((response) => {
-					//console.log(response);
 					if (response.status === 200) {
-						//console.log('response 200', response.data);
 						store.dispatch(advice(response.data));
 					}
 				})

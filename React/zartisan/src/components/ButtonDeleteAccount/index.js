@@ -1,12 +1,19 @@
+//Imports of dependencies
 import React from 'react';
-import { Button } from 'antd';
-import { deleteUser } from 'src/store/user/actions';
-import { useDispatch } from 'react-redux';
-import './style.sass';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { Button } from 'antd';
 
+//Local imports
+import { deleteUser } from 'src/store/user/actions';
+import './style.sass';
+
+//Components for page "ProfileSettingsUser and ProfileSettingsArtisan" : delete a account
 const ButtonDeleteAccount = ({ profileUser, profileRole }) => {
+	//Hooks
 	const dispatch = useDispatch();
+
+	//Event handler that triggers an action for delete an account
 	const handleDeleteAccount = () => {
 		switch (profileRole) {
 			case 'artisan':
@@ -25,7 +32,7 @@ const ButtonDeleteAccount = ({ profileUser, profileRole }) => {
 		</div>
 	);
 };
-
+//PropTypes
 ButtonDeleteAccount.propTypes = {
 	profileUser: PropTypes.object,
 	profileRole: PropTypes.string.isRequired

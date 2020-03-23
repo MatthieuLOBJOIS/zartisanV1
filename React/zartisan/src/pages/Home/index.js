@@ -1,23 +1,19 @@
-/**
- * Imports of dependencies
- */
+//Imports of dependencies
 import React, { useState } from 'react';
 import { Row } from 'antd';
 
-/**
- * Local imports
- */
+//Local imports
 import './style.sass';
-import FranceMap from '../../components/FranceMap';
+
+//Components
+import FranceMap from 'src/components/FranceMap';
 import ButtonSearchArtisanList from 'src/components/ButtonSearchArtisanList';
-import ButtonJob from '../../components/ButtonJob';
-import ButtonRegion from '../../components/ButtonRegion';
+import ButtonJob from 'src/components/ButtonJob';
+import ButtonRegion from 'src/components/ButtonRegion';
 
-/**
- * Code
- */
-
+//Components content of page home
 const Home = () => {
+	//Hooks
 	const [ visibleButtonJobs, setvisibleButtonJobs ] = useState(false);
 	const [ regionChange, setRegion ] = useState('Choisissez une Région');
 	const [ jobChange, setJobChange ] = useState('Choisissez votre métier');

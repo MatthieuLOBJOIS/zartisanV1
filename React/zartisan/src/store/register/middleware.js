@@ -1,11 +1,9 @@
-/**
- * Imports of dependencies
- */
+//Imports of dependencies
+
 import axios from 'axios';
 import cookies from 'js-cookie';
-/**
- * Local imports
- */
+
+//Local imports
 import { SEND_PASSWORD_FORGET } from 'src/store/register/actions';
 import { SEND_REGISTER_USER } from 'src/store/register/actions';
 import { SEND_REGISTER_ARTISAN } from 'src/store/register/actions';
@@ -13,9 +11,6 @@ import { SEND_LOGIN } from 'src/store/register/actions';
 import { CONNECT } from 'src/store/register/actions';
 import { CONNECT_FAIL } from 'src/store/register/actions';
 import { validRegister } from 'src/store/register/actions';
-/**
- * NAME SERVER
- */
 import { NAME_SERVER } from 'src/store/register/actions';
 
 export default (store) => (next) => (action) => {
@@ -29,17 +24,15 @@ export default (store) => (next) => (action) => {
 			}
 		})
 			.then((response) => {
-				// console.log(response);
 				if (response.status === 200) {
-					// console.log('connexion-login');
 					cookies.set('TOKEN', response.data.token);
-					// console.log(cookies.set('TOKEN', response.data.token));
+
 					store.dispatch({ type: CONNECT });
 				}
 			})
 			.catch(function(error) {
 				// handle error
-				//console.log(error);
+
 				store.dispatch({ type: CONNECT_FAIL });
 			})
 			.finally(function() {
@@ -48,30 +41,20 @@ export default (store) => (next) => (action) => {
 	};
 
 	switch (action.type) {
-		/**
-     * Connexion
-     */
 		case SEND_LOGIN: {
 			return loginCheck();
 		}
-
-		/**
-     * User register
-     */
 		case SEND_REGISTER_USER: {
 			const data = {
 				email: action.email,
 				password: action.password
 			};
-			console.log(data);
-
 			return axios({
 				method: 'post',
 				url: `${NAME_SERVER}/register/user`, // first check with static home page
 				data
 			})
 				.then((response) => {
-					// console.log(response);
 					if (response.status === 200) {
 						console.log('inscription');
 						store.dispatch(validRegister());
@@ -85,27 +68,19 @@ export default (store) => (next) => (action) => {
 					// always executed
 				});
 		}
-
-		/**
-     * Artisan register
-     */
 		case SEND_REGISTER_ARTISAN: {
 			const data = {
 				email: action.email,
 				password: action.password,
 				siret: action.siret
 			};
-			console.log(data);
-
 			return axios({
 				method: 'post',
 				url: `${NAME_SERVER}/register/artisan`, // first check with static home page
 				data
 			})
 				.then((response) => {
-					// console.log(response);
 					if (response.status === 200) {
-						console.log('inscription');
 						store.dispatch(validRegister());
 					}
 				})
@@ -127,19 +102,12 @@ export default (store) => (next) => (action) => {
 				email: action.email,
 				password: action.password
 			};
-			//console.log(data);
-
 			return axios({
 				method: 'post',
 				url: `${NAME_SERVER}/resetPassMail`,
 				data
 			})
-				.then((response) => {
-					//console.log(response);
-					if (response.status === 200) {
-						//console.log('test reussi');
-					}
-				})
+				.then((response) => {})
 				.catch(function(error) {
 					//console.log(error);
 				})

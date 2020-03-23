@@ -1,32 +1,27 @@
-/**
- * Imports of dependencies
- */
-
-import React, { useState, useEffect } from 'react';
-import { Row, Col, Button, Icon, Drawer, Typography } from 'antd';
+//Imports of dependencies
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
-import { Link, useHistory } from 'react-router-dom';
+import { Row, Button, Icon, Drawer } from 'antd';
 
-/**
- * Local imports
- */
-import './style.sass';
-import ShowAccount from 'src/components/ShowAccount';
+//Local imports
 import { NAME_SERVER } from 'src/store/register/actions';
-/**
- * Code
- */
+import './style.sass';
 
+//Components
+import ShowAccount from 'src/components/ShowAccount';
+
+//Components generic : Implements the header for all pages.
 const Header = () => {
-	/**Hooks for display or not menu burger */
+	//Hooks
 	const [ visible, setVisible ] = useState(false);
 
-	//open menu burger
+	//Open menu burger
 	const showDrawer = () => {
 		setVisible(true);
 	};
 
-	//close menu burger
+	//Close menu burger
 	const onClose = () => {
 		setVisible(false);
 	};
@@ -34,12 +29,9 @@ const Header = () => {
 	return (
 		<div>
 			<Row className="header" type="flex" justify="space-around">
-				{/** Button Burger */}
 				<Button className="header-burger-button header-burger-button--hidden" onClick={showDrawer}>
 					<Icon type="menu" />
 				</Button>
-
-				{/** Menu of Burger */}
 				<Drawer placement="top" onClose={onClose} visible={visible} closable={true}>
 					<Row type="flex" justify="center" align="top">
 						<img
@@ -51,8 +43,6 @@ const Header = () => {
 					<ShowAccount onClose={onClose} hidden={false} />
 				</Drawer>
 				<ShowAccount onClose={onClose} hidden={true} />
-
-				{/** logo header */}
 				<Link to="/">
 					<img
 						src={`${NAME_SERVER}/assets/images_default/zartisan.svg`}

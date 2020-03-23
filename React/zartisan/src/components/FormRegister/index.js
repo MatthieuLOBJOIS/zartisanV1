@@ -1,21 +1,18 @@
-/**
- * Imports of dependencies
- */
+//Imports of dependencies
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Row, Button, Modal } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form, Input, Row, Button, Modal } from 'antd';
 
-/**
- * Local imports
- */
-import './style.sass';
+//Local imports
 import { sendRegisterArtisan } from 'src/store/register/actions';
 import { sendRegisterUser } from 'src/store/register/actions';
+import './style.sass';
 
+//Components use for components "Header" : Display a form register
 const FormRegister = ({ registerState, setRegisterState }) => {
+	//Hooks
 	const dispatch = useDispatch();
-
 	const registerOk = useSelector((state) => state.connect);
 
 	const [ email, setEmail ] = useState({ value: '', status: '', help: '' });
@@ -23,6 +20,7 @@ const FormRegister = ({ registerState, setRegisterState }) => {
 	const [ passwordCheck, setPasswordCheck ] = useState({ value: '', status: '', help: '' });
 	const [ siret, setSiret ] = useState({ value: '', status: '', help: '' });
 
+	//If register request is valid display a modal of welcome
 	useEffect(
 		() => {
 			if (registerOk === 'register') {
@@ -32,6 +30,7 @@ const FormRegister = ({ registerState, setRegisterState }) => {
 		[ registerOk ]
 	);
 
+	//Event handle onChange that detect every value change on the input and update local state
 	const emailChangeValue = (event) => {
 		setEmail({ ...email, ...{ value: event.target.value } });
 	};
@@ -48,6 +47,8 @@ const FormRegister = ({ registerState, setRegisterState }) => {
 		setSiret({ ...siret, ...{ value: event.target.value } });
 	};
 
+	//Validat the different value and display a error/warning or success message
+	//If is success trigger a action for creat the account
 	const validateForm = () => {
 		const passwordFormat = /[a-zA-Z0-9]{6}/;
 		const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -123,11 +124,13 @@ const FormRegister = ({ registerState, setRegisterState }) => {
 		}
 	};
 
+	//Event handle onSubmit : trigger the function validatForm() after submit
 	const handleFormArtisan = (event) => {
 		event.preventDefault();
 		validateForm();
 	};
 
+	//Close the modal register after validat request
 	const hideModalRegister = () => {
 		setTimeout(() => {
 			setRegisterState({ ...registerState, ...{ visible: false } }), 2000;
@@ -138,10 +141,12 @@ const FormRegister = ({ registerState, setRegisterState }) => {
 		});
 	};
 
+	//Display modal welcome
 	const registerModalVisible = () => {
 		setRegisterState({ ...registerState, ...{ valid: true } });
 	};
 
+	//Close modal welcome
 	const registerModalClose = () => {
 		setRegisterState({ ...registerState, ...{ valid: false } });
 	};
@@ -198,6 +203,7 @@ const FormRegister = ({ registerState, setRegisterState }) => {
 	);
 };
 
+//PropTypes
 FormRegister.propTypes = {
 	registerState: PropTypes.object.isRequired,
 	setRegisterState: PropTypes.func.isRequired

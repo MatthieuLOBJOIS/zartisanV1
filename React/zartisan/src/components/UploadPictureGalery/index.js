@@ -1,24 +1,25 @@
-/**
- * Imports of dependencies
- */
+//Imports of dependencies
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Upload, Icon, Modal } from 'antd';
-import 'antd/dist/antd.css';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import 'antd/dist/antd.css';
+import { Upload, Icon, Modal } from 'antd';
 
+//Local imports
 import { NAME_SERVER } from 'src/store/register/actions';
 
+//Components for page " ProfileSettingsArtisan" : Implements the button upload galery picture.
 const UploadPictureGalery = ({ artisanObject, profileArtisan, setProfileArtisan }) => {
+	//Hooks
 	const [ fileList, setFileList ] = useState([]);
 	const [ pictureFolder, setPictureFolder ] = useState({
 		previewVisible: false,
 		previewImage: ''
 	});
 
-	// Select artisan in the global state
 	const artisanSelector = useSelector((state) => state.artisan);
 
+	//get base64: format of picture
 	function getSecondeBase64(file) {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -28,10 +29,10 @@ const UploadPictureGalery = ({ artisanObject, profileArtisan, setProfileArtisan 
 		});
 	}
 
+	//Select currently picture gallery
 	let arrayPicture = [];
 	if (artisanObject != '') {
 		arrayPicture = artisanObject.pictureFolder.map((picture) => {
-			//console.log('pic', picture);
 			return {
 				uid: picture,
 				name: picture,
@@ -42,8 +43,7 @@ const UploadPictureGalery = ({ artisanObject, profileArtisan, setProfileArtisan 
 		});
 	}
 
-	//console.log(arrayPicture);
-
+	//Update picture gallery
 	useEffect(
 		() => {
 			if (artisanObject != '') {
@@ -59,8 +59,8 @@ const UploadPictureGalery = ({ artisanObject, profileArtisan, setProfileArtisan 
 			...{ previewVisible: false }
 		});
 
+	//Display a modal for preview a picture
 	const handlePreview = async (file) => {
-		console.log(file);
 		if (!file.url && !file.preview) {
 			file.preview = await getSecondeBase64(file.originFileObj);
 		}
@@ -72,23 +72,18 @@ const UploadPictureGalery = ({ artisanObject, profileArtisan, setProfileArtisan 
 		});
 	};
 
-	console.log(pictureFolder);
-
+	//Update and fix array picture gallery for backend process
 	const handleChangeFile = (fileList) => {
 		if (fileList.file.thumbUrl != '') {
-			//console.log('changefilelist', fileList.fileList);
 			const urlFolder = fileList.fileList.map((file) => {
 				if (file.thumbUrl != undefined) {
 					const urlHttp = file.thumbUrl.indexOf('http');
 					if (urlHttp == 0) {
-						//console.log(file.thumbUrl);
 						return file.thumbUrl.slice(22);
 					}
 					return file.thumbUrl;
 				}
 			});
-
-			//console.log('url', urlFolder);
 
 			setProfileArtisan({
 				...profileArtisan,
@@ -123,6 +118,7 @@ const UploadPictureGalery = ({ artisanObject, profileArtisan, setProfileArtisan 
 	);
 };
 
+//PropTypes
 UploadPictureGalery.propTypes = {
 	artisanObject: PropTypes.object.isRequired,
 	profileArtisan: PropTypes.object.isRequired,

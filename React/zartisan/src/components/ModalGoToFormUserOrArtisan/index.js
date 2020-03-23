@@ -1,13 +1,15 @@
-/**
- * Imports of dependencies
- */
+//Imports of dependencies
 import React, { useState } from 'react';
-import { Row, Button, Modal } from 'antd';
 import PropTypes from 'prop-types';
+import { Row, Button, Modal } from 'antd';
 
+//Local imports
+//Components
 import FormRegister from 'src/components/FormRegister';
 
+//Components use for components "Header" : Display a modal
 const ModalGoToFormUserOrArtisan = ({ modalRegister, setModalRegister }) => {
+	//Hooks
 	const [ registerState, setRegisterState ] = useState({
 		visible: false,
 		valid: false,
@@ -26,10 +28,7 @@ const ModalGoToFormUserOrArtisan = ({ modalRegister, setModalRegister }) => {
 		setRegisterState({ ...registerState, ...{ visible: true }, ...{ role: 'Particulier' } });
 	};
 
-	/**
-   * button for navigate towards form register artisan/user (use withRouter for manage history url)
-   */
-
+	//button for navigate towards form register artisan/user (use withRouter for manage history url)
 	const ButtonGoToArtisanForm = () => {
 		return (
 			<Button
@@ -77,6 +76,7 @@ const ModalGoToFormUserOrArtisan = ({ modalRegister, setModalRegister }) => {
 	);
 };
 
+//PropTypes
 ModalGoToFormUserOrArtisan.propTypes = {
 	modalRegister: PropTypes.bool.isRequired,
 	setModalRegister: PropTypes.func.isRequired

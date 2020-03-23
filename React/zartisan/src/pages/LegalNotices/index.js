@@ -1,6 +1,4 @@
-/**
- * Imports of dependencies
- */
+//Imports of dependencies
 import React from 'react';
 
 const LegalNotices = () => {

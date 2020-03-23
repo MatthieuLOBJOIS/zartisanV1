@@ -1,11 +1,14 @@
+//Imports of dependencies
 import React from 'react';
-import { Button } from 'antd';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import cookies from 'js-cookie';
-import PropTypes from 'prop-types';
+import { Button } from 'antd';
 
+//Local imports
 import './style.sass';
 
+//Components for page "ProfileSettingsUser and ProfileSettingsArtisan" : save update account.
 const ButtonSaveAccount = ({
 	profileRole,
 	profileArtisan,
@@ -15,8 +18,10 @@ const ButtonSaveAccount = ({
 	editUser,
 	userSingle
 }) => {
+	//Hooks
 	const dispatch = useDispatch();
 
+	//tokenJWT: parse the token for read the data token
 	let token = cookies.get('TOKEN');
 	let parseJwt = (token) => {
 		try {
@@ -25,12 +30,12 @@ const ButtonSaveAccount = ({
 			return null;
 		}
 	};
-
 	let tokenEmail = '';
 	if (token != null) {
 		tokenEmail = parseJwt(token).username;
 	}
 
+	//Event handle onClick trigger a action for save update account
 	const handleSaveClick = () => {
 		console.log(profileRole, 'test');
 		switch (profileRole) {
@@ -63,6 +68,7 @@ const ButtonSaveAccount = ({
 	);
 };
 
+//PropTypes
 ButtonSaveAccount.propTypes = {
 	profileRole: PropTypes.string.isRequired,
 	profileArtisan: PropTypes.object,

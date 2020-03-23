@@ -1,22 +1,23 @@
-/**
- * Imports of dependencies
- */
+//Imports of dependencies
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form, Input } from 'antd';
 import 'antd/dist/antd.css';
-import PropTypes from 'prop-types';
 
+//Local imports
+import { artisanEdit } from 'src/store/artisan/actions';
+import { artisanData } from 'src/store/artisan/actions';
+//Components
 import UploadAvatar from 'src/components/UploadAvatar';
 import UploadPictureGalery from 'src/components/UploadPictureGalery';
 import ButtonDeleteAccount from 'src/components/ButtonDeleteAccount';
 import ButtonSaveAccount from 'src/components/ButtonSaveAccount';
 
-import { artisanEdit } from 'src/store/artisan/actions';
-import { artisanData } from 'src/store/artisan/actions';
-
+//Components for page "ProfileSettingsArtisan" : Implements the form for edit artisan account
 const FormEditArtisan = ({ artisanObject, profileArtisan, setProfileArtisan }) => {
 	const { TextArea } = Input;
 
+	//Event handle onChange that detect every value change on the input and update local state
 	const handleChangeValue = (keys) => {
 		return (event) => {
 			switch (keys) {
@@ -103,6 +104,7 @@ const FormEditArtisan = ({ artisanObject, profileArtisan, setProfileArtisan }) =
 	);
 };
 
+//PropTypes
 FormEditArtisan.propTypes = {
 	artisanObject: PropTypes.object.isRequired,
 	profileArtisan: PropTypes.object.isRequired,

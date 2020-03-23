@@ -1,23 +1,30 @@
+//Imports of dependencies
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import classNames from 'classnames';
 
+//Local imports
 import { getJobs } from 'src/store/jobs/actions';
 import { visibleJobDropdown } from 'src/services/local-state-service';
 import './style.sass';
 
+//Components for page "Home" : Implements the France map.
+
 const FranceMap = ({ setvisibleButtonJobs, setRegion, regionChange }) => {
+	//Hooks
 	const dispatch = useDispatch();
+
+	//Event handle onClick: select a region for display the button region
 	const handleClickFranceRegion = (event) => {
 		if (event.target.id != 'yoursvg') {
 			dispatch(getJobs(event.target.id));
 			visibleJobDropdown(setvisibleButtonJobs);
 			setRegion(event.target.id);
-			//console.log(event.target.id);
 		}
 	};
 
+	//Class that allows of change the path style
 	const klsCorse = classNames('land', {
 		[`land--color`]: regionChange === 'Corse'
 	});
@@ -154,6 +161,7 @@ const FranceMap = ({ setvisibleButtonJobs, setRegion, regionChange }) => {
 	);
 };
 
+//PropTypes
 FranceMap.propTypes = {
 	setvisibleButtonJob: PropTypes.func,
 	setRegion: PropTypes.func.isRequired,

@@ -1,8 +1,12 @@
+//Imports of dependencies
 import React from 'react';
 import { Spin } from 'antd';
-import './style.sass';
-import { useLoading } from 'src/hooks/useLoading';
 
+//Local imports
+import { useLoading } from 'src/hooks/useLoading';
+import './style.sass';
+
+//Components for transition of load request
 const Loader = () => {
 	let toLoading = useLoading();
 	return (

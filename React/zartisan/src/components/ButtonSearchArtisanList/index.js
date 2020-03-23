@@ -1,19 +1,21 @@
-/**
- * Imports of dependencies
- */
+//Imports of dependencies
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Button } from 'antd';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-/**
- * Local imports
- */
-import './style.sass';
-import { postHomeSearch } from 'src/store/search/actions';
+import { useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { Button } from 'antd';
 
+//Local imports
+import { postHomeSearch } from 'src/store/search/actions';
+import './style.sass';
+
+//Components for page "Home and ListArtisan" : button that sends the different results of artisans.
 const ButtonSearchArtisanList = withRouter(({ history, idJob, regionChange }) => {
+	//Hooks
 	const dispatch = useDispatch();
+
+	//Event handle onClick that trigger a action for search the different results artisan by region
+	//The action need region name and idJob in arguments
 	const handleSearch = () => {
 		dispatch(postHomeSearch(regionChange, idJob));
 
@@ -27,6 +29,7 @@ const ButtonSearchArtisanList = withRouter(({ history, idJob, regionChange }) =>
 	);
 });
 
+//PropTypes
 ButtonSearchArtisanList.propTypes = {
 	idJob: PropTypes.string.isRequired,
 	regionChange: PropTypes.string.isRequired
