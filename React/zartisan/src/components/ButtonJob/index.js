@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { Button, Icon, Menu, Dropdown } from 'antd';
 
 //Local imports
+import Loader from 'src/components/Loader';
 import './style.sass';
 
 //Components for page "Home and ListArtisan" : Implements a button for select a job
@@ -57,10 +58,17 @@ const ButtonJob = ({ visibleButtonJobs, jobChange, setJobChange, setIdJob }) => 
 		});
 	}
 
-	const menuJobs = <Menu className="menu-job">{jobartisan}</Menu>;
+	const menuJobs =
+		arrayJobs === null ? (
+			<Menu style={{ textAlign: 'center' }} className="menu-job">
+				Aucun métier trouvé
+			</Menu>
+		) : (
+			<Menu className="menu-job">{jobartisan}</Menu>
+		);
 
 	return (
-		<Dropdown overlay={menuJobs} trigger={[ 'click' ]} placement="bottomLeft">
+		<Dropdown overlay={arrayJobs !== undefined ? menuJobs : Loader} trigger={[ 'click' ]} placement="bottomLeft">
 			<Button
 				className={klsDisplayButton}
 				style={{

@@ -8,6 +8,7 @@ import { Button, Icon, Menu, Dropdown } from 'antd';
 import { getRegions } from 'src/store/regions/actions';
 import { getJobs } from 'src/store/jobs/actions';
 import { visibleJobDropdown } from 'src/services/local-state-service';
+import Loader from 'src/components/Loader';
 import './style.sass';
 
 //Components for page "Home and ListArtisan" : Implements a button for select a region
@@ -15,7 +16,6 @@ const ButtonRegion = ({ setvisibleButtonJobs, regionChange, setRegion }) => {
 	//Hooks
 	const regions = useSelector((state) => state.regions);
 	const dispatch = useDispatch();
-
 	//Choose a region for display button job and send request list jobs
 	const changeRegion = (event) => {
 		setRegion(event.item.props.value);
@@ -48,7 +48,7 @@ const ButtonRegion = ({ setvisibleButtonJobs, regionChange, setRegion }) => {
 	const menuRegion = <Menu className="menu-region">{itemRegions}</Menu>;
 
 	return (
-		<Dropdown overlay={menuRegion} trigger={[ 'click' ]} placement="bottomLeft">
+		<Dropdown overlay={regions.length !== 0 ? menuRegion : Loader} trigger={[ 'click' ]} placement="bottomLeft">
 			<Button className="home-button-region" style={{ backgroundColor: '#bb9574', color: 'white' }}>
 				{regionChange} <Icon type="down" />
 			</Button>
