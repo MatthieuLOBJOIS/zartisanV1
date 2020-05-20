@@ -14,7 +14,6 @@ import './style.sass';
 const ButtonJob = ({ visibleButtonJobs, jobChange, setJobChange, setIdJob }) => {
 	//Hooks
 	let jobs = useSelector((state) => state.jobs);
-
 	let arrayJobs = jobs[0];
 	let jobartisan = '';
 
@@ -68,7 +67,11 @@ const ButtonJob = ({ visibleButtonJobs, jobChange, setJobChange, setIdJob }) => 
 		);
 
 	return (
-		<Dropdown overlay={arrayJobs !== undefined ? menuJobs : Loader} trigger={[ 'click' ]} placement="bottomLeft">
+		<Dropdown
+			overlay={arrayJobs !== undefined ? menuJobs : <Loader />}
+			trigger={[ 'click' ]}
+			placement="bottomLeft"
+		>
 			<Button
 				className={klsDisplayButton}
 				style={{

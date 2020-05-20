@@ -48,7 +48,7 @@ const ButtonRegion = ({ setvisibleButtonJobs, regionChange, setRegion }) => {
 	const menuRegion = <Menu className="menu-region">{itemRegions}</Menu>;
 
 	return (
-		<Dropdown overlay={regions.length !== 0 ? menuRegion : Loader} trigger={[ 'click' ]} placement="bottomLeft">
+		<Dropdown overlay={regions.length !== 0 ? menuRegion : <Loader />} trigger={[ 'click' ]} placement="bottomLeft">
 			<Button className="home-button-region" style={{ backgroundColor: '#bb9574', color: 'white' }}>
 				{regionChange} <Icon type="down" />
 			</Button>

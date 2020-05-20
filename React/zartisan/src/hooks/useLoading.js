@@ -7,7 +7,7 @@ export const useLoading = () => {
 	const changeLoadValue = () => {
 		setTimeout(() => {
 			setLoading(false);
-		}, 1000);
+		}, 200);
 	};
 
 	useEffect(() => {
