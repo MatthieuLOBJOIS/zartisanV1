@@ -19,51 +19,45 @@ const ProfilSettingsArtisan = () => {
 	const artisanSelector = useSelector((state) => state.artisan);
 
 	const [ profileArtisan, setProfileArtisan ] = useState({
-		firstname: artisanObject.firstname,
-		lastname: artisanObject.lastname,
-		siret: artisanObject.siret,
-		company: artisanObject.company,
-		numberWay: artisanObject.numberWay,
-		way: artisanObject.way,
-		postalCode: artisanObject.postalCode,
-		city: artisanObject.city,
-		description: artisanObject.companyDescription,
-		pictureAvatar: artisanObject.picture,
-		pictureGalery: artisanObject.pictureFolder,
-		phone: artisanObject.phone,
-		email: artisanObject.email
+		firstname: '',
+		lastname: '',
+		siret: '',
+		company: '',
+		numberWay: '',
+		way: '',
+		postalCode: '',
+		city: '',
+		description: '',
+		pictureAvatar: '',
+		pictureGalery: '',
+		phone: '',
+		email: ''
 	});
 
 	//Creat session for account artisan
-	if (artisanSelector != '') {
-		sessionStorage.setItem('ProfileArtisan', JSON.stringify(artisanSelector));
+	if (artisanSelector !== '') {
+		sessionStorage.setItem('ProfileArtisan', JSON.stringify(artisanSelector[0]));
 	}
 	const sessionArtisan = JSON.parse(sessionStorage.getItem('ProfileArtisan'));
-	let artisanObject = '';
-
-	for (let artisan in sessionArtisan) {
-		artisanObject = sessionArtisan[0];
-	}
+	const artisanObject = sessionArtisan;
 
 	useEffect(
 		() => {
-			if (sessionArtisan !== null) {
-				setProfileArtisan({
-					firstname: artisanObject.firstname,
-					lastname: artisanObject.lastname,
-					siret: artisanObject.siret,
-					company: artisanObject.company,
-					numberWay: artisanObject.numberWay,
-					way: artisanObject.way,
-					postalCode: artisanObject.postalCode,
-					city: artisanObject.city,
-					description: artisanObject.companyDescription,
-					pictureAvatar: artisanObject.picture,
-					pictureGalery: artisanObject.pictureFolder,
-					phone: artisanObject.phone,
-					email: artisanObject.email
-				});
-			}
+			setProfileArtisan({
+				firstname: artisanObject.firstname,
+				lastname: artisanObject.lastname,
+				siret: artisanObject.siret,
+				company: artisanObject.company,
+				numberWay: artisanObject.numberWay,
+				way: artisanObject.way,
+				postalCode: artisanObject.postalCode,
+				city: artisanObject.city,
+				description: artisanObject.companyDescription,
+				pictureAvatar: artisanObject.picture,
+				pictureGalery: artisanObject.pictureFolder,
+				phone: artisanObject.phone,
+				email: artisanObject.email
+			});
 		},
 		[ artisanSelector ]
 	);
@@ -71,7 +65,7 @@ const ProfilSettingsArtisan = () => {
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{profileArtisan.siret !== undefined && toLoading === false ? (
+				{profileArtisan && toLoading === false ? (
 					<FormEditArtisan
 						artisanObject={artisanObject}
 						profileArtisan={profileArtisan}
