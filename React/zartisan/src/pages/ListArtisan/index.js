@@ -22,7 +22,7 @@ const ListArtisan = () => {
 	//Hooks
 	let toLoading = useLoading();
 	const dispatch = useDispatch();
-	const arrayArtisan = useSelector((state) => state.search);
+	//const arrayArtisan = useSelector((state) => state.search);
 
 	const [ visibleButtonJobs, setvisibleButtonJobs ] = useState(false);
 	const [ regionChange, setRegion ] = useState('Choisissez une Région');
@@ -32,11 +32,8 @@ const ListArtisan = () => {
 
 	let objectArtisan = '';
 	const listData = [];
-	//Creat session for list-artisan
-	if (arrayArtisan != '') {
-		sessionStorage.setItem('ListArtisan', JSON.stringify(arrayArtisan));
-	}
-	const sessionData = JSON.parse(sessionStorage.getItem('ListArtisan'));
+
+	const sessionData = JSON.parse(localStorage.getItem('ListArtisan'));
 
 	//Loop the different artisan of the search
 	if (sessionData != null) {
