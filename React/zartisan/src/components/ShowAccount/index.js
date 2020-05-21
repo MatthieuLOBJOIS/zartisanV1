@@ -1,8 +1,8 @@
 //Imports of dependencies
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import cookies from "js-cookie";
 import classNames from "classnames";
 import { Row, Typography } from "antd";
@@ -26,8 +26,12 @@ const ShowAccount = ({ onClose, hidden }) => {
   const [modalLogin, setModalLogin] = useState(false);
   const [modalRegister, setModalRegister] = useState(false);
   const [connectVisible, setConnectVisible] = useState(false);
+  const [sessionConnect, setSessionConnect] = useState(null);
 
-  const sessionConnect = localStorage.getItem("Connect");
+  const logState = useSelector(state => state.connect);
+  useEffect(() => {
+    setSessionConnect(localStorage.getItem("Connect"));
+  }, [logState]);
 
   const showModalLogin = () => {
     onClose();
@@ -47,7 +51,6 @@ const ShowAccount = ({ onClose, hidden }) => {
     onClose();
     dispatch(deconnect());
     history.push("/");
-    localStorage.clear();
   };
 
   //tokenJWT: parse the token for read the data token

@@ -4,7 +4,7 @@ import { CONNECT_FAIL } from "src/store/register/actions";
 import { DECONNEXION } from "src/store/register/actions";
 import { VALID_REGISTER } from "src/store/register/actions";
 
-const initialState = false;
+const initialState = null;
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -12,6 +12,7 @@ export default (state = initialState, action) => {
       return (state = true);
     }
     case DECONNEXION: {
+      localStorage.clear();
       return (state = false);
     }
 
