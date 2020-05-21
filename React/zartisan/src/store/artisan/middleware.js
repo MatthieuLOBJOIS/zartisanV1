@@ -22,6 +22,8 @@ export default (store) => (next) => (action) => {
 			})
 				.then((response) => {
 					if (response.status === 200) {
+						//Creat session for page-artisan
+						localStorage.setItem('PageArtisan', JSON.stringify(response.data));
 						store.dispatch(artisanInfo(response.data));
 					}
 				})

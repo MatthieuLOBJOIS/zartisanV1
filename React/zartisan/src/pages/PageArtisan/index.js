@@ -19,14 +19,10 @@ import Loader from 'src/components/Loader';
 //Components content of page-artisan
 const PageArtisan = () => {
 	//Hooks
-	const artisanSelector = useSelector((state) => state.artisan);
+	//const artisanSelector = useSelector((state) => state.artisan);
 	let toLoading = useLoading();
 
-	//Creat session for page-artisan
-	if (artisanSelector != '') {
-		sessionStorage.setItem('PageArtisan', JSON.stringify(artisanSelector));
-	}
-	const sessionArtisan = JSON.parse(sessionStorage.getItem('PageArtisan'));
+	const sessionArtisan = JSON.parse(localStorage.getItem('PageArtisan'));
 	const sessionConnect = sessionStorage.getItem('Connect');
 
 	let artisanObject = '';
