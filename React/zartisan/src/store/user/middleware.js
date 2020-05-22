@@ -25,7 +25,7 @@ export default store => next => action => {
         .then(response => {
           if (response.status === 200) {
             //Creat session for account user
-            localStorage.setItem("ProfileUser", JSON.stringify(userSelect));
+            localStorage.setItem("ProfileUser", JSON.stringify(response.data));
             store.dispatch(responseUser(response.data));
           }
         })
