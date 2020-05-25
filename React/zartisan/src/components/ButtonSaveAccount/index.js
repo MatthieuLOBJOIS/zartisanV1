@@ -37,7 +37,7 @@ const ButtonSaveAccount = ({
 
 	//Event handle onClick trigger a action for save update account
 	const handleSaveClick = () => {
-		console.log(profileRole, 'test');
+		//console.log(profileRole, 'test');
 		switch (profileRole) {
 			case 'artisan':
 				dispatch(
