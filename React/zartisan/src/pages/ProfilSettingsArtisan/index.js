@@ -51,8 +51,8 @@ const ProfilSettingsArtisan = () => {
 			//console.log(sessionArtisan);
 			if (sessionArtisan !== null) {
 				setProfileArtisan({
-					firstname: sessionArtisan.firstname,
-					lastname: sessionArtisan.lastname,
+					firstname: sessionArtisan.firstname !== null ? sessionArtisan.firstname : '',
+					lastname: sessionArtisan.lastname !== null ? sessionArtisan.lastname : '',
 					siret: sessionArtisan.siret,
 					company: sessionArtisan.company,
 					numberWay: sessionArtisan.numberWay,
