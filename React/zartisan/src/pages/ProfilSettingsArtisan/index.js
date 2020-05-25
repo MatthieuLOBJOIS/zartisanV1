@@ -16,7 +16,7 @@ import Loader from 'src/components/Loader';
 const ProfilSettingsArtisan = () => {
 	//Hooks
 	let toLoading = useLoading();
-	const artisanSelector = useSelector((state) => state.artisan);
+	const artisanSelector = useSelector((state) => state.artisan.artisan);
 
 	const [ sessionArtisan, setSessionArtisan ] = useState(null);
 	const [ profileArtisan, setProfileArtisan ] = useState({

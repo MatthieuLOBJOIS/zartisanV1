@@ -20,7 +20,8 @@ import Loader from 'src/components/Loader';
 //Components content of page-artisan
 const PageArtisan = () => {
 	//Hooks
-	const artisanSelector = useSelector((state) => state.artisan);
+	const artisanSelector = useSelector((state) => state.artisan.artisan);
+
 	let toLoading = useLoading();
 
 	const sessionConnect = useLog();
