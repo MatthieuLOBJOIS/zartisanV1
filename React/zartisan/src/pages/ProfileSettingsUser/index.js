@@ -15,7 +15,7 @@ import Loader from 'src/components/Loader';
 // Components content of page profile user
 const ProfileSettingsUser = () => {
 	// Hooks
-	const userSelect = useSelector((state) => state.user);
+	const userSelect = useSelector((state) => state.user.user);
 	const toLoading = useLoading();
 	const [ sessionUser, setSessionUser ] = useState(null);
 	const [ profileUser, setProfileUser ] = useState({
@@ -53,7 +53,7 @@ const ProfileSettingsUser = () => {
 	return (
 		<div className="profile-content-user">
 			<Row type="flex" justify="space-around" align="middle">
-				{sessionUser === null && toLoading === false ? (
+				{sessionUser === null && toLoading === true ? (
 					<Loader />
 				) : (
 					<FormEditUser profileUser={profileUser} setProfileUser={setProfileUser} />

@@ -4,10 +4,7 @@ import axios from 'axios';
 
 //Local imports
 import { NAME_SERVER } from 'src/store/register/actions';
-import { USER_SINGLE } from 'src/store/user/actions';
-import { EDIT_USER } from 'src/store/user/actions';
-import { DELETE_USER } from 'src/store/user/actions';
-import { responseUser } from 'src/store/user/actions';
+import { USER_SINGLE, EDIT_USER, DELETE_USER, responseUser, userSaveSuccess } from 'src/store/user/actions';
 
 export default (store) => (next) => (action) => {
 	switch (action.type) {
@@ -56,10 +53,12 @@ export default (store) => (next) => (action) => {
 					//console.log(response);
 					localStorage.setItem('ProfileUser', JSON.stringify(response.data));
 					store.dispatch(responseUser(response.data));
+					store.dispatch(userSaveSuccess(true));
 				})
 				.catch(function(error) {
 					// handle error
 					//console.log(error);
+					store.dispatch(userSaveSuccess(false));
 				})
 				.finally(function() {
 					// always executed
