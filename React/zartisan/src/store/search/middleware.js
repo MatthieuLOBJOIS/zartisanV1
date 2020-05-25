@@ -22,6 +22,8 @@ export default (store) => (next) => (action) => {
 			})
 				.then((response) => {
 					if (response.status === 200) {
+						//Creat session for list-artisan
+						localStorage.setItem('ListArtisan', JSON.stringify(response.data));
 						store.dispatch(homeSearch(response.data));
 					}
 				})

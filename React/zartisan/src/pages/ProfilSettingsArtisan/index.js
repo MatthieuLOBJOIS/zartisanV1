@@ -16,8 +16,9 @@ import Loader from 'src/components/Loader';
 const ProfilSettingsArtisan = () => {
 	//Hooks
 	let toLoading = useLoading();
-	const artisanSelector = useSelector((state) => state.artisan);
+	const artisanSelector = useSelector((state) => state.artisan.artisan);
 
+	const [ sessionArtisan, setSessionArtisan ] = useState(null);
 	const [ profileArtisan, setProfileArtisan ] = useState({
 		firstname: '',
 		lastname: '',
@@ -35,39 +36,46 @@ const ProfilSettingsArtisan = () => {
 	});
 
 	//Creat session for account artisan
-	if (artisanSelector !== '') {
-		sessionStorage.setItem('ProfileArtisan', JSON.stringify(artisanSelector[0]));
-	}
-	const sessionArtisan = JSON.parse(sessionStorage.getItem('ProfileArtisan'));
-	const artisanObject = sessionArtisan;
+
+	//const sessionArtisan = JSON.parse(localStorage.getItem("ProfileArtisan"));
 
 	useEffect(
 		() => {
-			setProfileArtisan({
-				firstname: artisanObject.firstname,
-				lastname: artisanObject.lastname,
-				siret: artisanObject.siret,
-				company: artisanObject.company,
-				numberWay: artisanObject.numberWay,
-				way: artisanObject.way,
-				postalCode: artisanObject.postalCode,
-				city: artisanObject.city,
-				description: artisanObject.companyDescription,
-				pictureAvatar: artisanObject.picture,
-				pictureGalery: artisanObject.pictureFolder,
-				phone: artisanObject.phone,
-				email: artisanObject.email
-			});
+			setSessionArtisan(JSON.parse(localStorage.getItem('ProfileArtisan')));
 		},
 		[ artisanSelector ]
+	);
+
+	useEffect(
+		() => {
+			//console.log(sessionArtisan);
+			if (sessionArtisan !== null) {
+				setProfileArtisan({
+					firstname: sessionArtisan.firstname !== null ? sessionArtisan.firstname : '',
+					lastname: sessionArtisan.lastname !== null ? sessionArtisan.lastname : '',
+					siret: sessionArtisan.siret,
+					company: sessionArtisan.company,
+					numberWay: sessionArtisan.numberWay,
+					way: sessionArtisan.way,
+					postalCode: sessionArtisan.postalCode,
+					city: sessionArtisan.city,
+					description: sessionArtisan.companyDescription,
+					pictureAvatar: sessionArtisan.picture,
+					pictureGalery: sessionArtisan.pictureFolder,
+					phone: sessionArtisan.phone,
+					email: sessionArtisan.email
+				});
+			}
+		},
+		[ sessionArtisan ]
 	);
 
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{profileArtisan && toLoading === false ? (
+				{sessionArtisan !== null && toLoading === false ? (
 					<FormEditArtisan
-						artisanObject={artisanObject}
+						artisanObject={sessionArtisan}
 						profileArtisan={profileArtisan}
 						setProfileArtisan={setProfileArtisan}
 					/>

@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import 'antd/dist/antd.css';
 import { Row, List, Rate } from 'antd';
+import slugify from 'slugify';
 
 //Local imports
 import { NAME_SERVER } from 'src/store/register/actions';
@@ -29,14 +30,17 @@ const ListArtisan = () => {
 	const [ jobChange, setJobChange ] = useState('Choisissez votre métier');
 	const [ idJob, setIdJob ] = useState('');
 	const [ star, setStar ] = useState(1);
+	const [ sessionData, setSessionData ] = useState(null);
+	useEffect(
+		() => {
+			setSessionData(JSON.parse(localStorage.getItem('ListArtisan')));
+		},
+		[ arrayArtisan ]
+	);
 
 	let objectArtisan = '';
+
 	const listData = [];
-	//Creat session for list-artisan
-	if (arrayArtisan != '') {
-		sessionStorage.setItem('ListArtisan', JSON.stringify(arrayArtisan));
-	}
-	const sessionData = JSON.parse(sessionStorage.getItem('ListArtisan'));
 
 	//Loop the different artisan of the search
 	if (sessionData != null) {
@@ -64,11 +68,12 @@ const ListArtisan = () => {
 	const LinkArtisan = withRouter(({ history, item }) => {
 		const handleSearch = () => {
 			dispatch(artisanData(item.id, item.email));
-			{
-				'item compagny', item.company;
-			}
 
-			history.push(`/page-artisan/${item.company}`);
+			history.push(
+				`/page-artisan/${slugify(item.company, {
+					lower: true
+				})}`
+			);
 		};
 		return <a onClick={handleSearch}>{item.company}</a>;
 	});

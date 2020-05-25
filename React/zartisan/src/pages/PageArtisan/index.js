@@ -1,5 +1,5 @@
 //Imports of dependencies
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import cookies from 'js-cookie';
 import 'antd/dist/antd.css';
@@ -9,6 +9,7 @@ import { Row, Col, Button, Popover } from 'antd';
 import { NAME_SERVER } from 'src/store/register/actions';
 import { useLoading } from 'src/hooks/useLoading';
 import './style.sass';
+import { useLog } from 'src/hooks/useLog';
 
 //Components
 import CarouselArtisan from 'src/components/CarouselArtisan';
@@ -19,22 +20,27 @@ import Loader from 'src/components/Loader';
 //Components content of page-artisan
 const PageArtisan = () => {
 	//Hooks
-	const artisanSelector = useSelector((state) => state.artisan);
+	const artisanSelector = useSelector((state) => state.artisan.artisan);
+
 	let toLoading = useLoading();
 
-	//Creat session for page-artisan
-	if (artisanSelector != '') {
-		sessionStorage.setItem('PageArtisan', JSON.stringify(artisanSelector));
-	}
-	const sessionArtisan = JSON.parse(sessionStorage.getItem('PageArtisan'));
-	const sessionConnect = sessionStorage.getItem('Connect');
+	const sessionConnect = useLog();
+
+	const [ stateArtisan, setStateArtisan ] = useState(null);
+
+	useEffect(
+		() => {
+			setStateArtisan(JSON.parse(localStorage.getItem('PageArtisan')));
+		},
+		[ artisanSelector ]
+	);
 
 	let artisanObject = '';
 	let adviceObject = [];
 	//Loop the different advice and data of artisan
-	for (let artisan in sessionArtisan) {
-		artisanObject = sessionArtisan[0];
-		adviceObject = sessionArtisan[1];
+	for (let artisan in stateArtisan) {
+		artisanObject = stateArtisan[0];
+		adviceObject = stateArtisan[1];
 	}
 
 	//tokenJWT: parse the token for read the data token
@@ -85,7 +91,7 @@ const PageArtisan = () => {
 	return (
 		<div>
 			<Row type="flex" justify="space-around" align="middle">
-				{sessionArtisan != null && toLoading === false ? (
+				{stateArtisan != null && toLoading === false ? (
 					<div id="page-artisan">
 						<Row>
 							<div className="page-artisan-description">

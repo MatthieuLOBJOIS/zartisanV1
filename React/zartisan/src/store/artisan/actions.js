@@ -2,6 +2,7 @@
 export const ARTISAN_DATA = 'artisan/actions/ARTISAN_DATA';
 export const ARTISAN_INFO = 'artisan/actions/ARTISAN_INFO';
 export const ARTISAN_EDIT = 'artisan/actions/ARTISAN_EDIT';
+export const ARTISAN_SAVE_SUCCESS = 'artisan/actions/ARTISAN_SAVE';
 
 //action creators
 export const artisanData = (id, email) => ({
@@ -22,4 +23,9 @@ export const artisanEdit = (email, description, pictureAvatar, pictureGalery, ph
 	pictureAvatar,
 	pictureGalery,
 	phone
+});
+
+export const artisanSaveSuccess = (success) => ({
+	type: ARTISAN_SAVE_SUCCESS,
+	success
 });

@@ -3,9 +3,7 @@ import cookies from 'js-cookie';
 import axios from 'axios';
 
 //Local imports
-import { ARTISAN_DATA } from 'src/store/artisan/actions';
-import { ARTISAN_EDIT } from 'src/store/artisan/actions';
-import { artisanInfo } from 'src/store/artisan/actions';
+import { ARTISAN_DATA, ARTISAN_EDIT, artisanInfo, artisanSaveSuccess } from 'src/store/artisan/actions';
 import { NAME_SERVER } from 'src/store/register/actions';
 
 export default (store) => (next) => (action) => {
@@ -22,6 +20,10 @@ export default (store) => (next) => (action) => {
 			})
 				.then((response) => {
 					if (response.status === 200) {
+						//Creat session for page-artisan
+						localStorage.setItem('PageArtisan', JSON.stringify(response.data));
+
+						localStorage.setItem('ProfileArtisan', JSON.stringify(response.data[0]));
 						store.dispatch(artisanInfo(response.data));
 					}
 				})
@@ -48,10 +50,15 @@ export default (store) => (next) => (action) => {
 				},
 				headers: { Authorization: `Bearer ${token}` }
 			})
-				.then((response) => {})
+				.then((response) => {
+					localStorage.setItem('ProfileArtisan', JSON.stringify(response.data));
+					store.dispatch(artisanInfo(response.data));
+					store.dispatch(artisanSaveSuccess(true));
+				})
 				.catch(function(error) {
 					// handle error
 					//console.log(error);
+					store.dispatch(artisanSaveSuccess(false));
 				})
 				.finally(function() {
 					// always executed

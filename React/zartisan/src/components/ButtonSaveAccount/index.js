@@ -1,9 +1,11 @@
 //Imports of dependencies
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import cookies from 'js-cookie';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
+import { artisanSaveSuccess } from 'src/store/artisan/actions';
+import { userSaveSuccess } from 'src/store/user/actions';
 
 //Local imports
 import './style.sass';
@@ -20,7 +22,22 @@ const ButtonSaveAccount = ({
 }) => {
 	//Hooks
 	const dispatch = useDispatch();
+	const saveArtisan = useSelector((state) => state.artisan.saveArtisan);
+	const saveUser = useSelector((state) => state.user.saveUser);
+	const success = () => {
+		message.success('Les modifications ont été sauvegardées');
+	};
 
+	useEffect(
+		() => {
+			if (saveArtisan === true || saveUser === true) {
+				success();
+				dispatch(artisanSaveSuccess(null));
+				dispatch(userSaveSuccess(null));
+			}
+		},
+		[ saveArtisan, saveUser ]
+	);
 	//tokenJWT: parse the token for read the data token
 	let token = cookies.get('TOKEN');
 	let parseJwt = (token) => {
@@ -37,7 +54,8 @@ const ButtonSaveAccount = ({
 
 	//Event handle onClick trigger a action for save update account
 	const handleSaveClick = () => {
-		console.log(profileRole, 'test');
+		//console.log(profileRole, 'test');
+
 		switch (profileRole) {
 			case 'artisan':
 				dispatch(
