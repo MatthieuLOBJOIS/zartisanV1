@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
-import { Row, Button, Icon, Drawer } from 'antd';
+import { Row, Button, Icon, Drawer, Tooltip } from 'antd';
 
 //Local imports
 import { NAME_SERVER } from 'src/store/register/actions';
@@ -43,13 +43,15 @@ const Header = () => {
 					<ShowAccount onClose={onClose} hidden={false} />
 				</Drawer>
 				<ShowAccount onClose={onClose} hidden={true} />
-				<Link to="/">
-					<img
-						src={`${NAME_SERVER}/assets/images_default/zartisan.svg`}
-						alt="zartisan image"
-						className="logo-zartisan"
-					/>
-				</Link>
+				<Tooltip placement="right" title="Retour à l'accueil">
+					<Link to="/">
+						<img
+							src={`${NAME_SERVER}/assets/images_default/zartisan.svg`}
+							alt="zartisan image"
+							className="logo-zartisan"
+						/>
+					</Link>
+				</Tooltip>
 			</Row>
 		</div>
 	);

@@ -1,7 +1,7 @@
 //Imports of dependencies
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Upload, Icon, message } from 'antd';
+import { Upload, Icon, message, Tooltip } from 'antd';
 
 //Local imports
 import { NAME_SERVER } from 'src/store/register/actions';
@@ -81,25 +81,27 @@ const UploadAvatar = ({ profileUser, setProfileUser, role, profileArtisan, setPr
 	}
 
 	return (
-		<div>
-			<Upload
-				name="avatar"
-				listType="picture-card"
-				className="avatar-uploader"
-				showUploadList={false}
-				action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-				beforeUpload={beforeUpload}
-				onChange={handleChange}
-			>
-				{imageUrl ? (
-					<img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
-				) : profile != '' ? (
-					<img src={`${NAME_SERVER}/${profile}`} alt="avatar" style={{ width: '100%' }} />
-				) : (
-					uploadButton
-				)}
-			</Upload>
-		</div>
+		<Tooltip placement="left" title="Modifier son avatar">
+			<div>
+				<Upload
+					name="avatar"
+					listType="picture-card"
+					className="avatar-uploader"
+					showUploadList={false}
+					action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+					beforeUpload={beforeUpload}
+					onChange={handleChange}
+				>
+					{imageUrl ? (
+						<img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
+					) : profile != '' ? (
+						<img src={`${NAME_SERVER}/${profile}`} alt="avatar" style={{ width: '100%' }} />
+					) : (
+						uploadButton
+					)}
+				</Upload>
+			</div>
+		</Tooltip>
 	);
 };
 
