@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import 'antd/dist/antd.css';
-import { Upload, Icon, Modal } from 'antd';
+import { Upload, Icon, Modal, Tooltip } from 'antd';
 
 //Local imports
 import { NAME_SERVER } from 'src/store/register/actions';
@@ -101,20 +101,22 @@ const UploadPictureGalery = ({ artisanObject, profileArtisan, setProfileArtisan 
 	);
 
 	return (
-		<div>
-			<Upload
-				action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-				listType="picture-card"
-				onPreview={handlePreview}
-				onChange={handleChangeFile}
-				fileList={fileList}
-			>
-				{fileList.length >= 4 ? null : uploadButtonFile}
-			</Upload>
-			<Modal visible={pictureFolder.previewVisible} footer={null} onCancel={handleCancel}>
-				<img alt="example" style={{ width: '100%' }} src={pictureFolder.previewImage} />
-			</Modal>
-		</div>
+		<Tooltip placement="left" title="Modifier son avatar">
+			<div>
+				<Upload
+					action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+					listType="picture-card"
+					onPreview={handlePreview}
+					onChange={handleChangeFile}
+					fileList={fileList}
+				>
+					{fileList.length >= 4 ? null : uploadButtonFile}
+				</Upload>
+				<Modal visible={pictureFolder.previewVisible} footer={null} onCancel={handleCancel}>
+					<img alt="example" style={{ width: '100%' }} src={pictureFolder.previewImage} />
+				</Modal>
+			</div>
+		</Tooltip>
 	);
 };
 

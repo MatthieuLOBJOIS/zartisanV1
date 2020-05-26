@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import 'antd/dist/antd.css';
-import { Rate, Popover } from 'antd';
+import { Rate, Popover, Tooltip } from 'antd';
 
 //Local imports
 import { sendRate } from 'src/store/rate/actions';
@@ -76,7 +76,9 @@ const RateArtisan = ({ user, artisanUser, artisanObject, idArtisan, mail }) => {
 						visible={visibleRate}
 						content={content}
 					>
-						<a className="evaluez">évaluez</a>
+						<Tooltip placement="left" title="Evaluer l'artisan">
+							<a className="evaluez">évaluez</a>
+						</Tooltip>
 					</Popover>
 				</div>
 			) : (

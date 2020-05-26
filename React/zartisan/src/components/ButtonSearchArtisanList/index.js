@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button, Tooltip } from 'antd';
 
 //Local imports
 import { postHomeSearch } from 'src/store/search/actions';
@@ -23,9 +23,11 @@ const ButtonSearchArtisanList = withRouter(({ history, idJob, regionChange }) =>
 	};
 
 	return (
-		<Button className="home-button-search" className="buttons" onClick={handleSearch}>
-			Recherche
-		</Button>
+		<Tooltip placement="bottom" title="Résultat de la recherche">
+			<Button className="home-button-search" className="buttons" onClick={handleSearch}>
+				Recherche
+			</Button>
+		</Tooltip>
 	);
 });
 

@@ -1,7 +1,7 @@
 //Imports of dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Carousel } from 'antd';
+import { Carousel, Tooltip } from 'antd';
 import 'antd/dist/antd.css';
 
 //Local imports
@@ -17,7 +17,9 @@ const CarouselArtisan = ({ artisanObject }) => {
 					return (
 						<div key={picture}>
 							<h3>
-								<img className="imgCarousel" src={`${NAME_SERVER}/${picture}`} alt="image-galery" />
+								<Tooltip placement="top" title="Caroussel d'image">
+									<img className="imgCarousel" src={`${NAME_SERVER}/${picture}`} alt="image-galery" />
+								</Tooltip>
 							</h3>
 						</div>
 					);
