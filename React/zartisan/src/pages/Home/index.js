@@ -1,11 +1,11 @@
 //Imports of dependencies
 import React, { useState, useEffect } from 'react';
 import { Row } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 //Local imports
 import './style.sass';
+import { useRegion } from 'src/hooks/useRegion';
 
 //Components
 import FranceMap from 'src/components/FranceMap';
@@ -14,23 +14,15 @@ import ButtonJob from 'src/components/ButtonJob';
 import ButtonRegion from 'src/components/ButtonRegion';
 import Loader from 'src/components/Loader';
 
-import { getRegions } from 'src/store/regions/actions';
-
 //Components content of page home
 const Home = () => {
 	//Hooks
-	const dispatch = useDispatch();
 	const [ visibleButtonJobs, setvisibleButtonJobs ] = useState(false);
 	const [ regionChange, setRegion ] = useState('Choisissez une Région');
 	const [ jobChange, setJobChange ] = useState('Choisissez votre métier');
 	const [ idJob, setIdJob ] = useState('');
 	const [ regionArray, setRegionArray ] = useState([]);
-
-	useEffect(() => {
-		dispatch(getRegions());
-	}, []);
-
-	const regions = useSelector((state) => state.regions);
+	const regions = useRegion();
 
 	useEffect(
 		() => {

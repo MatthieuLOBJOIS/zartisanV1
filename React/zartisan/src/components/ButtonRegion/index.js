@@ -1,13 +1,14 @@
 //Imports of dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, Icon, Menu, Dropdown } from 'antd';
 
 //Local imports
 
 import { getJobs } from 'src/store/jobs/actions';
 import { visibleJobDropdown } from 'src/services/local-state-service';
+import { useRegion } from 'src/hooks/useRegion';
 
 import './style.sass';
 
@@ -16,7 +17,7 @@ const ButtonRegion = ({ setvisibleButtonJobs, regionChange, setRegion }) => {
 	//Hooks
 
 	const dispatch = useDispatch();
-	const regions = useSelector((state) => state.regions);
+	const regions = useRegion();
 
 	//Choose a region for display button job and send request list jobs
 	const changeRegion = (event) => {
