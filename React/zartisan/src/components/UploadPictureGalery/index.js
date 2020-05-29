@@ -17,7 +17,7 @@ const UploadPictureGalery = ({ artisanObject, profileArtisan, setProfileArtisan 
 		previewImage: ''
 	});
 
-	const artisanSelector = useSelector((state) => state.artisan);
+	const artisanSelector = useSelector((state) => state.artisan.artisan);
 
 	//get base64: format of picture
 	function getSecondeBase64(file) {
