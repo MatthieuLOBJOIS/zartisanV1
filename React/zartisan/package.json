@@ -35,7 +35,7 @@
     "node-sass": "^4.14.1",
     "null-loader": "^3.0.0",
     "optimize-css-assets-webpack-plugin": "*",
-    "postcss": "^7.0.30",
+    "postcss": "^7.0.36",
     "postcss-loader": "*",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.1",
